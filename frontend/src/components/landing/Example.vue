@@ -15,6 +15,28 @@
       </div>
       <div class="example-palette">
         <h1>Palettes in Markdown</h1>
+        <div class="palette-content">
+          <div class="color-info d-flex align-center">
+            <div class="color"></div>
+            <div class="desc">Background</div>
+          </div>
+          <div class="color-info d-flex align-center">
+            <div class="color"></div>
+            <div class="desc">Headline</div>
+          </div>
+          <div class="color-info d-flex align-center">
+            <div class="color"></div>
+            <div class="desc">Sub headline</div>
+          </div>
+          <div class="color-info d-flex align-center">
+            <div class="color"></div>
+            <div class="desc">Emphasis</div>
+          </div>
+          <div class="color-info d-flex align-center">
+            <div class="color"></div>
+            <div class="desc">Quote</div>
+          </div>
+        </div>
       </div>
     </v-col>
   </div>
@@ -27,7 +49,12 @@ export default {
   name: 'Example',
   components: {
     ExampleContent,
-  }
+  },
+  data(){
+    return {
+      selectedTheme: null
+    }
+  },
 }
 </script>
 
@@ -88,4 +115,32 @@ export default {
   padding-left: 3%;
 }
 
+.palette-content{
+  width: 100%;
+  height: 100%;
+  background-color: cornflowerblue;
+}
+
+.palette-content .color-info{
+  border: 3px solid #707070;
+  float: left;
+  height: 90px;
+  width: 30%;
+  margin-right: 3%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.palette-content .color-info .color{
+  height: 50px;
+  width: 50px;
+  border-radius: 75px;
+  border: 3px solid #707070;
+  margin-left: 8%; 
+  margin-right: 3%;
+}
+
+.palette-content .color-info .desc{
+  font-size: 1.3rem;
+}
 </style>
