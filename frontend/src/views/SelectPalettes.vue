@@ -80,7 +80,6 @@ export default {
 .palette-stack-area.wrap{
   height: 100vh;
   width : 24%;
-  background-color: khaki;
 }
 
 </style>
