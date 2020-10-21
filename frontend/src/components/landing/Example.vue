@@ -31,8 +31,7 @@ export default {
 }
 </script>
 
-<style scope>
-
+<style scoped>
 .example-area.col{
   padding: 0;
 }
