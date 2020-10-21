@@ -1,13 +1,40 @@
 <template>
-  <h1>Landing Page</h1>  
+  <div>
+    <v-row class="landing wrap">
+      <div class="theme-sidebar wrap"><theme-sidebar/></div>
+      <div class="example-area wrap"><example/></div>
+    </v-row>
+  </div>
 </template>
 
 <script>
+import ThemeSidebar from '../components/sidebar/ThemeSidebar'
+import Example from '../components/landing/Example'
+
 export default {
+  name: 'Landing',
+  components: {
+    ThemeSidebar,
+    Example
+  },
 
 }
 </script>
 
 <style>
+.landing.wrap{
+  width: 100vw;
+  height: 100vh;
+}
+
+.theme-sidebar.wrap{
+  background-color: papayawhip;
+  width: 22.5%;
+}
+
+.example-area.wrap{
+  background-color: rosybrown;
+  width: 77.5%;
+}
 
 </style>
