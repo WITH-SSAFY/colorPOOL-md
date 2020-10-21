@@ -10,10 +10,11 @@
       <!-- exapmle ui와 버튼 -->
       <div class="example-md">
         <div class="example-content"><example-content/></div>
+        <!-- 다음 단계로 넘어가는 버튼-->
         <div class="button-group">
           <h1>Create Presentation</h1>
-          <v-btn block large elevation="0" color="#EE7771" tile height="68px" >With Team Color</v-btn>
-          <v-btn block large elevation="0" color="#EE7771" tile height="68px">with Main Keyword</v-btn>
+          <v-btn block large elevation="0" color="#EE7771" tile height="68px" @click="goPickColor">With Team Color</v-btn>
+          <v-btn block large elevation="0" color="#EE7771" tile height="68px" @click="goGetColor">with Main Keyword</v-btn>
         </div>
       </div>
 
@@ -49,8 +50,9 @@
 
 <script>
 import ExampleContent from './ExampleContent'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 const colorStore = 'colorStore'
+const landingStore = 'landingStore'
 
 export default {
   name: 'Example',
@@ -83,6 +85,19 @@ export default {
       this.color3 = val.color3;
       this.color4 = val.color4;
       this.color5 = val.color5;
+    }
+  },
+  methods: {
+    ...mapActions(landingStore, ['AC_IS_PICK', 'AC_IS_GET']),
+    goGetColor(){
+      this.AC_IS_PICK(false);
+      this.AC_IS_GET(true);
+      this.$router.push({name: 'Select'});
+    },
+    goPickColor(){
+      this.AC_IS_PICK(true);
+      this.AC_IS_GET(false);
+      this.$router.push({name: 'Select'});
     }
   }
 }

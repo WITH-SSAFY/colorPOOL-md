@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 // import Home from '../views/Home.vue'
 import Landing from '../views/Landing.vue'
 import Edit from '../views/Edit.vue'
+import SelectPalettes from '../views/SelectPalettes'
 
 Vue.use(VueRouter)
 
@@ -22,7 +23,11 @@ const routes = [
     name: 'Edit',
     component: Edit
   },
-
+  {
+    path: '/select',
+    name: 'Select',
+    component: SelectPalettes
+  },
   {
     path: '/about',
     name: 'About',
