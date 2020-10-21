@@ -21,9 +21,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .landing.wrap{
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   margin: 0;
   padding: 0;
@@ -31,6 +31,9 @@ export default {
 
 .theme-sidebar.wrap{
   background-color: papayawhip;
+  padding: 0;
+  margin: 0;
+  height: 100vh;
   width: 22.5%;
 }
 
