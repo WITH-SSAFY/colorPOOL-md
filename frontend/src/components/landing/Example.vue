@@ -1,10 +1,13 @@
 <template>
   <div>
     <v-col class="example-area">
+      <!-- 상단에 toggle 버튼-->
       <div class="toggle-button-group">
         <v-btn large text>toggle themes</v-btn>
         <v-btn large text>toggle palette</v-btn>
       </div>
+
+      <!-- exapmle ui와 버튼 -->
       <div class="example-md">
         <div class="example-content"><example-content/></div>
         <div class="button-group">
@@ -13,8 +16,32 @@
           <v-btn block large elevation="0" color="#EE7771" tile height="68px">with Main Keyword</v-btn>
         </div>
       </div>
+
+      <!-- 선택한 theme 팔레트에 표시-->
       <div class="example-palette">
         <h1>Palettes in Markdown</h1>
+        <div class="palette-content">
+          <div class="color-info d-flex align-center">
+            <div class="color" :style="{'background-color': 'rgb('+color1.r+', '+color1.g+', '+color1.b+')'}"></div>
+            <div class="desc">Background</div>
+          </div>
+          <div class="color-info d-flex align-center">
+            <div class="color" :style="{'background-color': 'rgb('+color2.r+', '+color2.g+', '+color2.b+')'}"></div>
+            <div class="desc">Headline</div>
+          </div>
+          <div class="color-info d-flex align-center">
+            <div class="color" :style="{'background-color': 'rgb('+color3.r+', '+color3.g+', '+color3.b+')'}"></div>
+            <div class="desc">Sub headline</div>
+          </div>
+          <div class="color-info d-flex align-center">
+            <div class="color" :style="{'background-color': 'rgb('+color4.r+', '+color4.g+', '+color4.b+')'}"></div>
+            <div class="desc">Emphasis</div>
+          </div>
+          <div class="color-info d-flex align-center">
+            <div class="color" :style="{'background-color': 'rgb('+color5.r+', '+color5.g+', '+color5.b+')'}"></div>
+            <div class="desc">Quote</div>
+          </div>
+        </div>
       </div>
     </v-col>
   </div>
@@ -22,11 +49,41 @@
 
 <script>
 import ExampleContent from './ExampleContent'
+import { mapGetters } from 'vuex'
+const colorStore = 'colorStore'
 
 export default {
   name: 'Example',
   components: {
     ExampleContent,
+  },
+  computed:{
+    ...mapGetters(colorStore, {storeSelectedTheme: 'GE_SELECTED_THEME'})
+  },
+  data(){
+    return {
+      color1: null,
+      color2: null,
+      color3: null,
+      color4: null,
+      color5: null
+    }
+  },
+  created(){
+    this.color1 = this.storeSelectedTheme.color1;
+    this.color2 = this.storeSelectedTheme.color2;
+    this.color3 = this.storeSelectedTheme.color3;
+    this.color4 = this.storeSelectedTheme.color4;
+    this.color5 = this.storeSelectedTheme.color5;
+  },
+  watch: {
+    storeSelectedTheme(val){
+      this.color1 = val.color1;
+      this.color2 = val.color2;
+      this.color3 = val.color3;
+      this.color4 = val.color4;
+      this.color5 = val.color5;
+    }
   }
 }
 </script>
@@ -50,7 +107,7 @@ export default {
   margin: 0;
   padding: 2%;
   height: 62vh;
-  background-color: cadetblue;
+  /* background-color: cadetblue; */
 }
 
 .button-group{
@@ -60,7 +117,7 @@ export default {
   height: 62vh;
   width: 30%;
   height: 100%;
-  background-color: darkslateblue;
+  /* background-color: darkslateblue; */
 }
 
 .button-group h1{
@@ -80,7 +137,7 @@ export default {
   float: left;
   width: 70%;
   height: 100%;
-  background-color: darksalmon;
+  /* background-color: darksalmon; */
 }
 
 .example-palette{
@@ -88,4 +145,32 @@ export default {
   padding-left: 3%;
 }
 
+.palette-content{
+  width: 100%;
+  height: 100%;
+  /* background-color: cornflowerblue; */
+}
+
+.palette-content .color-info{
+  border: 3px solid #707070;
+  float: left;
+  height: 90px;
+  width: 30%;
+  margin-right: 3%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.palette-content .color-info .color{
+  height: 50px;
+  width: 50px;
+  border-radius: 75px;
+  border: 3px solid #707070;
+  margin-left: 8%; 
+  margin-right: 3%;
+}
+
+.palette-content .color-info .desc{
+  font-size: 1.3rem;
+}
 </style>

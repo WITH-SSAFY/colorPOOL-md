@@ -1,5 +1,5 @@
 <template>
-  <div class="theme-list-wrap ">
+  <div class="theme-list-wrap">
     <div class="theme-wrap d-flex align-center justify-center" :style="{'background-color' : 'rgb('+color.color0.r+','+color.color0.g+','+color.color0.b+')'}"
           v-for="(color, index) in themes" :key="index" @click="selectTheme(color)">
       <div class="theme color1" :style="{'background-color' : 'rgb('+color.color1.r+','+color.color1.g+','+color.color1.b+')'}"></div>
@@ -13,9 +13,24 @@
 
 <script>
 import exampleThemes from '../../assets/themeEx'
+import { mapActions } from 'vuex'
+const colorStore = 'colorStore'
+
 export default {
   name: 'ThemeSidebar',
+  data(){
+    return{
+      exampleThemes: exampleThemes,
+      themes: [],
+    }
+  },
   created(){
+    const payload = {
+      selectedTheme : exampleThemes[0]
+    }
+    console.log(payload)
+    this.AC_SELECTED_THEME(payload)
+
     for(var i = 0; i < exampleThemes.length; i++){
       const curTheme = exampleThemes[i];
       const r = (curTheme.color1.r+curTheme.color2.r+curTheme.color3.r+curTheme.color4.r+curTheme.color5.r)/5;
@@ -30,15 +45,13 @@ export default {
       this.themes.push(bg);
     }
   },
-  data(){
-    return{
-      exampleThemes: exampleThemes,
-      themes: [],
-    }
-  },
   methods:{
+    ...mapActions(colorStore, ['AC_SELECTED_THEME']),
     selectTheme(theme){
-      console.log('선택한 theme 정보 : ', theme);
+      const payload = {
+        selectedTheme: theme
+      }
+      this.AC_SELECTED_THEME(payload)
     }
   }
 }
