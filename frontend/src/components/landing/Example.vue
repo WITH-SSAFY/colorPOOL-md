@@ -17,23 +17,23 @@
         <h1>Palettes in Markdown</h1>
         <div class="palette-content">
           <div class="color-info d-flex align-center">
-            <div class="color"></div>
+            <div class="color" :style="{'background-color': 'rgb('+color1.r+', '+color1.g+', '+color1.b+')'}"></div>
             <div class="desc">Background</div>
           </div>
           <div class="color-info d-flex align-center">
-            <div class="color"></div>
+            <div class="color" :style="{'background-color': 'rgb('+color2.r+', '+color2.g+', '+color2.b+')'}"></div>
             <div class="desc">Headline</div>
           </div>
           <div class="color-info d-flex align-center">
-            <div class="color"></div>
+            <div class="color" :style="{'background-color': 'rgb('+color3.r+', '+color3.g+', '+color3.b+')'}"></div>
             <div class="desc">Sub headline</div>
           </div>
           <div class="color-info d-flex align-center">
-            <div class="color"></div>
+            <div class="color" :style="{'background-color': 'rgb('+color4.r+', '+color4.g+', '+color4.b+')'}"></div>
             <div class="desc">Emphasis</div>
           </div>
           <div class="color-info d-flex align-center">
-            <div class="color"></div>
+            <div class="color" :style="{'background-color': 'rgb('+color5.r+', '+color5.g+', '+color5.b+')'}"></div>
             <div class="desc">Quote</div>
           </div>
         </div>
@@ -44,17 +44,42 @@
 
 <script>
 import ExampleContent from './ExampleContent'
+import { mapGetters } from 'vuex'
+const colorStore = 'colorStore'
 
 export default {
   name: 'Example',
   components: {
     ExampleContent,
   },
+  computed:{
+    ...mapGetters(colorStore, {storeSelectedTheme: 'GE_SELECTED_THEME'})
+  },
   data(){
     return {
-      selectedTheme: null
+      color1: null,
+      color2: null,
+      color3: null,
+      color4: null,
+      color5: null
     }
   },
+  created(){
+    this.color1 = this.storeSelectedTheme.color1;
+    this.color2 = this.storeSelectedTheme.color2;
+    this.color3 = this.storeSelectedTheme.color3;
+    this.color4 = this.storeSelectedTheme.color4;
+    this.color5 = this.storeSelectedTheme.color5;
+  },
+  watch: {
+    storeSelectedTheme(val){
+      this.color1 = val.color1;
+      this.color2 = val.color2;
+      this.color3 = val.color3;
+      this.color4 = val.color4;
+      this.color5 = val.color5;
+    }
+  }
 }
 </script>
 
