@@ -1,10 +1,13 @@
 <template>
   <div>
     <v-col class="example-area">
+      <!-- 상단에 toggle 버튼-->
       <div class="toggle-button-group">
         <v-btn large text>toggle themes</v-btn>
         <v-btn large text>toggle palette</v-btn>
       </div>
+
+      <!-- exapmle ui와 버튼 -->
       <div class="example-md">
         <div class="example-content"><example-content/></div>
         <div class="button-group">
@@ -13,6 +16,8 @@
           <v-btn block large elevation="0" color="#EE7771" tile height="68px">with Main Keyword</v-btn>
         </div>
       </div>
+
+      <!-- 선택한 theme 팔레트에 표시-->
       <div class="example-palette">
         <h1>Palettes in Markdown</h1>
         <div class="palette-content">
@@ -102,7 +107,7 @@ export default {
   margin: 0;
   padding: 2%;
   height: 62vh;
-  background-color: cadetblue;
+  /* background-color: cadetblue; */
 }
 
 .button-group{
@@ -112,7 +117,7 @@ export default {
   height: 62vh;
   width: 30%;
   height: 100%;
-  background-color: darkslateblue;
+  /* background-color: darkslateblue; */
 }
 
 .button-group h1{
@@ -132,7 +137,7 @@ export default {
   float: left;
   width: 70%;
   height: 100%;
-  background-color: darksalmon;
+  /* background-color: darksalmon; */
 }
 
 .example-palette{
@@ -143,7 +148,7 @@ export default {
 .palette-content{
   width: 100%;
   height: 100%;
-  background-color: cornflowerblue;
+  /* background-color: cornflowerblue; */
 }
 
 .palette-content .color-info{

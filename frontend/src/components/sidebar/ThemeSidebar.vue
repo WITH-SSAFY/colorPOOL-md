@@ -1,5 +1,5 @@
 <template>
-  <div class="theme-list-wrap ">
+  <div class="theme-list-wrap">
     <div class="theme-wrap d-flex align-center justify-center" :style="{'background-color' : 'rgb('+color.color0.r+','+color.color0.g+','+color.color0.b+')'}"
           v-for="(color, index) in themes" :key="index" @click="selectTheme(color)">
       <div class="theme color1" :style="{'background-color' : 'rgb('+color.color1.r+','+color.color1.g+','+color.color1.b+')'}"></div>
