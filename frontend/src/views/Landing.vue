@@ -30,7 +30,7 @@ export default {
 }
 
 .theme-sidebar.wrap{
-  background-color: papayawhip;
+  /* background-color: papayawhip; */
   padding: 0;
   margin: 0;
   height: 100vh;
@@ -38,7 +38,7 @@ export default {
 }
 
 .example-area.wrap{
-  background-color: rosybrown;
+  /* background-color: rosybrown; */
   width: 77.5%;
 }
 
