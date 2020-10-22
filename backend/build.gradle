@@ -1,0 +1,37 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'java'
+}
+
+group = 'com.cerberos'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    /* jpa */
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+    /* lombok */
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    /* mysql */
+    runtimeOnly 'mysql:mysql-connector-java'
+
+    /* spring doc */
+    compile 'org.springdoc:springdoc-openapi-ui:1.2.32'
+}
+
+test {
+    useJUnitPlatform()
+}
