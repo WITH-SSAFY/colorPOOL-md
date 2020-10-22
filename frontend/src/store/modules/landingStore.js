@@ -1,7 +1,7 @@
 const landingStore = {
   namespaced: true,
   state: {
-    isPick: true,
+    isPick: false,
     isGet: false,
   },
   getters:{
@@ -10,10 +10,11 @@ const landingStore = {
   },
   mutations: {
     MU_IS_PICK: (state, payload) => {
+      console.log('MU_IS_PICK', payload)
       state.isPick = payload
     },
     MU_IS_GET: (state, payload) => {
-      // console.log('MU_IS_GET', payload)
+      console.log('MU_IS_GET', payload)
       state.isGet = payload
    },
   },
