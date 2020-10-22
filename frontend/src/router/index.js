@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Landing from '../views/Landing.vue'
 import Edit from '../views/Edit.vue'
 import SelectPalettes from '../views/SelectPalettes'
+import EditKang from '../views/EditKang.vue'
 
 Vue.use(VueRouter)
 
@@ -36,6 +37,11 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
+  {
+    path: '/edit_kang',
+    name: EditKang,
+    component: EditKang
+  }
 ]
 
 const router = new VueRouter({
