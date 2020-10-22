@@ -1,7 +1,7 @@
 <template>
   <div class="theme-list-wrap">
     <div class="theme-wrap d-flex align-center justify-center" :style="{'background-color' : 'rgb('+color.color0.r+','+color.color0.g+','+color.color0.b+')'}"
-          v-for="(color, index) in themes" :key="index" @click="selectTheme(color)">
+          v-for="(color, index) in themes" :key="index" @click="selectTheme(color)" @mouseover="overTheme(index)" @mouseout="outTheme(index)">
       <div class="theme color1" :style="{'background-color' : 'rgb('+color.color1.r+','+color.color1.g+','+color.color1.b+')'}"></div>
       <div class="theme color2" :style="{'background-color' : 'rgb('+color.color2.r+','+color.color2.g+','+color.color2.b+')'}"></div>
       <div class="theme color3" :style="{'background-color' : 'rgb('+color.color3.r+','+color.color3.g+','+color.color3.b+')'}"></div>
@@ -52,6 +52,18 @@ export default {
         selectedTheme: theme
       }
       this.AC_SELECTED_THEME(payload)
+    },
+
+    //Theme 위에 마우스 올렸을 때, 애니메이션을 위한 함수
+    overTheme(index){
+      var targetTheme = document.getElementsByClassName('theme-wrap');
+      targetTheme[index].classList.add("animation-in");
+      targetTheme[index].classList.remove("animation-out");
+    },
+    outTheme(index){
+      var targetTheme = document.getElementsByClassName('theme-wrap');
+      targetTheme[index].classList.remove("animation-in");
+      targetTheme[index].classList.add("animation-out");
     }
   }
 }
@@ -67,12 +79,25 @@ export default {
   overflow: scroll;
 }
 
+.animation-in{
+  -webkit-filter: blur(0);
+  transform: scale(1.1);
+  transition-duration: 0.3s;
+}
+
+.animation-out{
+  -webkit-filter: blur(0);
+  transform: scale(1);
+  transition-duration: 0.1s;
+}
+
 .theme-wrap{
   margin-left: 15%;
   margin-bottom: 25px;
   width: 70%;
   height: 95px;
   border: 3px solid #707070;
+  cursor:pointer;
 }
 
 .theme {
@@ -80,7 +105,6 @@ export default {
   height: 65px;
   border-radius: 75px;
   border: 2.5px solid #707070;
-  /* float: left; */
 }
 
 .theme.color1{
@@ -107,4 +131,8 @@ export default {
   z-index: 54;
 }
 
+@keyframes scaleBounce{
+	from {transform:scale(1)}
+	to {transform:scale(1.05)}
+}
 </style>

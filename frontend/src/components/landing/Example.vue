@@ -132,6 +132,7 @@ export default {
   height: 62vh;
   width: 30%;
   height: 100%;
+  user-select: none;
   /* background-color: darkslateblue; */
 }
 
@@ -158,6 +159,8 @@ export default {
 .example-palette{
   margin: 0;
   padding-left: 3%;
+  cursor:pointer;
+  user-select: none;
 }
 
 .palette-content{
