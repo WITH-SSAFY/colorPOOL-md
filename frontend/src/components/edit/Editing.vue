@@ -14,10 +14,9 @@
           </div>
         </div>
         <div class="slide-box">
-          <!-- TODO : 슬라이드를 배경과 구분할 수 있는 UI 넣기 -->
           <div class="slide-content">
             <!-- 한국어 입력 동기화 이슈로, v-model 대신 v-bind와 v-on 직접 연결 방식 이용 -->
-            <textarea ref="md" :value="inputText" @input="updateInput" style="width: 100%;"></textarea>
+            <textarea ref="md" :value="inputText" @input="updateInput" class="text-input"></textarea>
             <div id="page"></div>
           </div>
         </div>
@@ -119,12 +118,22 @@ padding-top = 세로 / 가로 * 100
 .editing-area.col .slide-section .slide-content {
   position: absolute;
   background-color: whitesmoke;
+  padding: 0 10%;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  border: solid 2.5px #999;
+  -webkit-box-shadow: 5px 5px 10px -5px rgba(0,0,0,0.75);
+  -moz-box-shadow: 5px 5px 10px -5px rgba(0,0,0,0.75);
+  box-shadow: 5px 5px 10px -5px rgba(0,0,0,0.75);
 }
 
+.editing-area.col .slide-section .slide-content .text-input {
+  position: absolute;
+  width: 80%;
+  bottom: 0;
+}
 
 
 
