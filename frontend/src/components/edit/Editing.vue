@@ -13,20 +13,49 @@
             import md
           </div>
         </div>
-        <div class="slide-box"> 
-          <div class="slide-content">16:9 비율</div> 
+        <div class="slide-box">
+          <!-- TODO : 슬라이드를 배경과 구분할 수 있는 UI 넣기 -->
+          <div class="slide-content">
+            <!-- 한국어 입력 동기화 이슈로, v-model 대신 v-bind와 v-on 직접 연결 방식 이용 -->
+            <textarea ref="md" :value="inputText" @input="updateInput" style="width: 100%;"></textarea>
+            <div id="page"></div>
+          </div>
         </div>
       </div>
-
     </v-col>
   </div>
 </template>
 
 <script>
+// 마크다운 라이브러리 import
+const emoji = require('markdown-it-emoji');
+const md = require('markdown-it')({
+  html: true,
+  linkify: true,
+  typographer: true,
+});
+md.use(emoji);
+
 export default {
   name: 'Editing',
   components: {
     
+  },
+  data() {
+    return {
+      inputText: '',
+    }
+  },
+  methods: {
+    updateInput: function(event) {
+      var updatedText = event.target.value;
+      this.inputText = updatedText
+      document.querySelector("#page").innerHTML = md.render(this.inputText.toString());
+    }
+  },
+  created() {
+    // test
+    // var str = "# h1 Heading \n## h2 Heading Heading \n### h3 Heading \n#### h4 Heading \n##### h5 Heading \n###### h6 Heading \n---"
   }
 }
 </script>
