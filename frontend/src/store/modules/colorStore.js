@@ -2,11 +2,19 @@ const colorStore = {
   namespaced: true,
   state: {
     selectedColor: null,
-    selectedTheme: null
+    selectedTheme: null,
+    demoColor: {
+      backColor: '',
+      headColor: '',
+      subColor: '',
+      emphaColor: '',
+      quoteColor: ''
+    }
   },
   getters:{
     GE_SELECTED_COLOR: state => state.selectedColor,
     GE_SELECTED_THEME: state => state.selectedTheme,
+    GE_DEMO_COLOR: state => state.demoColor,
   },
   mutations: {
     MU_SELECTED_COLOR: (state, payload) => {
@@ -16,6 +24,10 @@ const colorStore = {
       // console.log('MU_SELCTED_THEME', payload)
       state.selectedTheme = payload.selectedTheme
    },
+   MU_DEMO_COLOR: (state, payload) => {
+      console.log('MU_DEMO_COLOR', payload)
+     state.demoColor = payload
+   }
   },
   actions:{
     AC_SELECTED_COLOR: ({commit}, payload) =>  {
@@ -24,6 +36,9 @@ const colorStore = {
     AC_SELECTED_THEME: ({commit}, payload) =>  {
       commit('MU_SELECTED_THEME', payload)
     },
+    AC_DEMO_COLOR: ({commit}, payload) => {
+      commit('MU_DEMO_COLOR', payload)
+    }
   }
 }
 export default colorStore;
