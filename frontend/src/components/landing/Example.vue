@@ -22,23 +22,23 @@
       <div class="example-palette">
         <h1>Palettes in Markdown</h1>
         <div class="palette-content">
-          <div class="color-info d-flex align-center">
+          <div class="color-info d-flex align-center" @mouseover="overColor(0)" @mouseout="outColor(0)">
             <div class="color" :style="{'background-color': 'rgb('+color1.r+', '+color1.g+', '+color1.b+')'}"></div>
             <div class="desc">Background</div>
           </div>
-          <div class="color-info d-flex align-center">
+          <div class="color-info d-flex align-center" @mouseover="overColor(1)" @mouseout="outColor(1)">
             <div class="color" :style="{'background-color': 'rgb('+color2.r+', '+color2.g+', '+color2.b+')'}"></div>
             <div class="desc">Headline</div>
           </div>
-          <div class="color-info d-flex align-center">
+          <div class="color-info d-flex align-center" @mouseover="overColor(2)" @mouseout="outColor(2)">
             <div class="color" :style="{'background-color': 'rgb('+color3.r+', '+color3.g+', '+color3.b+')'}"></div>
             <div class="desc">Sub headline</div>
           </div>
-          <div class="color-info d-flex align-center">
+          <div class="color-info d-flex align-center" @mouseover="overColor(3)" @mouseout="outColor(3)">
             <div class="color" :style="{'background-color': 'rgb('+color4.r+', '+color4.g+', '+color4.b+')'}"></div>
             <div class="desc">Emphasis</div>
           </div>
-          <div class="color-info d-flex align-center">
+          <div class="color-info d-flex align-center" @mouseover="overColor(4)" @mouseout="outColor(4)">
             <div class="color" :style="{'background-color': 'rgb('+color5.r+', '+color5.g+', '+color5.b+')'}"></div>
             <div class="desc">Quote</div>
           </div>
@@ -98,6 +98,18 @@ export default {
       this.AC_IS_PICK(true);
       this.AC_IS_GET(false);
       this.$router.push({name: 'Select'});
+    },
+    
+    //Color 위에 마우스 올렸을 때, 애니메이션을 위한 함수
+    overColor(index){
+      var targetColor = document.querySelectorAll('.color-info .color');
+      targetColor[index].classList.add("animation-in");
+      targetColor[index].classList.remove("animation-out");
+    },
+    outColor(index){
+      var targetColor = document.querySelectorAll('.color-info .color');
+      targetColor[index].classList.remove("animation-in");
+      targetColor[index].classList.add("animation-out");
     }
   }
 }
@@ -122,7 +134,14 @@ export default {
   margin: 0;
   padding: 2%;
   height: 62vh;
+  float: left;
   /* background-color: cadetblue; */
+}
+
+.example-content{
+  padding: 5%;
+  height: 100%; 
+  width: 100%;
 }
 
 .button-group{
@@ -159,11 +178,11 @@ export default {
 .example-palette{
   margin: 0;
   padding-left: 3%;
-  cursor:pointer;
   user-select: none;
 }
 
 .palette-content{
+  cursor:pointer;
   width: 100%;
   height: 100%;
   /* background-color: cornflowerblue; */
@@ -186,6 +205,18 @@ export default {
   border: 3px solid #707070;
   margin-left: 8%; 
   margin-right: 3%;
+}
+
+.animation-in{
+  -webkit-filter: blur(0);
+  transform: scale(1.2);
+  transition-duration: 0.3s;
+}
+
+.animation-out{
+  -webkit-filter: blur(0);
+  transform: scale(1);
+  transition-duration: 0.1s;
 }
 
 .palette-content .color-info .desc{
