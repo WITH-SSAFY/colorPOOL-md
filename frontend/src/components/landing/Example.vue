@@ -95,6 +95,8 @@ export default {
   methods: {
     ...mapActions(landingStore, ['AC_IS_PICK', 'AC_IS_GET']),
     ...mapActions(colorStore, ['AC_DEMO_COLOR']),
+
+    //getColor와 PickColor 간의 이동을 위한 변수 변환
     goGetColor(){
       this.AC_IS_PICK(false);
       this.AC_IS_GET(true);
@@ -117,9 +119,10 @@ export default {
       targetColor[index].classList.remove("animation-in");
       targetColor[index].classList.add("animation-out");
     },
+
+    //적용할 색상을 저장
     applyColor(color, index){
       console.log(color);
-      // var targetColor = document.querySelectorAll('.color-info .color');
       if(index == 0){
         if(this.demoColor.backColor === ''){
           const backColor = 'rgb('+this.color1.r+', '+this.color1.g+', '+this.color1.b+')';
@@ -246,7 +249,7 @@ export default {
 }
 
 .palette-content .color-info{
-  border: 3px solid #707070;
+  border: 4px solid #707070;
   float: left;
   height: 90px;
   width: 30%;
@@ -259,7 +262,7 @@ export default {
   height: 50px;
   width: 50px;
   border-radius: 75px;
-  border: 3px solid #707070;
+  border: 4px solid #707070;
   margin-left: 8%; 
   margin-right: 3%;
 }

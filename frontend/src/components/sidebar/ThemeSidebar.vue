@@ -25,12 +25,22 @@ export default {
     }
   },
   created(){
-    const payload = {
+    //초기 색상 저장
+    const payload1 = {
       selectedTheme : exampleThemes[0]
     }
-    console.log(payload)
-    this.AC_SELECTED_THEME(payload)
+    this.AC_SELECTED_THEME(payload1)
 
+    const payload2 = {
+      backColor: 'rgb('+exampleThemes[0].color1.r+', '+exampleThemes[0].color1.g+', '+exampleThemes[0].color1.b+')',
+      headColor: 'rgb('+exampleThemes[0].color2.r+', '+exampleThemes[0].color2.g+', '+exampleThemes[0].color2.b+')',
+      subColor: 'rgb('+exampleThemes[0].color3.r+', '+exampleThemes[0].color3.g+', '+exampleThemes[0].color3.b+')',
+      emphaColor: 'rgb('+exampleThemes[0].color4.r+', '+exampleThemes[0].color4.g+', '+exampleThemes[0].color4.b+')',
+      quoteColor: 'rgb('+exampleThemes[0].color5.r+', '+exampleThemes[0].color5.g+', '+exampleThemes[0].color5.b+')',
+    }
+    this.AC_DEMO_COLOR(payload2)
+
+    //rgb 중간값 계산
     for(var i = 0; i < exampleThemes.length; i++){
       const curTheme = exampleThemes[i];
       const r = (curTheme.color1.r+curTheme.color2.r+curTheme.color3.r+curTheme.color4.r+curTheme.color5.r)/5;
@@ -46,12 +56,22 @@ export default {
     }
   },
   methods:{
-    ...mapActions(colorStore, ['AC_SELECTED_THEME']),
+    ...mapActions(colorStore, ['AC_SELECTED_THEME', 'AC_DEMO_COLOR']),
+    
+    //배색 하나 선택
     selectTheme(theme){
-      const payload = {
+      var payload = {
         selectedTheme: theme
       }
-      this.AC_SELECTED_THEME(payload)
+      this.AC_SELECTED_THEME(payload);
+      payload = {
+        backColor: 'rgb('+theme.color1.r+', '+theme.color1.g+', '+theme.color1.b+')',
+        headColor: 'rgb('+theme.color2.r+', '+theme.color2.g+', '+theme.color2.b+')',
+        subColor: 'rgb('+theme.color3.r+', '+theme.color3.g+', '+theme.color3.b+')',
+        emphaColor: 'rgb('+theme.color4.r+', '+theme.color4.g+', '+theme.color4.b+')',
+        quoteColor: 'rgb('+theme.color5.r+', '+theme.color5.g+', '+theme.color5.b+')',
+      };
+      this.AC_DEMO_COLOR(payload);
     },
 
     //Theme 위에 마우스 올렸을 때, 애니메이션을 위한 함수
@@ -96,7 +116,7 @@ export default {
   margin-bottom: 25px;
   width: 70%;
   height: 95px;
-  border: 3px solid #707070;
+  border: 4px solid #707070;
   cursor:pointer;
 }
 
@@ -104,7 +124,7 @@ export default {
   width: 65px;
   height: 65px;
   border-radius: 75px;
-  border: 2.5px solid #707070;
+  border: 4px solid #707070;
 }
 
 .theme.color1{

@@ -37,6 +37,10 @@ export default {
   created(){
     this.isGet = this.storeIsGet;
     this.isPick = this.storeIsPick;
+    if(!this.isPick&&!this.isGet){
+      this.isPick = localStorage.getItem('isPick');
+      this.isGet = localStorage.getItem('isGet');
+    }
   },
   methods:{
     ...mapActions(landingStore, ['AC_IS_GET', 'AC_IS_PICK']),
