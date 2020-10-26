@@ -30,18 +30,9 @@ export default {
   },
   data(){
     return {
-      isPick: true,
+      isPick: false,
       isGet: false,
     }
-  },
-  created(){
-    this.isPick = this.storeIsPick;
-    this.isGet = this.storeIsGet;
-  },
-  destroyed(){
-    //이 페이지를 벗어날 때, isGet과 isPick을 초기화해줌
-    this.AC_IS_GET(false);
-    this.AC_IS_PICK(false);
   },
   watch: {
     storeIsPick(val){
@@ -50,6 +41,19 @@ export default {
     storeIsGet(val){
       this.isGet = val;
     }
+  },
+  created(){
+    this.isPick = this.storeIsPick;
+    this.isGet = this.storeIsGet;
+    if(!this.isPick&&!this.isGet){ //새로고침해도 요소가 남아있도록
+      this.isPick = localStorage.getItem('isPick');
+      this.isGet = localStorage.getItem('isGet');
+    }
+  },
+  destroyed(){
+    //이 페이지를 벗어날 때, isGet과 isPick을 초기화해줌
+    this.AC_IS_GET(false);
+    this.AC_IS_PICK(false);
   },
   methods: {
     ...mapActions(landingStore, ['AC_IS_GET', 'AC_IS_PICK'])
