@@ -23,7 +23,7 @@ const colorStore = {
       state.selectedTheme = payload;
     },
     MU_DEMO_COLOR: (state, payload) => {
-      console.log('MU_DEMO_COLOR', payload)
+      // console.log('MU_DEMO_COLOR', payload)
       state.demoColor = payload;
     },
     MU_DEMO_FLAG: (state, payload) => {
@@ -45,28 +45,12 @@ const colorStore = {
     AC_DEMO_COLOR: ({commit, dispatch}, payload) => {
       commit('MU_DEMO_COLOR', payload.theme)
       dispatch('AC_SELECTED_DEMO', payload);
-      // var theme = payload.theme;
-      // for(var i = 0; i < 5; i++){
-      //   if(!payload.flag[i]){
-      //     theme[i] = '';
-      //   }
-      // }
-      // commit('MU_SELECTED_DEMO', theme);
     },
     AC_DEMO_FLAG: ({commit, dispatch}, payload) => {
       commit('MU_DEMO_FLAG', payload.flag);
       dispatch('AC_SELECTED_DEMO', payload);
-      // var theme = payload.theme;
-      // for(var i = 0; i < 5; i++){
-      //   if(!payload.flag[i]){
-      //     theme[i] = '';
-      //   }
-      // }
-      // commit('MU_SELECTED_DEMO', theme);
     },
     AC_SELECTED_DEMO: ({commit}, payload) => {
-      // commit('MU_SELECTED_DEMO', payload)
-      console.log('AC_SELECTED_DEMO', payload);
       commit
       const temp = ['', '', '', '', ''];
       for(var i = 0; i < 5; i++){

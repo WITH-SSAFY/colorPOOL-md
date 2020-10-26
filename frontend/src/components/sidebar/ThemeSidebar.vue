@@ -50,15 +50,6 @@ export default {
     ]
     this.AC_DEMO_COLOR({theme: payload, flag: this.demoFlag});
 
-    // var payload2 = payload;
-    // for(var i = 0; i < 5; i++){
-    //   if(!this.demoFlag[i]){
-    //     payload2[i] = ''; 
-    //   }
-    // }
-    // this.AC_SELECTED_DEMO(payload2);
-    // this.AC_SELECTED_DEMO({theme : payload, flag : this.demoFlag});
-
     //rgb 중간값 계산
     for(var j = 0; j < exampleThemes.length; j++){
       const curTheme = exampleThemes[j];
@@ -91,18 +82,7 @@ export default {
         'rgb('+theme.color4.r+', '+theme.color4.g+', '+theme.color4.b+')',
         'rgb('+theme.color5.r+', '+theme.color5.g+', '+theme.color5.b+')',
       ]
-      // this.AC_DEMO_COLOR(payload);
-      console.log('배색 선택 시 payload : ', payload)
       this.AC_DEMO_COLOR({theme: payload, flag: this.demoFlag}); 
-
-      // var payload2 = payload;
-      // for(var i = 0; i < 5; i++){
-      //   if(!this.demoFlag[i]){
-      //     payload2[i] = ''; 
-      //   }
-      // }
-      // this.AC_SELECTED_DEMO(payload2);
-      // this.AC_SELECTED_DEMO({theme : payload, flag : this.demoFlag});
     },
 
     //Theme 위에 마우스 올렸을 때, 애니메이션을 위한 함수

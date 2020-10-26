@@ -1,7 +1,7 @@
 <template>
   <div class="background" :style="{'background-color': this.selectedDemoColors[0]}">
     <h1 :style="{'color': this.selectedDemoColors[1]}">colorPOOL</h1>
-    <blockquote :style="{'border-color': this.demoColors[4], 'background-color': this.quoteBackColor}">colorPOOL의 빅데이터 풀에서 나의 own 컬러와 배색을 찾고, 나만의 컨텐츠를 만들어보세요</blockquote>
+    <blockquote :style="{'border-color': this.selectedDemoColors[4], 'background-color': this.quoteBackColor}">colorPOOL의 빅데이터 풀에서 나의 own 컬러와 배색을 찾고, 나만의 컨텐츠를 만들어보세요</blockquote>
     <h2 :style="{'color': this.selectedDemoColors[2]}">1. <codeblock :style="{'background-color': this.selectedDemoColors[3]}">coloPOOL</codeblock>은 캐주얼한 컨텐츠로 소비될 수있는 서비스를 지향합니다.</h2>
     <h3>2. <codeblock :style="{'background-color': this.selectedDemoColors[3]}">coloPOOL</codeblock>은 멋진 배색을 찾고, 컬러 플레이를 즐기는 사용자를 대상으로 합니다.</h3>
     <h3>3. <codeblock :style="{'background-color': this.selectedDemoColors[3]}">coloPOOL</codeblock>은 온라인에서 다시 오프라인으로 이어지는 유저 경험을 제공합니다.</h3>
@@ -26,7 +26,6 @@ export default {
   data(){
     return{
       demoColors: [], // themeSidebar에서 선택한 theme
-      demoFlag: [], // 해당 color를 적용할지 안할지
       selectedDemoColors: [], // 선택한 theme에서 적용할 색들만 저장 
       quoteBackColor: ''
     }
@@ -36,7 +35,7 @@ export default {
       this.selectedDemoColors = val;
     }, 
     storeDemoFlag(val){
-      this.selectedDemoColors = val;
+      this.selectedDemoColors = val
     },
     storeDemoColor(val){
       this.selectedDemoColors = val;
@@ -44,38 +43,22 @@ export default {
   },
   created(){
     this.selectedDemoColors = this.storeSelectedDemo;
+    this.addOpacity(this.selectedDemoColors[4]);
   },
   updated() {
     this.selectedDemoColors = this.storeSelectedDemo;
+    this.addOpacity(this.selectedDemoColors[4]);
   },
   methods:{
     addOpacity(color){
-      let temp = color.replace('rgb(', "rgba(");
-      temp = temp.replace(')', ", 0.2)");
-      this.quoteBackColor = temp;
+      if(color !== ''){
+        let temp = color.replace('rgb(', "rgba(");
+        temp = temp.replace(')', ", 0.2)");
+        this.quoteBackColor = temp;
+      } else {
+        this.quoteBackColor = '';
+      }
     },
-
-    //tag 검색해서 거기에 style 추가하는 함수
-    applyColor(temp){
-      temp
-      // alert('applyColor : '+temp);
-      // console.log('applyColor', temp);
-      // if(this.demoColor.backColor!==''){
-      //   const backGround = document.querySelector('.background');
-      //   console.log(backGround);
-      //   backGround.style.backgroundColor=this.demoColor.backColor;
-      // }
-
-      // else if(this.demoColor.headColor!==''){
-
-      // } else if(this.demoColor.subColor!==''){
-        
-      // } else if(this.demoColor.emphaColor!==''){
-        
-      // } else if(this.demoColor.headColor!==''){
-        
-      // }
-    }
   }
 }
 </script>

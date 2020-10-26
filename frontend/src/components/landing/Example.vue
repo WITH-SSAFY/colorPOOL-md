@@ -22,23 +22,23 @@
       <div class="example-palette">
         <div class="palette-content">
         <h1>Palettes in Markdown</h1>
-          <div class="color-info d-flex align-center" @mouseover="overColor(0)" @mouseout="outColor(0)" @click="applyColor(color1, 0)">
+          <div class="color-info d-flex align-center" @mouseover="overColor(0)" @mouseout="outColor(0)" @click="applyColor(0)">
             <div class="color" :style="{'background-color': color1 }"></div>
             <div class="desc">Background</div>
           </div>
-          <div class="color-info d-flex align-center" @mouseover="overColor(1)" @mouseout="outColor(1)" @click="applyColor(color2, 1)">
+          <div class="color-info d-flex align-center" @mouseover="overColor(1)" @mouseout="outColor(1)" @click="applyColor(1)">
             <div class="color" :style="{'background-color': color2 }"></div>
             <div class="desc">Headline</div>
           </div>
-          <div class="color-info d-flex align-center" @mouseover="overColor(2)" @mouseout="outColor(2)" @click="applyColor(color3, 2)">
+          <div class="color-info d-flex align-center" @mouseover="overColor(2)" @mouseout="outColor(2)" @click="applyColor(2)">
             <div class="color" :style="{'background-color': color3 }"></div>
             <div class="desc">Sub headline</div>
           </div>
-          <div class="color-info d-flex align-center" @mouseover="overColor(3)" @mouseout="outColor(3)" @click="applyColor(color4, 3)">
+          <div class="color-info d-flex align-center" @mouseover="overColor(3)" @mouseout="outColor(3)" @click="applyColor(3)">
             <div class="color" :style="{'background-color': color4 }"></div>
             <div class="desc">Emphasis</div>
           </div>
-          <div class="color-info d-flex align-center" @mouseover="overColor(4)" @mouseout="outColor(4)" @click="applyColor(color5, 4)">
+          <div class="color-info d-flex align-center" @mouseover="overColor(4)" @mouseout="outColor(4)" @click="applyColor(4)">
             <div class="color" :style="{'background-color': color5 }"></div>
             <div class="desc">Quote</div>
           </div>
@@ -71,16 +71,13 @@ export default {
       color3: null,
       color4: null,
       color5: null,
-      // selectedTheme: [],
       demoColor: [],
       demoFlag: [], 
       selectedDemo: ['', '', '', '', '']
     }
   },
   created(){
-    // this.selectedTheme = this.storeSelectedTheme;
     this.demoColor = this.storeDemoColor;
-    // console.log('created - demoColor', this.demoColor);
     this.color1 = this.demoColor[0];
     this.color2 = this.demoColor[1];
     this.color3 = this.demoColor[2];
@@ -90,9 +87,6 @@ export default {
     this.demoFlag = this.storeDemoFlag;
   },
   watch: {
-    // storeSelectedTheme(val){
-    //   this.selectedTheme = val;
-    // },
     storeDemoColor(val){
       this.demoColor = val;
       console.log('example.vue - watch - demoColor', this.demoColor);
@@ -103,7 +97,6 @@ export default {
       this.color5 = val[4];
     },
     storeDemoFlag(val){
-      // console.log('example.vue - watch - storeDemoFlag');
       this.demoFlag = val;
     }
   },
@@ -136,76 +129,9 @@ export default {
     },
 
     //적용할 색상을 선택 -> demoFlag 값 변경
-    applyColor(color, index){
-      // console.log('applyColor', color);
-      color
+    applyColor(index){
       this.demoFlag[index] = !this.demoFlag[index];
-      // console.log('바꿀때 demoFlag 배열', this.demoFlag);
-      // this.AC_DEMO_FLAG(this.demoFlag);
-
-      // console.log('demoFlag!!', this.demoFlag);
-      // for(var i = 0; i < 5; i++){
-      //   if(this.demoFlag[i]){
-      //     this.selectedDemo[i] = this.demoColor[i];
-      //   } else {
-      //     this.selectedDemo[i] = '';
-      //   }
-      // } 
-      
-      // var theme = this.demoColor;
-      // for(var i = 0; i < 5; i++){
-      //   if(!this.demoFlag[i]){
-      //     theme[i] = '';
-      //   }
-      // }
       this.AC_SELECTED_DEMO({theme : this.demoColor, flag: this.demoFlag });
-      // this.AC_SELECTED_DEMO({theme: this.demoColor, flag: this.demoFlag});
-      // if(index == 0){
-      //   if(this.demoColor.backColor === ''){
-      //     const backColor = 'rgb('+this.color1.r+', '+this.color1.g+', '+this.color1.b+')';
-      //     this.demoColor.backColor = backColor;
-      //     this.AC_DEMO_COLOR(this.demoColor);
-      //   } else {
-      //     this.demoColor.backColor = '';
-      //     this.AC_DEMO_COLOR(this.demoColor);
-      //   }
-      // } else if(index == 1){
-      //   if(this.demoColor.headColor === ''){
-      //     const headColor = 'rgb('+this.color2.r+', '+this.color2.g+', '+this.color2.b+')';
-      //     this.demoColor.headColor = headColor;
-      //     this.AC_DEMO_COLOR(this.demoColor);
-      //   } else {
-      //     this.demoColor.headColor = '';
-      //     this.AC_DEMO_COLOR(this.demoColor);
-      //   }
-      // } else if(index == 2){
-      //   if(this.demoColor.subColor === ''){
-      //     const subColor = 'rgb('+this.color3.r+', '+this.color3.g+', '+this.color3.b+')';
-      //     this.demoColor.subColor = subColor;
-      //     this.AC_DEMO_COLOR(this.demoColor);
-      //   } else {
-      //     this.demoColor.subColor = '';
-      //     this.AC_DEMO_COLOR(this.demoColor);
-      //   }
-      // } else if(index == 3){
-      //   if(this.demoColor.emphaColor === ''){
-      //     const emphaColor = 'rgb('+this.color4.r+', '+this.color4.g+', '+this.color4.b+')';
-      //     this.demoColor.emphaColor = emphaColor;
-      //     this.AC_DEMO_COLOR(this.demoColor);
-      //   } else {
-      //     this.demoColor.emphaColor = '';
-      //     this.AC_DEMO_COLOR(this.demoColor);
-      //   }
-      // } else if(index == 4){
-      //   if(this.demoColor.quoteColor === ''){
-      //   const quoteColor = 'rgb('+this.color5.r+', '+this.color5.g+', '+this.color5.b+')';
-      //   this.demoColor.quoteColor = quoteColor;
-      //   this.AC_DEMO_COLOR(this.demoColor);
-      //   } else {
-      //     this.demoColor.quoteColor = '';
-      //     this.AC_DEMO_COLOR(this.demoColor);
-      //   }
-      // }
     }
   }
 }
@@ -232,7 +158,6 @@ export default {
   height: 62vh;
   width: 100%;
   float: left;
-  /* background-color: cadetblue; */
 }
 
 .example-content{
@@ -248,7 +173,6 @@ export default {
   width: 30%;
   height: 100%;
   user-select: none;
-  /* background-color: darkslateblue; */
 }
 
 .button-group h1{
@@ -268,12 +192,10 @@ export default {
   float: left;
   width: 70%;
   height: 100%;
-  /* background-color: darksalmon; */
 }
 
 .example-palette{
   margin: 0;
-  /* padding-top: 62vh; */
   padding-left: 3%;
   user-select: none;
 }
@@ -282,7 +204,6 @@ export default {
   cursor:pointer;
   width: 100%;
   height: 100%;
-  /* background-color: cornflowerblue; */
 }
 
 .palette-content .color-info{
