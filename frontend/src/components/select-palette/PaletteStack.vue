@@ -34,14 +34,6 @@ export default {
       this.isPick = val;
     }
   },
-  // mounted(){
-  //   this.isGet = this.storeIsGet;
-  //   this.isPick = this.storeIsPick;
-  //   if(!this.isPick&&!this.isGet){
-  //     this.isPick = localStorage.getItem('isPick');
-  //     this.isGet = localStorage.getItem('isGet');
-  //   }
-  // },
   created(){
     this.isGet = this.storeIsGet;
     this.isPick = this.storeIsPick;
@@ -50,14 +42,14 @@ export default {
       this.isGet = localStorage.getItem('isGet');
     }
   },
-  updated(){
-    this.isGet = this.storeIsGet;
-    this.isPick = this.storeIsPick;
-    if(!this.isPick&&!this.isGet){
-      this.isPick = localStorage.getItem('isPick');
-      this.isGet = localStorage.getItem('isGet');
-    }
-  },
+  // updated(){
+  //   this.isGet = this.storeIsGet;
+  //   this.isPick = this.storeIsPick;
+  //   if(!this.isPick&&!this.isGet){
+  //     this.isPick = localStorage.getItem('isPick');
+  //     this.isGet = localStorage.getItem('isGet');
+  //   }
+  // },
   destroyed(){
     //이 페이지를 벗어날 때, isGet과 isPick을 초기화해줌
     this.AC_IS_GET(false);

@@ -2,8 +2,11 @@
   <div>
     <v-row class="select-palettes wrap">
       <div class="theme-sidebar wrap"><theme-sidebar/></div>
-      <div class="pick-color-area wrap" v-if="isPick"><pick-color/></div>
-      <div class="get-color-area wrap" v-if="isGet"><get-color/></div>
+      <div class="select-color">
+        <div class="progress-bar"><progress-bar/></div>
+        <div class="pick-color-area wrap" v-if="isPick"><pick-color/></div>
+        <div class="get-color-area wrap" v-if="isGet"><get-color/></div>
+      </div>
       <div class="palette-stack-area wrap"><palette-stack/></div>
     </v-row>
   </div>
@@ -14,6 +17,8 @@ import ThemeSidebar from '../components/sidebar/ThemeSidebar'
 import PickColor from '../components/select-palette/PickColor'
 import GetColor from '../components/select-palette/GetColor'
 import paletteStack from '../components/select-palette/PaletteStack'
+import ProgressBar from '../components/header/ProgressBar'
+
 import { mapGetters, mapActions } from 'vuex'
 const landingStore = 'landingStore'
 
@@ -23,7 +28,8 @@ export default {
     ThemeSidebar,
     PickColor,
     GetColor,
-    paletteStack
+    paletteStack,
+    ProgressBar
   },
   computed:{
     ...mapGetters(landingStore, {storeIsPick: 'GE_IS_PICK', storeIsGet: 'GE_IS_GET'})
@@ -77,15 +83,27 @@ export default {
   width: 22.5%;
 }
 
+.select-color{
+  width: 53.5%;
+}
+
+.progress-bar{
+  height: 20vh;
+  width: 100%;
+  background-color: burlywood;
+}
+
 .get-color-area.wrap{
-  height: 100vh;
-  width : 53.5%;
+  height: 80vh;
+  /* width : 53.5%; */
+  width: 100%;
   background-color: honeydew;
 }
 
 .pick-color-area.wrap{
-  height: 100vh;
-  width : 53.5%; 
+  height: 80vh;
+  /* width : 53.5%;  */
+  width: 100%;
   background-color: lightpink;
 }
 
