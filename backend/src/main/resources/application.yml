@@ -19,7 +19,6 @@ springdoc:
     operations-sorter: method
     tags-sorter: alpha
     disable-swagger-default-url: true
-    display-query-params: true
     display-query-params-without-oauth2: true
     path: /docs/swagger-ui.html
   paths-to-match:
