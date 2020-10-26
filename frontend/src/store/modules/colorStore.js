@@ -16,7 +16,8 @@ const colorStore = {
   },
   mutations: {
     MU_SELECTED_COLOR: (state, payload) => {
-      state.selectedColor = payload.selectedColor
+      console.log('MU_SELECTED_COLOR', payload)
+      state.selectedColor = payload
     },
     MU_SELECTED_THEME: (state, payload) => {
       // console.log('MU_SELCTED_THEME', payload)

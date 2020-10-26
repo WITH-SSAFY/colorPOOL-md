@@ -1,31 +1,29 @@
 <template>
   <div>
-    <v-col>
-      <!-- 검색창 -->
-      <v-row rows="3" class="d-flex justify-center">
-        <div class="search-field d-flex align-center">
-          <input class="search-panel" type="text" v-model="keyword" placeholder="keyword">
-          <v-btn @click="getPicularImages()" class="d-flex align-center" tile large color="#a3b396" icon>
-            <v-icon>mdi-magnify</v-icon>
-          </v-btn>
-        </div>
-      </v-row>
+    <!-- 검색창 -->
+    <div class="d-flex justify-center">
+      <div class="search-field d-flex align-center">
+        <input class="search-panel" type="text" v-model="keyword" placeholder="keyword">
+        <v-btn @click="getPicularImages()" class="d-flex align-center" tile large color="#a3b396" icon>
+          <v-icon>mdi-magnify</v-icon>
+        </v-btn>
+      </div>
+    </div>
 
-      <!-- 검색 결과 -->
-      <v-row rows="9" class="d-flex justify-center">
-        <div class="result wrap">
-          <ul v-for="colorList in this.picularImages" :key="colorList.index">
-            <li v-for="color in colorList" :key="color.color">
-              <v-card class="mx-auto elevation-5">
-                <v-img class="white--text align-end" :src="color.img">
-                  <v-overlay :absolute="true" :opacity="0" class="image-layer" v-bind:style="{'background-color': color.color}"></v-overlay>  
-                </v-img>
-              </v-card>
-            </li>
-          </ul>
-        </div>
-      </v-row>
-    </v-col>
+    <!-- 검색 결과 -->
+    <div class="d-flex justify-center" style="overflow: scroll;">
+      <div class="result wrap">
+        <ul v-for="colorList in this.picularImages" :key="colorList.index">
+          <li v-for="color in colorList" :key="color.color" @click="selectColor(color.color)">
+            <v-card class="mx-auto elevation-5">
+              <v-img class="white--text" :src="color.img">
+                <v-overlay :absolute="true" :opacity="0" class="image-layer" v-bind:style="{'background-color': color.color}"></v-overlay>  
+              </v-img>
+            </v-card>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -46,7 +44,7 @@ export default {
     }
   },
   methods:{
-    ...mapActions(colorStore, ['AC_SELECTED_COLORs']),
+    ...mapActions(colorStore, ['AC_SELECTED_COLOR']),
     getPicularImages(){
       this.loading = true;
       console.log('keyword', this.keyword);
@@ -65,6 +63,10 @@ export default {
         this.loading = false;
         console.log(err);
       })
+    },
+    selectColor(color){
+      alert("select "+color+"!!");
+      this.AC_SELECTED_COLOR(color);
     }
   }
 }
@@ -96,10 +98,8 @@ export default {
 .result.wrap{
   width: 90%;
   height: 100%;
-  float: right;
   transition-duration: 300ms;
   display: flex;
-  align-items: center;
 }
 
 .result.wrap ul {
