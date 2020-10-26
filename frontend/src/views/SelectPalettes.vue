@@ -2,8 +2,8 @@
   <div>
     <v-row class="select-palettes wrap">
       <div class="theme-sidebar wrap"><theme-sidebar/></div>
-      <div class="pick-color-area wrap" v-if="isPick"><pick-color/></div>
-      <div class="get-color-area wrap" v-if="isGet"><get-color/></div>
+      <div class="pick-color-area wrap" v-if="isPick">{{isGet}}/{{isPick}}<pick-color/></div>
+      <div class="get-color-area wrap" v-if="isGet">{{isGet}}/{{isPick}}<get-color/></div>
       <div class="palette-stack-area wrap"><palette-stack/></div>
     </v-row>
   </div>
