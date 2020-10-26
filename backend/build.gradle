@@ -29,7 +29,7 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
 
     /* spring doc */
-    compile 'org.springdoc:springdoc-openapi-ui:1.2.32'
+    compile 'org.springdoc:springdoc-openapi-ui:1.4.1'
 }
 
 test {
