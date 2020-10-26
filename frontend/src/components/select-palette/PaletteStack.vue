@@ -1,6 +1,5 @@
 <template>
   <div class="stack-wrap">
-    {{isGet}}/{{isPick}}
     <!-- 상단 페이지 인덱스-->
     <div class="page-index d-flex align-center" type="button" v-if="isPick" @click="goGetColor">with Main keywords</div>
     <div class="page-index d-flex align-center" type="button" v-if="isGet" @click="goPickColor">with Team Color</div>
@@ -35,6 +34,14 @@ export default {
       this.isPick = val;
     }
   },
+  // mounted(){
+  //   this.isGet = this.storeIsGet;
+  //   this.isPick = this.storeIsPick;
+  //   if(!this.isPick&&!this.isGet){
+  //     this.isPick = localStorage.getItem('isPick');
+  //     this.isGet = localStorage.getItem('isGet');
+  //   }
+  // },
   created(){
     this.isGet = this.storeIsGet;
     this.isPick = this.storeIsPick;
@@ -44,6 +51,8 @@ export default {
     }
   },
   updated(){
+    this.isGet = this.storeIsGet;
+    this.isPick = this.storeIsPick;
     if(!this.isPick&&!this.isGet){
       this.isPick = localStorage.getItem('isPick');
       this.isGet = localStorage.getItem('isGet');
