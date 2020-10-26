@@ -5,13 +5,13 @@
       <div class="search-field d-flex align-center">
         <input class="search-panel" type="text" v-model="keyword" placeholder="keyword">
         <v-btn @click="getPicularImages()" class="d-flex align-center" tile large color="#a3b396" icon>
-          <v-icon>mdi-magnify</v-icon>
+          <v-icon x-large>mdi-magnify</v-icon>
         </v-btn>
       </div>
     </div>
 
     <!-- 검색 결과 -->
-    <div class="d-flex justify-center" style="overflow: scroll;">
+    <div class="d-flex justify-center">
       <div class="result wrap">
         <ul v-for="colorList in this.picularImages" :key="colorList.index">
           <li v-for="color in colorList" :key="color.color" @click="selectColor(color.color)">
@@ -75,14 +75,19 @@ export default {
 <style scoped>
 .search-field{
   display: block;
-  height: 50px;
+  height: 60px;
   width: 70%;
   padding-left: 3%;
-  margin: 5% 0%;
+  margin: 4% 0%;
   background-color: white;
   border: solid 3px;
   border-radius: 8px;
   border-color: #a3b396;
+}
+
+.search-field input{
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .search-field .v-btn{
@@ -96,8 +101,9 @@ export default {
 }
 
 .result.wrap{
-  width: 90%;
-  height: 100%;
+  width: 72%;
+  height: 70%;
+  overflow: scroll;
   transition-duration: 300ms;
   display: flex;
 }
