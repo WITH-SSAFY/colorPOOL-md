@@ -13,8 +13,8 @@
         <!-- 다음 단계로 넘어가는 버튼-->
         <div class="button-group">
           <h1>Create Presentation</h1>
-          <v-btn block large elevation="0" color="#EE7771" tile height="68px" @click="goPickColor">With Team Color</v-btn>
-          <v-btn block large elevation="0" color="#EE7771" tile height="68px" @click="goGetColor">with Main Keyword</v-btn>
+          <div type="button" class="button d-flex align-center" @click="goPickColor">with Team Color</div>
+          <div type="button" class="button d-flex align-center" @click="goGetColor">with Main Keyword</div>
         </div>
       </div>
 
@@ -186,6 +186,22 @@ export default {
   margin-bottom: 7%; 
   display: block;
   font-size: 1.5rem;
+}
+
+.button{
+  height: 68px;
+  width: 95%;
+  margin-left: 5%;
+  margin-bottom: 5%;
+  padding-left: 5%;
+  background-color: #ee7771;
+  font-size: 1.5rem;
+  font-weight: bolder;
+  color: #232a46;
+}
+
+.button:hover{
+  background-color: #d16a64;
 }
 
 .example-content{

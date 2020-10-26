@@ -34,6 +34,14 @@ export default {
       this.isPick = val;
     }
   },
+  // mounted(){
+  //   this.isGet = this.storeIsGet;
+  //   this.isPick = this.storeIsPick;
+  //   if(!this.isPick&&!this.isGet){
+  //     this.isPick = localStorage.getItem('isPick');
+  //     this.isGet = localStorage.getItem('isGet');
+  //   }
+  // },
   created(){
     this.isGet = this.storeIsGet;
     this.isPick = this.storeIsPick;
@@ -41,6 +49,19 @@ export default {
       this.isPick = localStorage.getItem('isPick');
       this.isGet = localStorage.getItem('isGet');
     }
+  },
+  updated(){
+    this.isGet = this.storeIsGet;
+    this.isPick = this.storeIsPick;
+    if(!this.isPick&&!this.isGet){
+      this.isPick = localStorage.getItem('isPick');
+      this.isGet = localStorage.getItem('isGet');
+    }
+  },
+  destroyed(){
+    //이 페이지를 벗어날 때, isGet과 isPick을 초기화해줌
+    this.AC_IS_GET(false);
+    this.AC_IS_PICK(false);
   },
   methods:{
     ...mapActions(landingStore, ['AC_IS_GET', 'AC_IS_PICK']),
@@ -71,6 +92,10 @@ export default {
   font-size: 1.5rem;
   font-weight: bolder;
   color: #232a46;
+}
+
+.page-index:hover{
+  background-color: #d16a64;
 }
 
 </style>
