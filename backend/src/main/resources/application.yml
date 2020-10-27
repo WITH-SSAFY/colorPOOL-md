@@ -1,12 +1,3 @@
-server:
-  port: 3000
-
-spring:
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-
 springdoc:
   version : 1.0.1
   api-docs:
