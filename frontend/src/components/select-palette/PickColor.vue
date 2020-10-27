@@ -15,14 +15,7 @@
           <div id="bghextitle">{{currentColor}}</div>
         </div>
         <div id="circle" :style="{'background-color': currentColor}" @click="selectColor()">
-          <!-- <i id="icon" class="material-icons">
-          </i> -->
         </div>
-        <!-- <v-btn dark @click="selectColor()">선택하기</v-btn> -->
-        <!-- <div id="shadcolorvalue">
-          <div id="shadowtitle">Red 500</div>
-          <div id="shadowhextitle">#FFGG78</div>
-        </div> -->
       </div>
     </div>
     <!-- <div class="d-flex justify-center mb-2">
@@ -43,6 +36,7 @@
 import materialColors from '../../assets/colorList'
 import { mapActions } from 'vuex'
 const colorStore = 'colorStore'
+const themeStore = 'themeStore'
 
 export default {
   name: 'PickColor',
@@ -60,15 +54,17 @@ export default {
   },
   methods:{
     ...mapActions(colorStore, ['AC_SELECTED_COLOR']),
+    ...mapActions(themeStore, ['AC_THEME_LIST']),
     selectColor(color){
       // alert('selected Color : '+this.currentColor)
       this.selectedColor = color.hex;
       this.currentColor = color.hex;
       this.currentColorName = color.name;
       this.AC_SELECTED_COLOR(color.hex);
+      this.AC_THEME_LIST(color.id);
     },
     showColor(color, name, vari){
-      console.log(color+", "+name);
+      // console.log(color+", "+name);
       this.currentColor = color;
       this.currentColorName = name;
       this.variations = vari;
@@ -79,32 +75,12 @@ export default {
 </script>
 
 <style scoped>
-html,
-body {
-    padding: 0;
-    margin: 0;
-    background: rgb(31, 31, 31);
-    font-family: 'M PLUS Rounded 1c', sans-serif;
-}
-
-.disablescroll {
-    overflow: hidden;
-}
-
 #container {
     user-select: none;
     display: flex;
     padding-top: 5px;
     justify-content: center;
     height: 100%;
-    /* min-width: 640px; */
-}
-
-.copycontainer i {
-    font-size: 30px;
-    font-size: 30px;
-    width: 100%;
-    text-align: center;
 }
 
 #colorpicker {
@@ -135,35 +111,11 @@ body {
     margin: 100px 40px 40px 40px;
 }
 
-#colorpicker .colorp {
-    width: 16.666%;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#shadcolorvalue {
-    color: #717171;
-    font-size: 18px;
-    text-align: center;
-    margin-top: 50px;
-    position: relative;
-}
-
-#copytoclip {
-    width: 100%;
-    text-align: center;
-    color: rgb(228, 228, 228);
-}
-
-#bgtitle,
-#shadowtitle {
+#bgtitle {
     font-size: 14px;
 }
 
-#bghextitle,
-#shadowhextitle {
+#bghextitle {
     font-size: 18px;
 }
 
@@ -191,33 +143,6 @@ body {
     left: -20px;
 }
 
-#shadcolorvalue::after {
-    content: '';
-    position: absolute;
-    border: 2px solid #717171;
-    height: 121px;
-    width: 47px;
-    border-left: none;
-    top: -92px;
-    right: -14px;
-}
-
-#colorpicker .colorp .lilcircle {
-    height: 30px;
-    width: 30px;
-    transform: scale(.7);
-    background-color: black;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all .5s ease;
-}
-
-#colorpicker .colorp .lilcircle:hover,
-#colorpicker .colorp .lilcircle.active {
-    transform: scale(1);
-    transition: all .5s ease;
-}
-
 #colorpicker #example {
     height: 400px;
     width: 300px;
@@ -242,15 +167,6 @@ body {
     cursor: pointer;
 }
 
-#circle i {
-    font-size: 100px;
-    color: white;
-}
-
-#icon {
-    cursor: pointer;
-}
-
 .variations-wrap{
     height: 80px;
     width: 800px;
@@ -270,6 +186,7 @@ body {
   border: 4px solid rgba(0, 0, 0, 0.5);
 }
 
+/* slider 관련 css */
 .range-value {
     padding: 20px;
     font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
@@ -281,10 +198,8 @@ body {
 .color-slider {
     height: 80px;
     width: 800px;
-    /* max-width: calc(100% - 40px); */
     border-radius: 75px;
     background-image: linear-gradient(to right, #FFEBEE, #B71C1C);
-    /* box-shadow: 0 0 0 2px rgba(0, 0, 0, .1), inset 0 0 0 5px white, inset 0 0 0 6px rgba(0, 0, 0, .2); */
     padding: 0 10px;
     margin: 0;
     -webkit-appearance: none;

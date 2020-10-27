@@ -1,6 +1,7 @@
 <template>
 <div>
-  <div class="theme-list-wrap">
+  <!-- 컬러 선택 전이라서 추천 배색이 아직 없는 경우는 더미 데이터를 보여줌-->
+  <div class="theme-list-wrap" v-if="themeList.length==0">
     <div class="theme-wrap d-flex align-center justify-center" :style="{'background-color' : 'rgb('+color.color0.r+','+color.color0.g+','+color.color0.b+')'}"
           v-for="(color, index) in themes" :key="index" @click="selectTheme(color)" @mouseover="overTheme(index)" @mouseout="outTheme(index)">
       <div class="theme color1" :style="{'background-color' : 'rgb('+color.color1.r+', '+color.color1.g+', '+color.color1.b+')'}"></div>
@@ -10,15 +11,25 @@
       <div class="theme color5" :style="{'background-color' : 'rgb('+color.color5.r+', '+color.color5.g+', '+color.color5.b+')'}"></div>
     </div>
   </div>
-  <div class="theme-list-wrap">
-    <div class="theme-wrap d-flex align-center justify-center" :style="{'background-color' : 'rgb('+color.color0.r+','+color.color0.g+','+color.color0.b+')'}"
-          v-for="(color, index) in themes" :key="index" @click="selectTheme(color)" @mouseover="overTheme(index)" @mouseout="outTheme(index)">
-      <div class="theme color1" :style="{'background-color' : 'rgb('+color.color1.r+', '+color.color1.g+', '+color.color1.b+')'}"></div>
-      <div class="theme color2" :style="{'background-color' : 'rgb('+color.color2.r+', '+color.color2.g+', '+color.color2.b+')'}"></div>
-      <div class="theme color3" :style="{'background-color' : 'rgb('+color.color3.r+', '+color.color3.g+', '+color.color3.b+')'}"></div>
-      <div class="theme color4" :style="{'background-color' : 'rgb('+color.color4.r+', '+color.color4.g+', '+color.color4.b+')'}"></div>
-      <div class="theme color5" :style="{'background-color' : 'rgb('+color.color5.r+', '+color.color5.g+', '+color.color5.b+')'}"></div>
-    </div>
+
+  <!-- 컬러 선택해서 추천 배색을 불러온 경우 -->
+  <div class="theme-list-wrap" v-if="themeList.length > 0">
+      <div class="theme-wrap d-flex align-center justify-center" v-for="(theme, index) in themeList" :key="index"
+            @mouseover="overTheme(index)" @mouseout="outTheme(index)">
+            <!-- 배경색 계산 안한 경우 -->
+        <!-- <div class="theme color1" :style="{'background-color': 'rgb('+theme.red1+','+theme.green1+','+theme.blue1+')'}"></div>
+        <div class="theme color2" :style="{'background-color': 'rgb('+theme.red2+','+theme.green2+','+theme.blue2+')'}"></div>
+        <div class="theme color3" :style="{'background-color': 'rgb('+theme.red3+','+theme.green3+','+theme.blue3+')'}"></div>
+        <div class="theme color4" :style="{'background-color': 'rgb('+theme.red4+','+theme.green4+','+theme.blue4+')'}"></div>
+        <div class="theme color5" :style="{'background-color': 'rgb('+theme.red5+','+theme.green5+','+theme.blue5+')'}"></div> -->
+        
+        <!-- 배경색 계산 한 경우 -->
+        <div class="theme color1" :style="{'background-color': theme.color1 }"></div>
+        <div class="theme color2" :style="{'background-color': theme.color2 }"></div>
+        <div class="theme color3" :style="{'background-color': theme.color3 }"></div>
+        <div class="theme color4" :style="{'background-color': theme.color4 }"></div>
+        <div class="theme color5" :style="{'background-color': theme.color5 }"></div>
+      </div>
   </div>
 </div>
 </template>
@@ -27,22 +38,45 @@
 import exampleThemes from '../../assets/themeEx'
 import { mapActions, mapGetters } from 'vuex'
 const colorStore = 'colorStore'
+const themeStore = 'themeStore'
 
 export default {
   name: 'ThemeSidebar',
   computed: {
-    ...mapGetters(colorStore, { storeDemoFlag : 'GE_DEMO_FLAG'})
+    ...mapGetters(colorStore, { storeDemoFlag : 'GE_DEMO_FLAG'}),
+    ...mapGetters(themeStore, { storeThemeList: 'GE_THEME_LIST'})
   },
   data(){
     return{
       exampleThemes: exampleThemes,
-      themes: [],
+      themes: [], //demo 배색
+      themeList: [], //추천 배색
       demoFlag: [],
     }
   },
   watch: {
     storeDemoFlag(val){
       this.demoFlag = val;
+    },
+    storeThemeList(val){
+      //배경색 계산 필요없는 경우
+      // this.themeList = val;
+
+      //배경색 계산이 필요한 경우
+      for(var j = 0; j < val.length; j++){
+        const curTheme = val[j];
+        const r = (curTheme.red1+curTheme.red2+curTheme.red3+curTheme.red4+curTheme.red5)/5;
+        const g = (curTheme.green1+curTheme.green2+curTheme.green3+curTheme.green4+curTheme.green5)/5;
+        const b = (curTheme.blue1+curTheme.blue2+curTheme.blue3+curTheme.blue4+curTheme.blue5)/5;
+        const bg = { color1: 'rgb('+curTheme.red1+', '+curTheme.green1+', '+curTheme.blue1+')',
+                    color2: 'rgb('+curTheme.red2+', '+curTheme.green2+', '+curTheme.blue2+')',
+                    color3: 'rgb('+curTheme.red3+', '+curTheme.green3+', '+curTheme.blue3+')',
+                    color4: 'rgb('+curTheme.red4+', '+curTheme.green4+', '+curTheme.blue4+')',
+                    color5: 'rgb('+curTheme.red5+', '+curTheme.green5+', '+curTheme.blue5+')',
+                    color0: 'rgb('+r+', '+g+', '+b+')' //배경색
+                    };
+        this.themeList.push(bg);
+      }
     }
   },
   created(){
@@ -76,6 +110,7 @@ export default {
                   color0: { r, g, b}};
       this.themes.push(bg);
     }
+    this.themeList = this.storeThemeList;
   },
   methods:{
     ...mapActions(colorStore, ['AC_SELECTED_THEME', 'AC_DEMO_COLOR', 'AC_DEMO_FLAG', 'AC_SELECTED_DEMO']),
