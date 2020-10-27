@@ -26,6 +26,12 @@
             import md
           </div>
         </div>
+
+        <div class="arrow">
+          <div class="pre-arrow"></div>
+          <div class="next-arrow"></div>
+        </div>
+
         <div class="slide-box">
           <div class="slide-content">
             <!-- 한국어 입력 동기화 이슈로, v-model 대신 v-bind와 v-on 직접 연결 방식 이용 -->
@@ -139,6 +145,29 @@ export default {
   background-color: rgba(238, 238, 238, 0.7);
 }
 
+.editing-area.col .slide-section .arrow {
+  display: flex;
+  margin: 0 3.5%;
+  width: 93%;
+  justify-content: space-between;
+}
+
+.editing-area.col .slide-section .arrow .pre-arrow {
+  width: 0; 
+  height: 0;
+  border-top: 2rem solid transparent;
+  border-bottom: 2rem solid transparent; 
+  border-right: 2rem solid blue; 
+}
+
+.editing-area.col .slide-section .arrow .next-arrow {
+  width: 0; 
+  height: 0; 
+  border-top: 2rem solid transparent;
+  border-bottom: 2rem solid transparent;
+  border-left: 2rem solid blue;
+}
+
 .editing-area.col .tool-box {
   display: flex;
   justify-content: space-around;
@@ -182,7 +211,7 @@ padding-top = 세로 / 가로 * 100
   display: block;
   padding-top: 56.25%;
 }
- 
+
 .editing-area.col .slide-section .slide-content {
   position: absolute;
   background-color: whitesmoke;
