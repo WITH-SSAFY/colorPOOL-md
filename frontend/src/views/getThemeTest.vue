@@ -8,11 +8,11 @@
   </div>
   <div>
     <div style="height: 100px; width: 80%; margin: 20px;" v-for="(theme, index) in themes" :key="index">
-      <div class="color-chip" style="height: 100%; width: 10%; display: inline-block" :style="{'background-color': 'rgb('+theme.red1+','+theme.green1+','+theme.blue1+')'}"></div>
-      <div class="color-chip" style="height: 100%; width: 10%; display: inline-block" :style="{'background-color': 'rgb('+theme.red2+','+theme.green2+','+theme.blue2+')'}"></div>
-      <div class="color-chip" style="height: 100%; width: 10%; display: inline-block" :style="{'background-color': 'rgb('+theme.red3+','+theme.green3+','+theme.blue3+')'}"></div>
-      <div class="color-chip" style="height: 100%; width: 10%; display: inline-block" :style="{'background-color': 'rgb('+theme.red4+','+theme.green4+','+theme.blue4+')'}"></div>
-      <div class="color-chip" style="height: 100%; width: 10%; display: inline-block" :style="{'background-color': 'rgb('+theme.red5+','+theme.green5+','+theme.blue5+')'}"></div>
+      <div style="height: 100%; width: 10%; display: inline-block" :style="{'background-color': 'rgb('+theme.red1+','+theme.green1+','+theme.blue1+')'}"></div>
+      <div style="height: 100%; width: 10%; display: inline-block" :style="{'background-color': 'rgb('+theme.red2+','+theme.green2+','+theme.blue2+')'}"></div>
+      <div style="height: 100%; width: 10%; display: inline-block" :style="{'background-color': 'rgb('+theme.red3+','+theme.green3+','+theme.blue3+')'}"></div>
+      <div style="height: 100%; width: 10%; display: inline-block" :style="{'background-color': 'rgb('+theme.red4+','+theme.green4+','+theme.blue4+')'}"></div>
+      <div style="height: 100%; width: 10%; display: inline-block" :style="{'background-color': 'rgb('+theme.red5+','+theme.green5+','+theme.blue5+')'}"></div>
     </div>
   </div>
 </div>
