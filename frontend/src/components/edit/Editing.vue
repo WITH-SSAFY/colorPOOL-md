@@ -136,14 +136,14 @@ export default {
 }
 
 .editing-area.col .slide-section {
-  background-color: aqua;
+  background-color: rgba(238, 238, 238, 0.7);
 }
 
 .editing-area.col .tool-box {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: blue;
+  background-color: rgba(238, 238, 238, 0.7);
   height: 10vh;
   width: 85%;
   margin-left: 7.5%;
