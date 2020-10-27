@@ -85,16 +85,16 @@ export default {
     appendBold () {
       // this.inputText = '**'.concat(this.inputText, '**')
       // document.querySelector("#page").innerHTML = md.render(this.inputText.toString());
-      this.inputText += '\n** bold example';
-      this.inputText += '\n**';
+      this.inputText += '\n**bold example';
+      this.inputText += '**';
     },
     appendItalic () {
-      this.inputText += '\n_ bold example';
-      this.inputText += '\n_';
+      this.inputText += '\n_bold example';
+      this.inputText += '_';
     },
     appendUnderline () {
-      this.inputText += '\n~~ bold example';
-      this.inputText += '\n~~';
+      this.inputText += '\n~~bold example';
+      this.inputText += '~~';
     },
     appendCode () {
       this.inputText += '\n ``` js\n';
