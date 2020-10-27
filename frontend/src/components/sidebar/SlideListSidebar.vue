@@ -1,7 +1,7 @@
 <template>
   <div class="slide-list-wrap">
     <div class="slide-wrap" v-for="(slide, index) in slides" :key="index">
-      <span class="slide-number">{{ index }}</span>
+      <span class="slide-number" :style="{'color': selectedColor}">{{ index }}</span>
       <div class="slide-window" :style="{'border-color': selectedColor}"></div>
     </div>
   </div>
@@ -57,7 +57,7 @@ export default {
   */
   .slide-list-wrap .slide-wrap .slide-window {
     margin-left: 5%;
-    margin-bottom: 25px;
+    margin-bottom: 2%;
     position: relative;
     width: 90%;
     border: 2px solid;
