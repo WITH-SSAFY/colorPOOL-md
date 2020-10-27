@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 import colorStore from '@/store/modules/colorStore'
+import themeStore from '@/store/modules/themeStore'
 import landingStore from '@/store/modules/landingStore'
 
 export default new Vuex.Store({
@@ -15,6 +16,7 @@ export default new Vuex.Store({
   },
   modules: {
     colorStore,
+    themeStore,
     landingStore
   }
 })
