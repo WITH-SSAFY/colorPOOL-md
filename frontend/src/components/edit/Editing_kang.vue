@@ -18,7 +18,7 @@
           <div class="slide-content">
             <!-- 한국어 입력 동기화 이슈로, v-model 대신 v-bind와 v-on 직접 연결 방식 이용 -->
             <!-- <textarea ref="md" :value="inputText" @input="updateInput" style="width: 100%;"></textarea> -->
-            <div contenteditable id="page" v-on="inputText" @input="inputted2"></div>
+            <div contenteditable id="page" @input="inputted2"></div>
             <!-- <textarea id="page" :value="inputText" @input="inputted"></textarea> -->
           </div>
         </div>
@@ -48,11 +48,19 @@ export default {
       document.querySelector("#page").innerHTML = md.render(this.inputText.toString());
     },
     inputted2(e) {
-      console.log(e)
-      console.log(document.querySelector('#page').innerHTML)
-      if(e.data == '-') {
-        document.querySelector('#page').innerHTML = md.render(document.querySelector('#page').innerHTML)
+      console.log(e);
+      let str = document.querySelector('#page').innerHTML;
+      console.log(str);
+      if(e.inputType == 'insertParagraph')
+        document.querySelector('#page').innerHTML = md.render(document.querySelector('#page').innerHTML);
+      if(e.inputType == 'insertText' && e.data == null) {
+        document.querySelector('#page').innerHTML = md.render(document.querySelector('#page').innerHTML);
       }
+      // console.log(e)
+      // console.log(document.querySelector('#page').innerHTML)
+      // if(e.data == '-') {
+      //   document.querySelector('#page').innerHTML = md.render(document.querySelector('#page').innerHTML)
+      // }
       // console.log(this.inputText);
       // if(e.inputType == 'insertParagraph' || ((e.inputType == 'insertText') && (e.data == null) )) {
       //   document.querySelector('#page').innerHTML = md.render(this.inputText.toString())
