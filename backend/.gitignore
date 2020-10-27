@@ -37,4 +37,4 @@ out/
 .vscode/
 
 ### yml(properties) ##
-application.yml
+application-auth.yml
