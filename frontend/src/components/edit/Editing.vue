@@ -215,8 +215,9 @@ padding-top = 세로 / 가로 * 100
 
 .editing-area.col .slide-section .slide-content {
   position: absolute;
+  overflow: hidden;
   background-color: whitesmoke;
-  padding: 0 10%;
+  padding: 5% 10%;
   top: 0;
   right: 0;
   bottom: 0;
