@@ -1,19 +1,34 @@
 <template>
   <div class="slide-list-wrap">
     <div class="slide-wrap" v-for="(slide, index) in slides" :key="index">
-      <span class="slide-number d-flex align-center justify-center">{{ index }}</span>
-      <div class="slide-window d-flex align-center justify-center"></div>
+      <span class="slide-number">{{ index }}</span>
+      <div class="slide-window" :style="{'border-color': selectedColor}"></div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+const colorStore = 'colorStore'
+
 export default {
   name: 'ThemeSidebar',
+  computed:{
+    ...mapGetters(colorStore, { storeSelectedColor: 'GE_SELECTED_COLOR'})
+  },
   data() {
     return {
       slides: ['str', 'str'],
+      selectedColor: ''
     }
+  },
+  watch: {
+    storeSelectedColor (val) {
+      this.selectedColor = val;
+    }
+  },
+  created() {
+    this.selectedColor = this.storeSelectedColor;
   }
 }
 </script>
@@ -28,13 +43,11 @@ export default {
   }
 
   .slide-list-wrap .slide-wrap {
-    /* display: inline; */
-    text-align: left;
-    margin-left: 0;
+    display: inline;
+    margin-left: 5%;
   }
 
   .slide-list-wrap .slide-wrap .slide-num {
-    display: inline;
     text-align: left;
   }
 
@@ -47,7 +60,7 @@ export default {
     margin-bottom: 25px;
     position: relative;
     width: 90%;
-    border: 2px solid #707070;
+    border: 2px solid;
     background-color: white;
     cursor: pointer;
   }
