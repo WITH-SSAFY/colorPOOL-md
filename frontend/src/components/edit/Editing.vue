@@ -85,16 +85,16 @@ export default {
     appendBold () {
       // this.inputText = '**'.concat(this.inputText, '**')
       // document.querySelector("#page").innerHTML = md.render(this.inputText.toString());
-      this.inputText += '\n** bold example';
-      this.inputText += '\n**';
+      this.inputText += '\n**bold example';
+      this.inputText += '**';
     },
     appendItalic () {
-      this.inputText += '\n_ bold example';
-      this.inputText += '\n_';
+      this.inputText += '\n_bold example';
+      this.inputText += '_';
     },
     appendUnderline () {
-      this.inputText += '\n~~ bold example';
-      this.inputText += '\n~~';
+      this.inputText += '\n~~bold example';
+      this.inputText += '~~';
     },
     appendCode () {
       this.inputText += '\n ``` js\n';
@@ -215,8 +215,9 @@ padding-top = 세로 / 가로 * 100
 
 .editing-area.col .slide-section .slide-content {
   position: absolute;
+  overflow: hidden;
   background-color: whitesmoke;
-  padding: 0 10%;
+  padding: 5% 10%;
   top: 0;
   right: 0;
   bottom: 0;
