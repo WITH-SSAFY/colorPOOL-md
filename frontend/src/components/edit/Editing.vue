@@ -6,26 +6,44 @@
       </div>
       <div class="slide-section">
         <div class="tool-box">
-          <div class="tool-bar">
-            <button @click="appendBold"><v-icon>mdi-format-bold</v-icon></button>
-            <button @click="appendItalic"><v-icon>mdi-format-italic</v-icon></button>
-            <button @click="appendUnderline"><v-icon>mdi-format-underline</v-icon></button>
-            <button @click="appendCode"><v-icon>mdi-code-tags</v-icon></button>
-            <button @click="appendH1"><v-icon>mdi-format-header-1</v-icon></button>
-            <button @click="appendH2"><v-icon>mdi-format-header-2</v-icon></button>
-            <button @click="appendH3"><v-icon>mdi-format-header-3</v-icon></button>
-            <button @click="appendH4"><v-icon>mdi-format-header-4</v-icon></button>
-            <button @click="appendH5"><v-icon>mdi-format-header-5</v-icon></button>
-            <button @click="appendH6"><v-icon>mdi-format-header-6</v-icon></button>
-            <button @click="appendQuote"><v-icon>mdi-format-quote-open</v-icon></button>
-            <button @click="appendUl"><v-icon>mdi-format-list-bulleted</v-icon></button>
-            <button @click="appendOl"><v-icon>mdi-format-list-numbered</v-icon></button>
-            <button @click="appendEmoji"><v-icon>mdi-emoticon-outline</v-icon></button>
-          </div>
-          <div class="import-button">
-            import md
-          </div>
+          <v-card flat>
+            <v-toolbar dense>
+              <button @click="appendBold"><v-icon>mdi-format-bold</v-icon></button>
+              <button @click="appendItalic"><v-icon>mdi-format-italic</v-icon></button>
+              <button @click="appendUnderline"><v-icon>mdi-format-underline</v-icon></button>
+              <button @click="appendCode"><v-icon>mdi-code-tags</v-icon></button>
+              <button @click="appendH1"><v-icon>mdi-format-header-1</v-icon></button>
+              <button @click="appendH2"><v-icon>mdi-format-header-2</v-icon></button>
+              <button @click="appendH3"><v-icon>mdi-format-header-3</v-icon></button>
+              <button @click="appendH4"><v-icon>mdi-format-header-4</v-icon></button>
+              <button @click="appendH5"><v-icon>mdi-format-header-5</v-icon></button>
+              <button @click="appendH6"><v-icon>mdi-format-header-6</v-icon></button>
+              <button @click="appendQuote"><v-icon>mdi-format-quote-open</v-icon></button>
+              <button @click="appendUl"><v-icon>mdi-format-list-bulleted</v-icon></button>
+              <button @click="appendOl"><v-icon>mdi-format-list-numbered</v-icon></button>
+              <button @click="appendEmoji"><v-icon>mdi-emoticon-outline</v-icon></button>
+            </v-toolbar>
+          </v-card>
+          <v-btn
+            color="blue-grey"
+            class="ma-2 white--text"
+            @click="loader = 'loading3'"
+          >
+            Import MD
+            <v-icon
+              right
+              dark
+            >
+              mdi-file-upload
+            </v-icon>
+          </v-btn>
         </div>
+
+        <!-- <div class="arrow">
+          <div class="pre-arrow"></div>
+          <div class="next-arrow"></div>
+        </div> -->
+
         <div class="slide-box">
           <div class="slide-content">
             <!-- 한국어 입력 동기화 이슈로, v-model 대신 v-bind와 v-on 직접 연결 방식 이용 -->
@@ -139,32 +157,44 @@ export default {
   background-color: rgba(238, 238, 238, 0.7);
 }
 
+.editing-area.col .slide-section .arrow {
+  display: flex;
+  margin: 0 3.5%;
+  width: 93%;
+  justify-content: space-between;
+}
+
+.editing-area.col .slide-section .arrow .pre-arrow {
+  width: 0; 
+  height: 0;
+  border-top: 2rem solid transparent;
+  border-bottom: 2rem solid transparent; 
+  border-right: 2rem solid blue; 
+}
+
+.editing-area.col .slide-section .arrow .next-arrow {
+  width: 0; 
+  height: 0; 
+  border-top: 2rem solid transparent;
+  border-bottom: 2rem solid transparent;
+  border-left: 2rem solid blue;
+}
+
 .editing-area.col .tool-box {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  background-color: rgba(238, 238, 238, 0.7);
   height: 10vh;
   width: 85%;
   margin-left: 7.5%;
 }
 
-.editing-area.col .tool-box .tool-bar {
-  display: inline-block;
-  background-color: lightgrey;
-  height: 4vh;
-  width: 50%;
+.editing-area.col .tool-box .v-card {
+  width: 70%;
 }
 
-.editing-area.col .tool-box .tool-bar button {
-  padding: 1% 1%;
-}
-
-.editing-area.col .tool-box .import-button {
-  display: inline-block;
-  background-color: lightgreen;
-  height: 4vh;
-  width: 10%;
+.editing-area.col .tool-box .v-card .v-toolbar button {
+  margin: 0 1%;
 }
 
 /* 
@@ -182,7 +212,7 @@ padding-top = 세로 / 가로 * 100
   display: block;
   padding-top: 56.25%;
 }
- 
+
 .editing-area.col .slide-section .slide-content {
   position: absolute;
   background-color: whitesmoke;
