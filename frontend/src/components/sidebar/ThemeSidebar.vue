@@ -15,8 +15,8 @@
   <!-- 컬러 선택해서 추천 배색을 불러온 경우 -->
   <div class="theme-list-wrap" v-if="themeList.length > 0">
       <div class="theme-wrap d-flex align-center justify-center" v-for="(theme, index) in themeList" :key="index"
-            @mouseover="overTheme(index)" @mouseout="outTheme(index)">
-            <!-- 배경색 계산 안한 경우 -->
+            @click="selectTheme(theme)" @mouseover="overTheme(index)" @mouseout="outTheme(index)">
+        <!-- 배경색 계산 안한 경우 -->
         <!-- <div class="theme color1" :style="{'background-color': 'rgb('+theme.red1+','+theme.green1+','+theme.blue1+')'}"></div>
         <div class="theme color2" :style="{'background-color': 'rgb('+theme.red2+','+theme.green2+','+theme.blue2+')'}"></div>
         <div class="theme color3" :style="{'background-color': 'rgb('+theme.red3+','+theme.green3+','+theme.blue3+')'}"></div>
@@ -59,6 +59,7 @@ export default {
       this.demoFlag = val;
     },
     storeThemeList(val){
+      this.themeList = [];
       //배경색 계산 필요없는 경우
       // this.themeList = val;
 
@@ -77,7 +78,7 @@ export default {
                     };
         this.themeList.push(bg);
       }
-    }
+    },
   },
   created(){
     this.demoFlag = this.storeDemoFlag;
@@ -121,15 +122,22 @@ export default {
         selectedTheme: theme
       }
       this.AC_SELECTED_THEME(payload);
-      
-      payload = [
-        'rgb('+theme.color1.r+', '+theme.color1.g+', '+theme.color1.b+')',
-        'rgb('+theme.color2.r+', '+theme.color2.g+', '+theme.color2.b+')',
-        'rgb('+theme.color3.r+', '+theme.color3.g+', '+theme.color3.b+')',
-        'rgb('+theme.color4.r+', '+theme.color4.g+', '+theme.color4.b+')',
-        'rgb('+theme.color5.r+', '+theme.color5.g+', '+theme.color5.b+')',
-      ]
-      this.AC_DEMO_COLOR({theme: payload, flag: this.demoFlag}); 
+
+      if(this.themeList.length > 0){
+        payload = [
+          theme.color1, theme.color2, theme.color3, theme.color4, theme.color5
+        ]
+        this.AC_DEMO_COLOR({theme: payload, flag: [true, true, true, true, true]}); 
+      } else {
+        payload = [
+          'rgb('+theme.color1.r+', '+theme.color1.g+', '+theme.color1.b+')',
+          'rgb('+theme.color2.r+', '+theme.color2.g+', '+theme.color2.b+')',
+          'rgb('+theme.color3.r+', '+theme.color3.g+', '+theme.color3.b+')',
+          'rgb('+theme.color4.r+', '+theme.color4.g+', '+theme.color4.b+')',
+          'rgb('+theme.color5.r+', '+theme.color5.g+', '+theme.color5.b+')',
+        ]
+        this.AC_DEMO_COLOR({theme: payload, flag: [true, true, true, true, true]}); 
+      }
     },
 
     //Theme 위에 마우스 올렸을 때, 애니메이션을 위한 함수
