@@ -95,16 +95,14 @@ export default {
 
 .get-color-area.wrap{
   height: 80vh;
-  /* width : 53.5%; */
   width: 100%;
-  background-color: honeydew;
+  /* background-color: honeydew; */
 }
 
 .pick-color-area.wrap{
   height: 80vh;
-  /* width : 53.5%;  */
   width: 100%;
-  background-color: lightpink;
+  /* background-color: lightpink; */
 }
 
 .palette-stack-area.wrap{

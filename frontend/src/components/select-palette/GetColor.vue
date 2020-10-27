@@ -3,7 +3,7 @@
     <!-- 검색창 -->
     <div class="d-flex justify-center">
       <div class="search-field d-flex align-center">
-        <input class="search-panel" type="text" v-model="keyword" placeholder="keyword">
+        <input class="search-panel" type="text" v-model="keyword" placeholder="keyword" @keyup.enter="getPicularImages()">
         <v-btn @click="getPicularImages()" class="d-flex align-center" tile large color="#a3b396" icon>
           <v-icon x-large>mdi-magnify</v-icon>
         </v-btn>
