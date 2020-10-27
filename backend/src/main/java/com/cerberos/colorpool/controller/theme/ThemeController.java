@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping(value = "/api")
 public class ThemeController {
     private final ThemeService themeService;
-
+    ///
     @Operation(summary = "배색 조합 추천 받기")
     @GetMapping(value = "/themes/{colorId}")
     public List<Theme> getThemes(@PathVariable Integer colorId) {
