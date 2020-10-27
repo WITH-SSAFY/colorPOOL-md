@@ -29,12 +29,12 @@ export default {
 }
 
 .edit.wrap .slide-sidebar.wrap {
-  background-color: papayawhip;
+  background-color: #eeeeee;
   width: 22.5%;
 }
 
 .edit.wrap .editing-area.wrap {
-  background-color: rosybrown;
+  background-color: rgba(238, 238, 238, 0.7);
   width: 77.5%;
 }
 
