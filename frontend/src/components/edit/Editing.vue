@@ -24,9 +24,19 @@
               <button @click="appendEmoji"><v-icon>mdi-emoticon-outline</v-icon></button>
             </v-toolbar>
           </v-card>
-          <div class="import-button">
-            import md
-          </div>
+          <v-btn
+            color="blue-grey"
+            class="ma-2 white--text"
+            @click="loader = 'loading3'"
+          >
+            Import MD
+            <v-icon
+              right
+              dark
+            >
+              mdi-file-upload
+            </v-icon>
+          </v-btn>
         </div>
 
         <!-- <div class="arrow">
@@ -185,13 +195,6 @@ export default {
 
 .editing-area.col .tool-box .v-card .v-toolbar button {
   margin: 0 1%;
-}
-
-.editing-area.col .tool-box .import-button {
-  display: inline-block;
-  background-color: lightgreen;
-  height: 4vh;
-  width: 10%;
 }
 
 /* 
