@@ -8,7 +8,7 @@
     <div class="palette-wrap">
       <div v-for="(theme, index) in stack" :key="index">
         <div class="palette d-flex align-center justify-center" >
-          <div class="theme-wrap d-flex align-center justify-center" :style="{'background-color' : 'white'}">
+          <div class="theme-wrap d-flex align-center justify-center" :style="{'background-color' : theme[5]}">
             <div class="theme color1" :style="{'background-color' : theme[0]}"></div>
             <div class="theme color2" :style="{'background-color' : theme[1]}"></div>
             <div class="theme color3" :style="{'background-color' : theme[2]}"></div>
@@ -32,13 +32,14 @@ export default {
   name: 'PaletteStack',
   computed: {
     ...mapGetters(landingStore, { storeIsGet: 'GE_IS_GET', storeIsPick: 'GE_IS_PICK'}),
-    ...mapGetters(colorStore, { storeDemoColor: 'GE_DEMO_COLOR'})
+    ...mapGetters(colorStore, { storeDemoColor: 'GE_DEMO_COLOR', storeSelectedColor: 'GE_SELECTED_COLOR'})
   },
   data(){
     return{
       isGet: false,
       isPick: false,
       stack: [],
+      selectedColor: '',
     }
   },
   watch: {
@@ -50,7 +51,9 @@ export default {
     },
     storeDemoColor(val){
       this.stack.unshift(val);
-      console.log('unshift: ', this.stack);
+    },
+    storeSelectedColor(val){
+      this.selectedColor = val;
     }
   },
   created(){
@@ -60,15 +63,8 @@ export default {
       this.isPick = localStorage.getItem('isPick');
       this.isGet = localStorage.getItem('isGet');
     }
+    this.selectedColor = this.storeSelectedColor;
   },
-  // updated(){
-  //   this.isGet = this.storeIsGet;
-  //   this.isPick = this.storeIsPick;
-  //   if(!this.isPick&&!this.isGet){
-  //     this.isPick = localStorage.getItem('isPick');
-  //     this.isGet = localStorage.getItem('isGet');
-  //   }
-  // },
   destroyed(){
     //이 페이지를 벗어날 때, isGet과 isPick을 초기화해줌
     this.AC_IS_GET(false);

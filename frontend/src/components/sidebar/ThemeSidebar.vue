@@ -59,6 +59,7 @@ export default {
       this.demoFlag = val;
     },
     storeThemeList(val){
+      this.themeList = [];
       //배경색 계산 필요없는 경우
       // this.themeList = val;
 
@@ -77,7 +78,7 @@ export default {
                     };
         this.themeList.push(bg);
       }
-    }
+    },
   },
   created(){
     this.demoFlag = this.storeDemoFlag;
@@ -123,7 +124,6 @@ export default {
       this.AC_SELECTED_THEME(payload);
 
       if(this.themeList.length > 0){
-        console.log('theme 왜 undifined??', theme);
         payload = [
           theme.color1, theme.color2, theme.color3, theme.color4, theme.color5
         ]
