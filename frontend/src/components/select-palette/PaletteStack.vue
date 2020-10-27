@@ -32,7 +32,8 @@ export default {
   name: 'PaletteStack',
   computed: {
     ...mapGetters(landingStore, { storeIsGet: 'GE_IS_GET', storeIsPick: 'GE_IS_PICK'}),
-    ...mapGetters(colorStore, { storeDemoColor: 'GE_DEMO_COLOR', storeSelectedColor: 'GE_SELECTED_COLOR'})
+    ...mapGetters(colorStore, { storeDemoColor: 'GE_DEMO_COLOR',
+                                storeSelectedColor: 'GE_SELECTED_COLOR'})
   },
   data(){
     return{

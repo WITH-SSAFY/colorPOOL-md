@@ -136,7 +136,7 @@ export default {
           'rgb('+theme.color4.r+', '+theme.color4.g+', '+theme.color4.b+')',
           'rgb('+theme.color5.r+', '+theme.color5.g+', '+theme.color5.b+')',
         ]
-        this.AC_DEMO_COLOR({theme: payload, flag: [true, true, true, true, true]}); 
+        this.AC_DEMO_COLOR({theme: payload, flag: this.demoFlag}); 
       }
     },
 
