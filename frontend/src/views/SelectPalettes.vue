@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import ThemeSidebar from '../components/sidebar/ThemeSidebar'
+import ThemeSidebar from '../components/sidebar/SelectThemeSidebar'
 import PickColor from '../components/select-palette/PickColor'
 import GetColor from '../components/select-palette/GetColor'
 import paletteStack from '../components/select-palette/PaletteStack'
