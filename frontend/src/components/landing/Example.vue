@@ -51,7 +51,7 @@
 <script>
 import ExampleContent from './ExampleContent'
 import { mapGetters, mapActions } from 'vuex'
-const colorStore = 'colorStore'
+const demoStore = 'demoStore'
 const landingStore = 'landingStore'
 
 export default {
@@ -60,9 +60,7 @@ export default {
     ExampleContent,
   },
   computed:{
-    ...mapGetters(colorStore, {storeSelectedTheme: 'GE_SELECTED_THEME',
-                                storeDemoColor: 'GE_DEMO_COLOR',
-                                storeDemoFlag: 'GE_DEMO_FLAG'}),
+    ...mapGetters(demoStore, {storeSelectedDemoTheme: 'GE_SELECTED_DEMO_THEME', storeFlagDemoTheme: 'GE_FLAG_DEMO_THEME'}),
   },
   data(){
     return {
@@ -71,39 +69,38 @@ export default {
       color3: null,
       color4: null,
       color5: null,
+      selectedDemoTheme: null,
+      flagDemoTheme: [],
       demoColor: [],
       demoFlag: [], 
       selectedDemo: ['', '', '', '', '']
     }
   },
   created(){
-    this.demoColor = this.storeDemoColor;
-    this.color1 = this.demoColor[0];
-    this.color2 = this.demoColor[1];
-    this.color3 = this.demoColor[2];
-    this.color4 = this.demoColor[3];
-    this.color5 = this.demoColor[4];
-
-    this.demoFlag = this.storeDemoFlag;
+    this.selectedDemoTheme = this.storeSelectedDemoTheme;
+    this.flagDemoTheme = this.storeFlagDemoTheme;
+    this.setColors(this.selectedDemoTheme);
   },
   watch: {
-    storeDemoColor(val){
-      this.demoColor = val;
-      console.log('example.vue - watch - demoColor', this.demoColor);
-      this.color1 = val[0];
-      this.color2 = val[1];
-      this.color3 = val[2];
-      this.color4 = val[3];
-      this.color5 = val[4];
+    storeSelectedDemoTheme (val) {
+      console.log(val);
+      this.setColors(val);
     },
-    storeDemoFlag(val){
-      this.demoFlag = val;
-    }
+    storeFlagDemoTheme (val) {
+      console.log(val);
+      this.flagDemoTheme = val;
+    },
   },
   methods: {
     ...mapActions(landingStore, ['AC_IS_PICK', 'AC_IS_GET']),
-    ...mapActions(colorStore, ['AC_DEMO_COLOR', 'AC_DEMO_FLAG', 'AC_SELECTED_DEMO']),
-
+    ...mapActions(demoStore, ['AC_FLAG_DEMO_THEME']),
+    setColors(color) {
+      this.color1 = 'rgb(' + color.red1 + ', ' + color.green1 + ', ' + color.blue1 + ')';
+      this.color2 = 'rgb(' + color.red2 + ', ' + color.green2 + ', ' + color.blue2 + ')';
+      this.color3 = 'rgb(' + color.red3 + ', ' + color.green3 + ', ' + color.blue3 + ')';
+      this.color4 = 'rgb(' + color.red4 + ', ' + color.green4 + ', ' + color.blue4 + ')';
+      this.color5 = 'rgb(' + color.red5 + ', ' + color.green5 + ', ' + color.blue5 + ')';
+    },
     //getColor와 PickColor 간의 이동을 위한 변수 변경
     goGetColor(){
       this.AC_IS_PICK(false);
@@ -130,8 +127,8 @@ export default {
 
     //적용할 색상을 선택 -> demoFlag 값 변경
     applyColor(index){
-      this.demoFlag[index] = !this.demoFlag[index];
-      this.AC_SELECTED_DEMO({theme : this.demoColor, flag: this.demoFlag });
+      this.flagDemoTheme[index] = !this.flagDemoTheme[index];
+      this.AC_FLAG_DEMO_THEME(this.flagDemoTheme);
     }
   }
 }

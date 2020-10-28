@@ -13,7 +13,7 @@
   </div>
 
   <!-- 컬러 선택해서 추천 배색을 불러온 경우 -->
-  <div class="theme-list-wrap" v-if="themeList.length > 0">
+  <div class="theme-list-wrap" v-if="themeList.length != 0">
       <div class="theme-wrap d-flex align-center justify-center" v-for="(theme, index) in themeList" :key="index"
             @click="selectTheme(theme)" @mouseover="overTheme(index)" @mouseout="outTheme(index)">
         <!-- 배경색 계산 안한 경우 -->
@@ -38,12 +38,13 @@
 import exampleThemes from '../../assets/themeEx'
 import { mapActions, mapGetters } from 'vuex'
 const colorStore = 'colorStore'
+const demoStore = 'demoStore'
 const themeStore = 'themeStore'
 
 export default {
   name: 'ThemeSidebar',
-  computed: {
-    ...mapGetters(colorStore, { storeDemoFlag : 'GE_DEMO_FLAG'}),
+  computed: { 
+    ...mapGetters(demoStore, { storeDemoFlag : 'GE_DEMO_FLAG'}),
     ...mapGetters(themeStore, { storeThemeList: 'GE_THEME_LIST'})
   },
   data(){
@@ -64,20 +65,21 @@ export default {
       // this.themeList = val;
 
       //배경색 계산이 필요한 경우
-      for(var j = 0; j < val.length; j++){
-        const curTheme = val[j];
-        const r = (curTheme.red1+curTheme.red2+curTheme.red3+curTheme.red4+curTheme.red5)/5;
-        const g = (curTheme.green1+curTheme.green2+curTheme.green3+curTheme.green4+curTheme.green5)/5;
-        const b = (curTheme.blue1+curTheme.blue2+curTheme.blue3+curTheme.blue4+curTheme.blue5)/5;
-        const bg = { color1: 'rgb('+curTheme.red1+', '+curTheme.green1+', '+curTheme.blue1+')',
-                    color2: 'rgb('+curTheme.red2+', '+curTheme.green2+', '+curTheme.blue2+')',
-                    color3: 'rgb('+curTheme.red3+', '+curTheme.green3+', '+curTheme.blue3+')',
-                    color4: 'rgb('+curTheme.red4+', '+curTheme.green4+', '+curTheme.blue4+')',
-                    color5: 'rgb('+curTheme.red5+', '+curTheme.green5+', '+curTheme.blue5+')',
-                    color0: 'rgb('+r+', '+g+', '+b+')' //배경색
-                    };
+      val.forEach((ele) => {
+        const r = (ele.red1 + ele.red2 + ele.red3 + ele.red4 + ele.red5) / 5;
+        const g = (ele.green1 + ele.green2 + ele.green3 + ele.green4 + ele.green5) / 5;
+        const b = (ele.blue1 + ele.blue2 + ele.blue3 + ele.blue4 + ele.blue5) / 5;
+
+        const bg = {
+          color1: 'rgb(' + ele.red1 + ', ' + ele.green1 + ', ' + ele.blue1 + ')',
+          color2: 'rgb(' + ele.red2 + ', ' + ele.green2 + ', ' + ele.blue2 + ')',
+          color3: 'rgb(' + ele.red3 + ', ' + ele.green3 + ', ' + ele.blue3 + ')',
+          color4: 'rgb(' + ele.red4 + ', ' + ele.green4 + ', ' + ele.blue4 + ')',
+          color5: 'rgb(' + ele.red5 + ', ' + ele.green5 + ', ' + ele.blue5 + ')',
+          color0: 'rgb(' + r + ', ' + g + ', ' + b + ')',
+        }
         this.themeList.push(bg);
-      }
+      })
     },
   },
   created(){
@@ -114,7 +116,8 @@ export default {
     this.themeList = this.storeThemeList;
   },
   methods:{
-    ...mapActions(colorStore, ['AC_SELECTED_THEME', 'AC_DEMO_COLOR', 'AC_DEMO_FLAG', 'AC_SELECTED_DEMO']),
+    ...mapActions(colorStore, ['AC_SELECTED_THEME']),
+    ...mapActions(demoStore, [ 'AC_DEMO_COLOR', 'AC_DEMO_FLAG', 'AC_SELECTED_DEMO']),
     
     //배색 하나 선택
     selectTheme(theme){
