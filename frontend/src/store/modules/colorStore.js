@@ -16,7 +16,7 @@ const colorStore = {
   },
   mutations: {
     MU_SELECTED_COLOR: (state, payload) => {
-      console.log('MU_SELECTED_COLOR', payload)
+      // console.log('MU_SELECTED_COLOR', payload)
       state.selectedColor = payload
     },
     MU_SELECTED_THEME: (state, payload) => {
@@ -28,11 +28,11 @@ const colorStore = {
       state.demoColor = payload;
     },
     MU_DEMO_FLAG: (state, payload) => {
-     console.log('MU_DEMO_FALG', payload)
+    //  console.log('MU_DEMO_FALG', payload)
      state.demoFlag = payload;
     },
     MU_SELECTED_DEMO: (state, payload) => {
-      console.log('MU_SELECTED_DEMO',payload)
+      // console.log('MU_SELECTED_DEMO',payload)
       state.selectedDemo = payload;
     } 
   },
