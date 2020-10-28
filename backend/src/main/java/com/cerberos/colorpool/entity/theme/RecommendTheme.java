@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Entity @Getter @Setter @ToString @NoArgsConstructor @AllArgsConstructor @Builder
+@Entity @Getter @ToString @NoArgsConstructor @AllArgsConstructor @Builder
 @Table(name = "RECOMMEND")
 public class RecommendTheme {
     @Id
