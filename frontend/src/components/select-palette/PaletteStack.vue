@@ -6,30 +6,37 @@
 
     <!-- 팔레트 스택 -->
     <div class="palette-wrap">
-      <div v-for="(theme, index) in stack" :key="index">
-        <div class="palette d-flex align-center justify-center" >
-          <div class="theme-wrap d-flex align-center justify-center" :style="{'background-color' : theme[5]}">
-            <div class="theme color1" :style="{'background-color' : theme[0]}"></div>
-            <div class="theme color2" :style="{'background-color' : theme[1]}"></div>
-            <div class="theme color3" :style="{'background-color' : theme[2]}"></div>
-            <div class="theme color4" :style="{'background-color' : theme[3]}"></div>
-            <div class="theme color5" :style="{'background-color' : theme[4]}"></div>
+      <div v-for="(item, index) in stack" :key="index" @click="showDialog()">
+        <div class="palette d-flex align-center justify-center" :style="{ 'background-color': item.background }">
+          <div class="theme-wrap d-flex align-center justify-center" :style="{'background-color' : 'rgb(255, 255, 255)'}">
+            <div class="theme color1" :style="{'background-color' : item.theme[0]}"></div>
+            <div class="theme color2" :style="{'background-color' : item.theme[1]}"></div>
+            <div class="theme color3" :style="{'background-color' : item.theme[2]}"></div>
+            <div class="theme color4" :style="{'background-color' : item.theme[3]}"></div>
+            <div class="theme color5" :style="{'background-color' : item.theme[4]}"></div>
           </div>
         </div>
         <!-- 말풍선 아래 부분 -->
-        <div class="palette-point"></div>
+        <div class="palette-point" :style="{ 'border-top-color': item.background }"></div>
       </div>
     </div>
+
+    <!-- palette custom 페이지 -->
+    <palette-custom/>
   </div>
 </template>
 
 <script>
+import PaletteCustom from '../select-palette/PaletteCustom'
 import { mapGetters, mapActions } from 'vuex'
 const landingStore = 'landingStore'
 const colorStore = 'colorStore'
 
 export default {
   name: 'PaletteStack',
+  components:{
+    PaletteCustom
+  },
   computed: {
     ...mapGetters(landingStore, { storeIsGet: 'GE_IS_GET', storeIsPick: 'GE_IS_PICK'}),
     ...mapGetters(colorStore, { storeDemoColor: 'GE_DEMO_COLOR',
@@ -41,6 +48,7 @@ export default {
       isPick: false,
       stack: [],
       selectedColor: '',
+      dialog: false,
     }
   },
   watch: {
@@ -51,7 +59,7 @@ export default {
       this.isPick = val;
     },
     storeDemoColor(val){
-      this.stack.unshift(val);
+      this.stack.unshift({theme: val, background: this.selectedColor});
     },
     storeSelectedColor(val){
       this.selectedColor = val;
@@ -72,7 +80,7 @@ export default {
     this.AC_IS_PICK(false);
   },
   methods:{
-    ...mapActions(landingStore, ['AC_IS_GET', 'AC_IS_PICK']),
+    ...mapActions(landingStore, ['AC_IS_GET', 'AC_IS_PICK', 'AC_DIALOG']),
     goGetColor(){
       this.AC_IS_GET(true);
       this.AC_IS_PICK(false);
@@ -80,6 +88,9 @@ export default {
     goPickColor(){
       this.AC_IS_GET(false);
       this.AC_IS_PICK(true);
+    },
+    showDialog(){
+      this.AC_DIALOG(true);
     }
   }
 }
@@ -121,7 +132,8 @@ export default {
   height: 170px;
   margin: 0% 10%;
   border-radius: 10px;
-  background-color: skyblue;
+  cursor: pointer;
+  /* background-color: skyblue; */
 }
 
 .palette-point{
@@ -131,7 +143,7 @@ export default {
   border-left: 15px solid transparent;
   border-right: 15px solid transparent;
   border-top: 10px solid;
-  border-top-color: skyblue;
+  /* border-top-color: skyblue; */
 }
 
 .theme-wrap{
