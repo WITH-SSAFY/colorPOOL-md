@@ -35,7 +35,7 @@
 <script>
 import materialColors from '../../assets/colorList'
 import { mapActions } from 'vuex'
-const colorStore2 = 'colorStore2'
+const colorStore = 'colorStore'
 const themeStore = 'themeStore'
 
 export default {
@@ -57,7 +57,7 @@ export default {
     } 
   },
   methods:{
-    ...mapActions(colorStore2, ['AC_SELECTED_COLOR']),
+    ...mapActions(colorStore, ['AC_SELECTED_COLOR']),
     ...mapActions(themeStore, ['AC_THEME_LIST']),
     selectColor(color){
       // alert('selected Color : '+this.currentColor)

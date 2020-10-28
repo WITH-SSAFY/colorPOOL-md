@@ -22,20 +22,20 @@
     </div>
 
     <!-- palette custom 페이지 -->
-    <palette-custom/>
+    <!-- <palette-custom/> -->
   </div>
 </template>
 
 <script>
-import PaletteCustom from '../select-palette/PaletteCustom'
+// import PaletteCustom from '../select-palette/PaletteCustom'
 import { mapGetters, mapActions } from 'vuex'
 const landingStore = 'landingStore'
-const colorStore2 = 'colorStore2'
+const colorStore = 'colorStore'
 
 export default {
   name: 'PaletteStack',
   components:{
-    PaletteCustom
+    // PaletteCustom
   },
   computed: {
     ...mapGetters(landingStore, { storeIsGet: 'GE_IS_GET', storeIsPick: 'GE_IS_PICK'}),
