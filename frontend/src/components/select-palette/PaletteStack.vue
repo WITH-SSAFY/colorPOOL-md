@@ -30,7 +30,7 @@
 import PaletteCustom from '../select-palette/PaletteCustom'
 import { mapGetters, mapActions } from 'vuex'
 const landingStore = 'landingStore'
-const colorStore = 'colorStore'
+const colorStore2 = 'colorStore2'
 
 export default {
   name: 'PaletteStack',
