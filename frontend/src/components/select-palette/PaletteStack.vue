@@ -20,16 +20,23 @@
         <div class="palette-point" :style="{'border-top-color': theme.background}"></div>
       </div>
     </div>
+
+    <!-- palette custom 페이지 -->
+    <palette-custom/>
   </div>
 </template>
 
 <script>
+import PaletteCustom from '../select-palette/PaletteCustom'
 import { mapGetters, mapActions } from 'vuex'
 const landingStore = 'landingStore'
 const colorStore2 = 'colorStore2'
 
 export default {
   name: 'PaletteStack',
+  components:{
+    PaletteCustom
+  },
   computed: {
     ...mapGetters(landingStore, { storeIsGet: 'GE_IS_GET', storeIsPick: 'GE_IS_PICK'}),
     ...mapGetters(colorStore2, { storeSelectedColor: 'GE_SELECTED_COLOR', storeSelectedTheme: 'GE_SELECTED_THEME'})
@@ -40,6 +47,7 @@ export default {
       isPick: false,
       stack: [],
       selectedColor: '',
+      dialog: false,
     }
   },
   watch: {
@@ -72,7 +80,7 @@ export default {
     this.AC_IS_PICK(false);
   },
   methods:{
-    ...mapActions(landingStore, ['AC_IS_GET', 'AC_IS_PICK']),
+    ...mapActions(landingStore, ['AC_IS_GET', 'AC_IS_PICK', 'AC_DIALOG']),
     goGetColor(){
       this.AC_IS_GET(true);
       this.AC_IS_PICK(false);
@@ -80,6 +88,9 @@ export default {
     goPickColor(){
       this.AC_IS_GET(false);
       this.AC_IS_PICK(true);
+    },
+    showDialog(){
+      this.AC_DIALOG(true);
     }
   }
 }
@@ -121,7 +132,8 @@ export default {
   height: 170px;
   margin: 0% 10%;
   border-radius: 10px;
-  background-color: skyblue;
+  cursor: pointer;
+  /* background-color: skyblue; */
 }
 
 .palette-point{
@@ -131,7 +143,7 @@ export default {
   border-left: 15px solid transparent;
   border-right: 15px solid transparent;
   border-top: 10px solid;
-  border-top-color: skyblue;
+  /* border-top-color: skyblue; */
 }
 
 .theme-wrap{
