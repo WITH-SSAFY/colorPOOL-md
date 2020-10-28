@@ -40,8 +40,12 @@ const themeStore = 'themeStore'
 
 export default {
   name: 'PickColor',
+  created() {
+    this.AC_SELECTED_COLOR('#F44336');
+    this.AC_THEME_LIST(6);
+  },
   computed(){
-
+    
   },
   data(){
     return{

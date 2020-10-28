@@ -1,23 +1,25 @@
 <template>
   <div>
     <v-row class="landing wrap">
-      <div class="theme-sidebar wrap"><theme-sidebar/></div>
+      <div class="theme-sidebar wrap"><demo-theme-sidebar/></div>
       <div class="example-area wrap"><example/></div>
     </v-row>
   </div>
 </template>
 
 <script>
-import ThemeSidebar from '../components/sidebar/ThemeSidebar'
 import Example from '../components/landing/Example'
+import DemoThemeSidebar from '../components/sidebar/DemoThemeSidebar'
 
 export default {
   name: 'Landing',
   components: {
-    ThemeSidebar,
+    DemoThemeSidebar,
     Example
   },
-
+  methods: {
+    
+  }
 }
 </script>
 
