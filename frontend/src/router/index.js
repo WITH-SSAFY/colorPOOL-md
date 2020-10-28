@@ -5,6 +5,8 @@ import Landing from '../views/Landing.vue'
 import Edit from '../views/Edit.vue'
 import SelectPalettes from '../views/SelectPalettes'
 
+import EditKang from '../views/EditKang.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -22,6 +24,11 @@ const routes = [
     path: '/edit',
     name: 'Edit',
     component: Edit
+  },
+  {
+    path: '/edit_kang',
+    name: 'Edit_kang',
+    component: EditKang
   },
   {
     path: '/select',
