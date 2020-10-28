@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: auth
+    active: dev
 
 springdoc:
   version : 1.0.1
