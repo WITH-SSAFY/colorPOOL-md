@@ -7,17 +7,17 @@
     <!-- 팔레트 스택 -->
     <div class="palette-wrap">
       <div v-for="(theme, index) in stack" :key="index">
-        <div class="palette d-flex align-center justify-center" >
-          <div class="theme-wrap d-flex align-center justify-center" :style="{'background-color' : theme[5]}">
-            <div class="theme color1" :style="{'background-color' : theme[0]}"></div>
-            <div class="theme color2" :style="{'background-color' : theme[1]}"></div>
-            <div class="theme color3" :style="{'background-color' : theme[2]}"></div>
-            <div class="theme color4" :style="{'background-color' : theme[3]}"></div>
-            <div class="theme color5" :style="{'background-color' : theme[4]}"></div>
+        <div class="palette d-flex align-center justify-center" :style="{'background-color' : theme.background}">
+          <div class="theme-wrap d-flex align-center justify-center" style="background-color: white;">
+            <div class="theme color1" :style="{'background-color' : theme.color1}"></div>
+            <div class="theme color2" :style="{'background-color' : theme.color2}"></div>
+            <div class="theme color3" :style="{'background-color' : theme.color3}"></div>
+            <div class="theme color4" :style="{'background-color' : theme.color4}"></div>
+            <div class="theme color5" :style="{'background-color' : theme.color5}"></div>
           </div>
         </div>
         <!-- 말풍선 아래 부분 -->
-        <div class="palette-point"></div>
+        <div class="palette-point" :style="{'border-top-color': theme.background}"></div>
       </div>
     </div>
   </div>
@@ -26,14 +26,13 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 const landingStore = 'landingStore'
-const colorStore = 'colorStore'
+const colorStore2 = 'colorStore2'
 
 export default {
   name: 'PaletteStack',
   computed: {
     ...mapGetters(landingStore, { storeIsGet: 'GE_IS_GET', storeIsPick: 'GE_IS_PICK'}),
-    ...mapGetters(colorStore, { storeDemoColor: 'GE_DEMO_COLOR',
-                                storeSelectedColor: 'GE_SELECTED_COLOR'})
+    ...mapGetters(colorStore2, { storeSelectedColor: 'GE_SELECTED_COLOR', storeSelectedTheme: 'GE_SELECTED_THEME'})
   },
   data(){
     return{
@@ -50,8 +49,9 @@ export default {
     storeIsPick(val){
       this.isPick = val;
     },
-    storeDemoColor(val){
-      this.stack.unshift(val);
+    storeSelectedTheme(val){
+      val.selectedTheme.background = this.selectedColor;
+      this.stack.unshift(val.selectedTheme);
     },
     storeSelectedColor(val){
       this.selectedColor = val;

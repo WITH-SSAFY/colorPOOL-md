@@ -8,6 +8,7 @@ import themeStore from '@/store/modules/themeStore'
 import landingStore from '@/store/modules/landingStore'
 import demoStore_prev from '@/store/modules/demoStore_prev'
 import demoStore from '@/store/modules/demoStore'
+import colorStore2 from '@/store/modules/colorStore2'
 
 export default new Vuex.Store({
   state: {
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     themeStore,
     landingStore,
     demoStore_prev,
-    demoStore
+    demoStore,
+    colorStore2
   }
 })
