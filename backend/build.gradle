@@ -30,6 +30,14 @@ dependencies {
 
     /* spring doc */
     compile 'org.springdoc:springdoc-openapi-ui:1.4.3'
+
+    /* pdf */
+    compile 'com.itextpdf:itextpdf:5.5.13'
+    compile 'com.itextpdf:itext-pdfa:5.5.13'
+    compile 'com.itextpdf.tool:xmlworker:5.5.13'
+    //compile 'com.itextpdf:itext-xtra:5.5.13'
+
+
 }
 
 test {
