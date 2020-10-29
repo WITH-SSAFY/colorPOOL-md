@@ -14,7 +14,6 @@ public class PdfController {
 
     @PostMapping("/save")
     public String savePDF(@RequestBody PdfModel pdfModel){
-        System.out.println(pdfModel.getContents());
         return pdfService.savePDF(pdfModel);
     }
 }
