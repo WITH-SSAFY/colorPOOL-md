@@ -174,8 +174,9 @@
 
         </editor-menu-bar>
 
-        <div class="editor">
+        <div id="container" class="editor" style="height: 450px; overflow-y: scroll;">
           <editor-content class="editor__content" :editor="editor"/>
+          <div id="bottomSensor"></div>
         </div>
 
         <!-- <div class="arrow">
@@ -189,6 +190,7 @@
 </template>
 
 <script>
+  import scrollMonitor from 'scrollmonitor'
   require('../../assets/LiveEditStyle.css')
   import {Editor, EditorContent, EditorMenuBar} from 'tiptap'
   import {
@@ -253,12 +255,30 @@
         })
       }
     },
+    mounted() {
+      this.loadUntilSlideIsFull()
+    },
     beforeDestroy() {
       this
         .editor
         .destroy()
     },
-    methods: {}
+    methods: {
+      loadUntilSlideIsFull: function () {
+        const containerElement = document.querySelector("#container")
+        const containerMonitor = scrollMonitor.createContainer(containerElement)
+
+        const bottomSensor = document.querySelector("#bottomSensor")
+        const watcher = containerMonitor.create(bottomSensor)
+
+        watcher.enterViewport(() => {
+          console.log('____BOTTOMENTER____')
+        })  
+        watcher.exitViewport(() => {
+          console.log('____BOTTOMEXIT____')
+        })
+      }
+    },
   }
 </script>
 
@@ -332,7 +352,7 @@
 
 .editing-area.col .slide-section .editor__content {
   position: absolute;
-  overflow: hidden;
+  /* overflow: scroll; */
   background-color: #fff;
   padding: 5% 10%;
   top: 0;
