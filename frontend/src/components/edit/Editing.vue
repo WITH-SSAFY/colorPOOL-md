@@ -5,38 +5,177 @@
         info-section
       </div>
       <div class="slide-section">
-        <div class="tool-box">
-          <v-card flat>
-            <v-toolbar dense>
-              <button @click="appendBold"><v-icon>mdi-format-bold</v-icon></button>
-              <button @click="appendItalic"><v-icon>mdi-format-italic</v-icon></button>
-              <button @click="appendUnderline"><v-icon>mdi-format-underline</v-icon></button>
-              <button @click="appendCode"><v-icon>mdi-code-tags</v-icon></button>
-              <button @click="appendH1"><v-icon>mdi-format-header-1</v-icon></button>
-              <button @click="appendH2"><v-icon>mdi-format-header-2</v-icon></button>
-              <button @click="appendH3"><v-icon>mdi-format-header-3</v-icon></button>
-              <button @click="appendH4"><v-icon>mdi-format-header-4</v-icon></button>
-              <button @click="appendH5"><v-icon>mdi-format-header-5</v-icon></button>
-              <button @click="appendH6"><v-icon>mdi-format-header-6</v-icon></button>
-              <button @click="appendQuote"><v-icon>mdi-format-quote-open</v-icon></button>
-              <button @click="appendUl"><v-icon>mdi-format-list-bulleted</v-icon></button>
-              <button @click="appendOl"><v-icon>mdi-format-list-numbered</v-icon></button>
-              <button @click="appendEmoji"><v-icon>mdi-emoticon-outline</v-icon></button>
-            </v-toolbar>
-          </v-card>
-          <v-btn
-            color="blue-grey"
-            class="ma-2 white--text"
-            @click="loader = 'loading3'"
-          >
-            Import MD
-            <v-icon
-              right
-              dark
+        <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
+          <div class="menu-box">
+            <div class="menubar">
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.bold() }"
+                @click="commands.bold">
+                <v-icon>mdi-format-bold</v-icon>
+              </button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.italic() }"
+                @click="commands.italic">
+                <v-icon>mdi-format-italic</v-icon>
+              </button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.strike() }"
+                @click="commands.strike">
+                <v-icon>mdi-format-strikethrough</v-icon>
+              </button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.underline() }"
+                @click="commands.underline">
+                <v-icon>mdi-format-underline</v-icon>
+              </button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.code() }"
+                @click="commands.code">
+                <v-icon>mdi-code-tags</v-icon>
+              </button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.paragraph() }"
+                @click="commands.paragraph">
+                <v-icon>mdi-format-paragraph</v-icon>
+              </button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.heading({ level: 1 }) }"
+                @click="commands.heading({ level: 1 })">
+                <v-icon>mdi-format-header-1</v-icon>
+              </button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.heading({ level: 2 }) }"
+                @click="commands.heading({ level: 2 })">
+                <v-icon>mdi-format-header-2</v-icon>
+              </button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.heading({ level: 3 }) }"
+                @click="commands.heading({ level: 3 })">
+                <v-icon>mdi-format-header-3</v-icon>
+              </button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.bullet_list() }"
+                @click="commands.bullet_list">
+                <v-icon>mdi-format-list-bulleted</v-icon>
+              </button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.ordered_list() }"
+                @click="commands.ordered_list">
+                <v-icon>mdi-format-list-numbered</v-icon>
+              </button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.blockquote() }"
+                @click="commands.blockquote">
+                <v-icon>mdi-format-quote-open</v-icon>
+              </button>
+
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.code_block() }"
+                @click="commands.code_block">
+                <v-icon>mdi-code-not-equal-variant</v-icon>
+              </button>
+
+              <button class="menubar__button" @click="commands.horizontal_rule">
+                hr
+              </button>
+
+              <button class="menubar__button" @click="commands.undo">
+                <v-icon>mdi-undo-variant</v-icon>
+              </button>
+
+              <button class="menubar__button" @click="commands.redo">
+                <v-icon>mdi-redo-variant</v-icon>
+              </button>
+
+              <button
+                class="menubar__button"
+                @click="commands.createTable({rowsCount: 3, colsCount: 3, withHeaderRow: false })">
+                <v-icon>mdi-table-large</v-icon>
+              </button>
+
+              <br>
+
+              <span v-if="isActive.table()">
+
+                <button class="menubar__button" @click="commands.deleteTable">
+                  <v-icon>mdi-table-large-remove</v-icon>
+                </button>
+
+                <button class="menubar__button" @click="commands.addColumnBefore">
+                  <v-icon>mdi-table-column-plus-before</v-icon>
+                </button>
+
+                <button class="menubar__button" @click="commands.addColumnAfter">
+                  <v-icon>mdi-table-column-plus-after</v-icon>
+                </button>
+
+                <button class="menubar__button" @click="commands.deleteColumn">
+                    <v-icon>mdi-table-column-remove</v-icon>
+                </button>
+
+                <button class="menubar__button" @click="commands.addRowBefore">
+                    <v-icon>mdi-table-row-plus-before</v-icon>
+                </button>
+
+                <button class="menubar__button" @click="commands.addRowAfter">
+                    <v-icon>mdi-table-row-plus-after</v-icon>
+                </button>
+
+                <button class="menubar__button" @click="commands.deleteRow">
+                    <v-icon>mdi-table-row-remove</v-icon>
+                </button>
+
+                <button class="menubar__button" @click="commands.toggleCellMerge">
+                    <v-icon>mdi-table-merge-cells</v-icon>
+                </button>
+
+              </span>
+            </div>
+
+            <v-btn
+              color="blue-grey"
+              class="ma-2 white--text"
+              @click="loader = 'loading3'"
             >
-              mdi-file-upload
-            </v-icon>
-          </v-btn>
+              Import MD
+              <v-icon
+                right
+                dark
+              >
+                mdi-file-upload
+              </v-icon>
+            </v-btn>
+
+          </div>
+
+        </editor-menu-bar>
+
+        <div class="editor">
+          <editor-content class="editor__content" :editor="editor"/>
         </div>
 
         <!-- <div class="arrow">
@@ -44,101 +183,83 @@
           <div class="next-arrow"></div>
         </div> -->
 
-        <div class="slide-box">
-          <div class="slide-content">
-            <!-- 한국어 입력 동기화 이슈로, v-model 대신 v-bind와 v-on 직접 연결 방식 이용 -->
-            <textarea ref="md" :value="inputText" @input="updateInput" class="text-input"></textarea>
-            <div id="page"></div>
-          </div>
-        </div>
       </div>
     </v-col>
   </div>
 </template>
 
 <script>
-// 마크다운 라이브러리 import
-const emoji = require('markdown-it-emoji');
-const md = require('markdown-it')({
-  html: true,
-  linkify: true,
-  typographer: true,
-});
-md.use(emoji);
+  require('../../assets/LiveEditStyle.css')
+  import {Editor, EditorContent, EditorMenuBar} from 'tiptap'
+  import {
+      Blockquote,
+      CodeBlock,
+      HardBreak,
+      Heading,
+      HorizontalRule,
+      OrderedList,
+      BulletList,
+      ListItem,
+      TodoItem,
+      TodoList,
+      Bold,
+      Code,
+      Italic,
+      Link,
+      Strike,
+      Underline,
+      History,
+      Table,
+      TableHeader,
+      TableCell,
+      TableRow
+  } from 'tiptap-extensions'
 
-export default {
-  name: 'Editing',
-  components: {
-    
-  },
-  data() {
-    return {
-      inputText: '',
-    }
-  },
-  methods: {
-    updateInput () {
-      var updatedText = event.target.value;
-      this.inputText = updatedText;
-      document.querySelector("#page").innerHTML = md.render(this.inputText.toString());
+  export default {
+    name: 'Editing',
+    components: {
+      EditorContent,
+      EditorMenuBar
     },
-    appendBold () {
-      // this.inputText = '**'.concat(this.inputText, '**')
-      // document.querySelector("#page").innerHTML = md.render(this.inputText.toString());
-      this.inputText += '\n**bold example';
-      this.inputText += '**';
+    data() {
+      return {
+        editor: new Editor({
+          extensions: [
+            new Blockquote(),
+            new BulletList(),
+            new CodeBlock(),
+            new HardBreak(),
+            new Heading({
+                levels: [1, 2, 3]
+            }),
+            new HorizontalRule(),
+            new ListItem(),
+            new OrderedList(),
+            new TodoItem(),
+            new TodoList(),
+            new Link(),
+            new Bold(),
+            new Code(),
+            new Italic(),
+            new Strike(),
+            new Underline(),
+            new History(),
+            new Table(),
+            new TableHeader(),
+            new TableCell(),
+            new TableRow()
+          ],
+          content: ''
+        })
+      }
     },
-    appendItalic () {
-      this.inputText += '\n_bold example';
-      this.inputText += '_';
+    beforeDestroy() {
+      this
+        .editor
+        .destroy()
     },
-    appendUnderline () {
-      this.inputText += '\n~~bold example';
-      this.inputText += '~~';
-    },
-    appendCode () {
-      this.inputText += '\n ``` js\n';
-      this.inputText += "var foo = function (bar) {\nreturn bar++;\n};\nconsole.log(foo(5));";
-      this.inputText += '\n ```';
-    },
-    appendH1 () {
-      this.inputText += '\n# h1 example'
-    },
-    appendH2 () {
-      this.inputText += '\n## h2 example'
-    },
-    appendH3 () {
-      this.inputText += '\n### h3 example'
-    },
-    appendH4 () {
-      this.inputText += '\n#### h4 example'
-    },
-    appendH5 () {
-      this.inputText += '\n##### h5 example'
-    },
-    appendH6 () {
-      this.inputText += '\n###### h6 example'
-    },
-    appendQuote () {
-      this.inputText += '\n > quote example'
-    },
-    appendUl () {
-      this.inputText += '\n- bullet example'
-    },
-    appendOl () {
-      this.inputText += '\n1. number example'
-    },
-    appendEmoji() {
-      let emojis = [':wink:', ':cry:', ':laughing:', ':yum:'];
-      this.inputText += '\n' + emojis[Math.floor(Math.random() * emojis.length)];
-    }
-  },
-  watch: {
-    inputText() {
-      document.querySelector("#page").innerHTML = md.render(this.inputText.toString());
-    }
+    methods: {}
   }
-}
 </script>
 
 <style scoped>
@@ -180,7 +301,7 @@ export default {
   border-left: 2rem solid blue;
 }
 
-.editing-area.col .tool-box {
+.editing-area.col .slide-section .menu-box {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -189,34 +310,30 @@ export default {
   margin-left: 7.5%;
 }
 
-.editing-area.col .tool-box .v-card {
+.editing-area.col .slide-section .menu-box .menubar {
   width: 70%;
 }
 
-.editing-area.col .tool-box .v-card .v-toolbar button {
-  margin: 0 1%;
+.editing-area.col .slide-section .menu-box .menubar button {
+  margin: 0 0.5%;
 }
 
-/* 
-슬라이드 창 비율 고정 [16:9]
-padding-top = 세로 / 가로 * 100
-*/
-.editing-area.col .slide-section .slide-box {
+.editing-area.col .slide-section .editor {
   position: relative;
   margin-left: 7.5%;
   width: 85%;
 }
  
-.editing-area.col .slide-section .slide-box:before {
+.editing-area.col .slide-section .editor:before {
   content: "";
   display: block;
   padding-top: 56.25%;
 }
 
-.editing-area.col .slide-section .slide-content {
+.editing-area.col .slide-section .editor__content {
   position: absolute;
   overflow: hidden;
-  background-color: whitesmoke;
+  background-color: #fff;
   padding: 5% 10%;
   top: 0;
   right: 0;
@@ -226,18 +343,6 @@ padding-top = 세로 / 가로 * 100
   -webkit-box-shadow: 5px 5px 10px -5px rgba(0,0,0,0.75);
   -moz-box-shadow: 5px 5px 10px -5px rgba(0,0,0,0.75);
   box-shadow: 5px 5px 10px -5px rgba(0,0,0,0.75);
-}
-
-.editing-area.col .slide-section .slide-content .text-input {
-  position: absolute;
-  width: 80%;
-  bottom: 0;
-}
-
-* >>> blockquote {
-  border-left: 8px solid #ccc;
-  margin: 10px;
-  padding: 10px;
 }
 
 </style>
