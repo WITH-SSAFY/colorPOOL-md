@@ -4,6 +4,7 @@
       <div class="info-section">
         info-section
       </div>
+      <component v-for="(template, index) in templates" :key="index" :is="template"></component>
       <div class="slide-section">
         <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
           <div class="menu-box">
@@ -191,6 +192,7 @@
 
 <script>
   import scrollMonitor from 'scrollmonitor'
+  import EditPage from './EditPage'
   require('../../assets/LiveEditStyle.css')
   import {Editor, EditorContent, EditorMenuBar} from 'tiptap'
   import {
@@ -254,10 +256,7 @@
           content: ''
         }),
         height: null,
-        // template : `<div id="container" class="editor" :style="{'height': this.height}">
-        //   <editor-content class="editor__content" :editor="editor"/>
-        //   <div id="bottomSensor"></div>
-        // </div>`
+        templates: [],
       }
     },
     mounted() {
@@ -285,19 +284,14 @@
 
         watcher.enterViewport(() => {
           console.log('____BOTTOMENTER____')
-          // TODO : 새로운 창 만들기
-          const node = document.querySelector('#container')
-          node.insertAdjacentHTML('afterend', `<div id="container" class="editor" style="height: 400px; background-color: skyblue;">
-          <editor-content class="editor__content" :editor="editor"/>
-          <div id="bottomSensor"></div>
-        </div>`);
-        })  
+          this.templates.push(EditPage)
+        })
         watcher.exitViewport(() => {
           console.log('____BOTTOMEXIT____')
           // TODO : 다음 창의 내용이 빈 값일 경우 삭제하기
         })
       }
-    },
+    }
   }
 </script>
 
