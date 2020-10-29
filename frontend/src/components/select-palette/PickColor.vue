@@ -18,40 +18,63 @@
         </div>
       </div>
     </div>
-    <!-- <div class="d-flex justify-center mb-2">
-      <input id="color-range" class="color-slider" type="range" min="0" max="1" step="0.1">
+    <div class="d-flex justify-center mb-2">
+      <input id="color-range" class="color-slider" type="range" min="1" max="10" step="1" @change="themeChange" @input="sliderChange"
+        :style="{'background' : 'linear-gradient(to right, ' + variations[0].hex + ' 10%,' 
+              + variations[1].hex + ' 10% 20%, ' + variations[2].hex + '  20% 30%, ' + variations[3].hex  + '  30% 40%,' 
+              + variations[4].hex + ' 40% 50%, ' + variations[5].hex + '  50% 60%, ' + variations[6].hex  + '  60% 70%,' 
+              + variations[7].hex + ' 70% 80%, ' + variations[8].hex + '  80% 90%, ' + variations[9].hex + '  90%)'}"
+      >
       <div class="range-value" id="range-value"></div>   
-    </div> -->
-    <div class="d-flex justify-center">
+    </div>
+    <!-- <div class="d-flex justify-center">
       <div class="variations-wrap">
         <div class="variations" v-for="(color, index) in variations" :key="index" :style="{'background-color': color.hex}"
               @click="selectColor(color)">
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import materialColors from '../../assets/colorList'
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 const colorStore = 'colorStore'
 const themeStore = 'themeStore'
 
 export default {
   name: 'PickColor',
   created() {
-    this.AC_SELECTED_COLOR('#F44336');
-    this.AC_THEME_LIST(6);
-  },
-  computed(){
+    if(this.storeSelectedColor == null) {
+      this.AC_SELECTED_COLOR('#F44336');
+      this.AC_THEME_LIST(6);
+      this.currentColor = '#F44336';
+      this.currentColorName = 'Red Orange'
+    } else {
+      this.materialColors.forEach((color) => {
+        color.variations.forEach((ele) => {
+          if(ele.hex == this.storeSelectedColor) {
+            this.currentColor = ele.hex;
+            this.currentColorName = ele.name;
+            this.AC_THEME_LIST(ele.id);
+            this.variations = color.variations;
+            return;
+          }
+        })
+      })
+    }
     
+    // console.log(this.storeSelectedColor)
+  },
+  computed : {
+    ...mapGetters(colorStore, { storeSelectedColor: 'GE_SELECTED_COLOR'})
   },
   data(){
     return{
       materialColors: materialColors,
-      currentColor: '#F44336',
-      currentColorName: 'Red Orange',
+      currentColor: null,
+      currentColorName: null,
       variations: materialColors[0].variations,
       selectedColor: '', 
     } 
@@ -72,6 +95,21 @@ export default {
       this.currentColor = color;
       this.currentColorName = name;
       this.variations = vari;
+    },
+    sliderChange () {
+      var slider = document.querySelector('#color-range');
+      console.log(slider.value);
+      // const index = val - 1;
+      // let idx = val - 1;
+      console.log(this.variations[slider.value])
+      this.currentColor = this.variations[slider.value - 1].hex;
+      this.currentColorName = this.variations[slider.value - 1].name;
+      this.AC_SELECTED_COLOR(this.currentColor);
+    },
+    themeChange () {
+      var slider = document.querySelector('#color-range');
+      this.AC_THEME_LIST(this.variations[slider.value - 1].id)
+      document.querySelector('#color-range')
     }
   }
 
@@ -197,13 +235,14 @@ export default {
     font-weight: 600;
     font-size: 20px;
     color: #595959;
+    outline: none;
 }
 
 .color-slider {
     height: 80px;
     width: 800px;
-    border-radius: 75px;
-    background-image: linear-gradient(to right, #FFEBEE, #B71C1C);
+    border-radius: 15px;
+    /* background-image: linear-gradient(to right, #FFEBEE, #B71C1C); */
     padding: 0 10px;
     margin: 0;
     -webkit-appearance: none;
@@ -215,11 +254,9 @@ export default {
     height: 50px;
     width: 50px;
     border-radius: 30px;
+    outline: none;
     box-shadow: inset 0 0 0 5px white, inset 0 0 0 6px rgba(0, 0, 0, .2), 0 0 0 1px rgba(0, 0, 0, .2);
 }
-.color-slider:focus {
-    box-shadow: 0 0 0 2px #0cf, inset 0 0 0 5px white, inset 0 0 0 6px rgba(0, 0, 0, .2);
-}
- 
+
 
 </style>

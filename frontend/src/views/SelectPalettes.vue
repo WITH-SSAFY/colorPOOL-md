@@ -3,7 +3,7 @@
     <v-row class="select-palettes wrap">
       <div class="theme-sidebar wrap"><theme-sidebar/></div>
       <div class="select-color">
-        <div class="progress-bar"><progress-bar/></div>
+        <div class="progress-bar"><progress-bar v-bind:page="1" /></div>
         <div class="pick-color-area wrap" v-if="isPick"><pick-color/></div>
         <div class="get-color-area wrap" v-if="isGet"><get-color/></div>
       </div>

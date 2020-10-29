@@ -186,6 +186,15 @@ require('../../assets/LiveEditStyle.css')
             EditorContent,
             EditorMenuBar
         },
+        // beforeCreate() {
+        //   var res = prompt("두유노 비밀번호?");
+        //   if(res !== 'beaverbae123') {
+        //     alert('아 나가요 ㅡㅡ');
+        //     this.$router.push({name: 'Landing'});
+        //   } else {
+        //     alert('흠.. 사용하도록..')
+        //   }
+        // },
         data() {
             return {
                 editor: new Editor({
@@ -223,7 +232,7 @@ require('../../assets/LiveEditStyle.css')
                 .editor
                 .destroy()
         },
-        methods: {}
+        methods: {},
     }
 </script>
 <style scoped>

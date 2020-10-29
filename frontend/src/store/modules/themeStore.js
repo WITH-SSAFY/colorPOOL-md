@@ -1,5 +1,6 @@
 import SERVER from '../../api/restApi'
 import axios from '../../api/axiosCommon'
+import exampleThemes from '../../assets/themeEx'
 
 const themeStore = {
   namespaced: true,
@@ -28,6 +29,9 @@ const themeStore = {
       .catch((err) => {
         console.log(err.response);
       })
+    },
+    AC_THEME_LIST_DUMMY: ({commit}) => {
+      commit('MU_THEME_LIST', exampleThemes)
     }
   }
 }
