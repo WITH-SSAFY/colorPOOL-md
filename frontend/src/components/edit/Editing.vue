@@ -5,7 +5,7 @@
         info-section
       </div>
       <component v-for="(template, index) in templates" :key="index" :is="template"></component>
-      <div class="slide-section">
+      <!-- <div class="slide-section">
         <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
           <div class="menu-box">
             <div class="menubar">
@@ -180,12 +180,11 @@
           <div id="bottomSensor"></div>
         </div>
 
-        <!-- <div class="arrow">
-          <div class="pre-arrow"></div>
-          <div class="next-arrow"></div>
-        </div> -->
-
-      </div>
+      </div> -->
+      <!-- <div class="arrow">
+        <div class="pre-arrow"></div>
+        <div class="next-arrow"></div>
+      </div> -->
     </v-col>
   </div>
 </template>
@@ -258,6 +257,9 @@
         height: null,
         templates: [],
       }
+    },
+    created() {
+      this.templates.push(EditPage)
     },
     mounted() {
       window.addEventListener('resize', this.handleResize)

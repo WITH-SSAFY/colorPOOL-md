@@ -277,16 +277,9 @@
 
         watcher.enterViewport(() => {
           console.log('____BOTTOMENTER____')
-          // TODO : 새로운 창 만들기
-          const node = document.querySelector('#container')
-          node.insertAdjacentHTML('afterend', `<div id="container" class="editor" style="height: 400px; background-color: skyblue;">
-          <editor-content class="editor__content" :editor="editor"/>
-          <div id="bottomSensor"></div>
-        </div>`);
         })  
         watcher.exitViewport(() => {
           console.log('____BOTTOMEXIT____')
-          // TODO : 다음 창의 내용이 빈 값일 경우 삭제하기
         })
       }
     },
