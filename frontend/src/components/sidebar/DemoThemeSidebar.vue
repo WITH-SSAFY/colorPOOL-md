@@ -77,13 +77,13 @@ export default {
 }
 
 .animation-in{
-  -webkit-filter: blur(0);
+  /* -webkit-filter: blur(0); */
   transform: scale(1.1);
   transition-duration: 0.3s;
 }
 
 .animation-out{
-  -webkit-filter: blur(0);
+  /* -webkit-filter: blur(0); */
   transform: scale(1);
   transition-duration: 0.1s;
 }
