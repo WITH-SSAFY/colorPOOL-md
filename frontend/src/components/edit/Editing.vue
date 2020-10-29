@@ -4,7 +4,8 @@
       <div class="info-section">
         info-section
       </div>
-      <div class="slide-section">
+      <component v-for="(template, index) in templates" :key="index" :is="template"></component>
+      <!-- <div class="slide-section">
         <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
           <div class="menu-box">
             <div class="menubar">
@@ -179,18 +180,18 @@
           <div id="bottomSensor"></div>
         </div>
 
-        <!-- <div class="arrow">
-          <div class="pre-arrow"></div>
-          <div class="next-arrow"></div>
-        </div> -->
-
-      </div>
+      </div> -->
+      <!-- <div class="arrow">
+        <div class="pre-arrow"></div>
+        <div class="next-arrow"></div>
+      </div> -->
     </v-col>
   </div>
 </template>
 
 <script>
   import scrollMonitor from 'scrollmonitor'
+  import EditPage from './EditPage'
   require('../../assets/LiveEditStyle.css')
   import {Editor, EditorContent, EditorMenuBar} from 'tiptap'
   import {
@@ -225,7 +226,6 @@
     },
     data() {
       return {
-        height: null,
         editor: new Editor({
           extensions: [
             new Blockquote(),
@@ -253,8 +253,13 @@
             new TableRow()
           ],
           content: ''
-        })
+        }),
+        height: null,
+        templates: [],
       }
+    },
+    created() {
+      this.templates.push(EditPage)
     },
     mounted() {
       window.addEventListener('resize', this.handleResize)
@@ -281,12 +286,14 @@
 
         watcher.enterViewport(() => {
           console.log('____BOTTOMENTER____')
-        })  
+          this.templates.push(EditPage)
+        })
         watcher.exitViewport(() => {
           console.log('____BOTTOMEXIT____')
+          // TODO : 다음 창의 내용이 빈 값일 경우 삭제하기
         })
       }
-    },
+    }
   }
 </script>
 
