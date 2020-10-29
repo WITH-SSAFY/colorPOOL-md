@@ -174,7 +174,7 @@
 
         </editor-menu-bar>
 
-        <div id="container" class="editor" style="height: 450px; overflow-y: scroll;">
+        <div id="container" class="editor" :style="{'height': this.height}">
           <editor-content class="editor__content" :editor="editor"/>
           <div id="bottomSensor"></div>
         </div>
@@ -194,27 +194,27 @@
   require('../../assets/LiveEditStyle.css')
   import {Editor, EditorContent, EditorMenuBar} from 'tiptap'
   import {
-      Blockquote,
-      CodeBlock,
-      HardBreak,
-      Heading,
-      HorizontalRule,
-      OrderedList,
-      BulletList,
-      ListItem,
-      TodoItem,
-      TodoList,
-      Bold,
-      Code,
-      Italic,
-      Link,
-      Strike,
-      Underline,
-      History,
-      Table,
-      TableHeader,
-      TableCell,
-      TableRow
+    Blockquote,
+    CodeBlock,
+    HardBreak,
+    Heading,
+    HorizontalRule,
+    OrderedList,
+    BulletList,
+    ListItem,
+    TodoItem,
+    TodoList,
+    Bold,
+    Code,
+    Italic,
+    Link,
+    Strike,
+    Underline,
+    History,
+    Table,
+    TableHeader,
+    TableCell,
+    TableRow
   } from 'tiptap-extensions'
 
   export default {
@@ -225,6 +225,7 @@
     },
     data() {
       return {
+        height: null,
         editor: new Editor({
           extensions: [
             new Blockquote(),
@@ -256,15 +257,22 @@
       }
     },
     mounted() {
+      window.addEventListener('resize', this.handleResize)
       this.loadUntilSlideIsFull()
     },
     beforeDestroy() {
       this
         .editor
         .destroy()
+      window.removeEventListener('resize', this.handleResize)
     },
     methods: {
+      handleResize() {
+        this.height = document.querySelector("#container").clientHeight
+      },
       loadUntilSlideIsFull: function () {
+        document.querySelector("#container").style.height = this.height;
+
         const containerElement = document.querySelector("#container")
         const containerMonitor = scrollMonitor.createContainer(containerElement)
 
@@ -342,6 +350,7 @@
   position: relative;
   margin-left: 7.5%;
   width: 85%;
+  overflow-y: scroll;
 }
  
 .editing-area.col .slide-section .editor:before {
