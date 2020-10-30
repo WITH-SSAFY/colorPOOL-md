@@ -6,7 +6,7 @@
 
     <!-- 팔레트 스택 -->
     <div class="palette-wrap">
-      <div v-for="(theme, index) in stack" :key="index">
+      <div v-for="(theme, index) in stack" :key="index" @click="showDialog(theme)">
         <div class="palette d-flex align-center justify-center" :style="{'background-color' : theme.background}">
           <div class="theme-wrap d-flex align-center justify-center" style="background-color: white;">
             <div class="theme color1" :style="{'background-color' : theme.color1}"></div>
@@ -22,12 +22,12 @@
     </div>
 
     <!-- palette custom 페이지 -->
-    <!-- <palette-custom/> -->
+    <palette-custom/>
   </div>
 </template>
 
 <script>
-// import PaletteCustom from '../select-palette/PaletteCustom'
+import PaletteCustom from '../select-palette/PaletteCustom'
 import { mapGetters, mapActions } from 'vuex'
 const landingStore = 'landingStore'
 const colorStore = 'colorStore'
@@ -35,7 +35,7 @@ const colorStore = 'colorStore'
 export default {
   name: 'PaletteStack',
   components:{
-    // PaletteCustom
+    PaletteCustom
   },
   computed: {
     ...mapGetters(landingStore, { storeIsGet: 'GE_IS_GET', storeIsPick: 'GE_IS_PICK'}),
@@ -74,13 +74,14 @@ export default {
     }
     this.selectedColor = this.storeSelectedColor;
   },
-  destroyed(){
+  beforeDestroy(){
     //이 페이지를 벗어날 때, isGet과 isPick을 초기화해줌
     this.AC_IS_GET(false);
     this.AC_IS_PICK(false);
   },
   methods:{
     ...mapActions(landingStore, ['AC_IS_GET', 'AC_IS_PICK', 'AC_DIALOG']),
+    ...mapActions(colorStore, ['AC_SELECTED_COLOR', 'AC_SELECTED_THEME']),
     goGetColor(){
       this.AC_IS_GET(true);
       this.AC_IS_PICK(false);
@@ -89,9 +90,12 @@ export default {
       this.AC_IS_GET(false);
       this.AC_IS_PICK(true);
     },
-    showDialog(){
+    showDialog(theme){
+      console.log('showDialog', theme);
+      this.AC_SELECTED_COLOR(theme.background);
+      this.AC_SELECTED_THEME([theme.color1, theme.color2, theme.color3, theme.color4, theme.color5]);
       this.AC_DIALOG(true);
-    }
+    },
   }
 }
 </script>
