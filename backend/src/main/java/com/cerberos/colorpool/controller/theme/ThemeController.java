@@ -1,6 +1,7 @@
 package com.cerberos.colorpool.controller.theme;
 
 import com.cerberos.colorpool.entity.theme.Theme;
+import com.cerberos.colorpool.model.theme.ThemeModel;
 import com.cerberos.colorpool.service.theme.ThemeService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class ThemeController {
 
     @Operation(summary = "배색 조합 추천 받기")
     @GetMapping(value = "/{colorId}")
-    public List<Theme> getThemes(@PathVariable Integer colorId) {
+    public List<ThemeModel> getThemes(@PathVariable Integer colorId) {
         return themeService.getThemes(colorId);
     }
 }

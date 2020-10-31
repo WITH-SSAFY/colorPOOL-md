@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Entity @Getter @ToString @NoArgsConstructor @AllArgsConstructor @Builder
+@Entity @Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "RECOMMEND")
 public class RecommendTheme {
     @Id
