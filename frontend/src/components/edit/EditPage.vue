@@ -213,7 +213,7 @@
   } from 'tiptap-extensions'
 
   export default {
-    name: 'Editing',
+    name: 'EditPage',
     components: {
       EditorContent,
       EditorMenuBar
@@ -249,7 +249,7 @@
           content: ''
         }),
         height: null,
-        templates: [],
+        isNewPage: false,
       }
     },
     mounted() {
@@ -267,6 +267,7 @@
         this.height = document.querySelector("#container").clientHeight
       },
       loadUntilSlideIsFull: function () {
+        if(this.isNewPage) return;
         document.querySelector("#container").style.height = this.height;
 
         const containerElement = document.querySelector("#container")
@@ -277,9 +278,12 @@
 
         watcher.enterViewport(() => {
           console.log('____BOTTOMENTER____')
+          if(!this.isNewPage) this.$emit('newPage')
+          this.isNewPage = true;
         })  
         watcher.exitViewport(() => {
           console.log('____BOTTOMEXIT____')
+          this.isNewPage = false;
         })
       }
     },
