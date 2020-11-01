@@ -2,7 +2,6 @@ package com.cerberos.colorpool.service.theme;
 
 import com.cerberos.colorpool.entity.theme.RecommendTheme;
 import com.cerberos.colorpool.entity.theme.Theme;
-import com.cerberos.colorpool.model.theme.ThemeModel;
 import com.cerberos.colorpool.repository.theme.RecommendJpaRepository;
 import com.cerberos.colorpool.repository.theme.ThemeJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,7 @@ public class ThemeService {
     private final RecommendJpaRepository recommendJpaRepository;
     private final ThemeJpaRepository themeJpaRepository;
 
-    public List<ThemeModel> getThemes (Integer colorId) {
+    public List<Theme> getThemes (Integer colorId) {
         RecommendTheme recommendTheme = recommendJpaRepository.findById(colorId).orElseThrow(IllegalArgumentException::new);
 
         List<Theme> themes = new ArrayList<>();
@@ -33,11 +32,6 @@ public class ThemeService {
         themes.add(themeJpaRepository.findById(recommendTheme.getThemeId9() + 1).orElseThrow(IllegalArgumentException::new));
         themes.add(themeJpaRepository.findById(recommendTheme.getThemeId10() + 1).orElseThrow(IllegalArgumentException::new));
 
-        List<ThemeModel> themeModels = new ArrayList<>();
-        for(Theme theme : themes){
-            themeModels.add(new ThemeModel(theme));
-        }
-
-        return themeModels;
+        return themes;
     }
 }

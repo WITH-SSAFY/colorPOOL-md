@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ThemeJpaRepository extends JpaRepository<Theme, Integer> {
-//    List<Theme> findBySelectedColor(Integer selectedColor);
+
 }
