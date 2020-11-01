@@ -1,6 +1,9 @@
 spring:
   profiles:
     active: dev
+  messages:
+    basename: i18n/exception
+    encoding: UTF-8
 
 springdoc:
   version : 1.0.1
