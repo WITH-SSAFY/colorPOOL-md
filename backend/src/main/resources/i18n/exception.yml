@@ -1,0 +1,7 @@
+# exception_ko.yml
+unKnown:
+  code: "-9999"
+  msg: "알수 없는 오류가 발생하였습니다."
+themeNotFoundException:
+  code: "-1000"
+  msg: "해당 컬러의 배색 조합을 추천할 수 없습니다."

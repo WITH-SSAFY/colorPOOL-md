@@ -38,7 +38,7 @@ public class ResponseService {
     }
 
     //다중건 결과 처리
-    public <T>ListResult<T> getListResult(List<T> list){
+    public <T> ListResult<T> getListResult(List<T> list){
         ListResult<T> result = new ListResult<>();
         result.setData(list);
         setSuccessResult(result);
@@ -52,10 +52,12 @@ public class ResponseService {
         return result;
     }
 
-    //실패 결과만 처리
-    public CommonResult getFailResult(){
+    //실패 결과 처리
+    public CommonResult getFailResult(int code, String msg){
         CommonResult result = new CommonResult();
-        setFail(result);
+        result.setSuccess(false);
+        result.setCode(code);
+        result.setMsg(msg);
         return result;
     }
 
@@ -64,12 +66,5 @@ public class ResponseService {
         result.setSuccess(true);
         result.setCode(CommonResponse.SUCCESS.getCode());
         result.setMsg(CommonResponse.SUCCESS.getMsg());
-    }
-
-    //결과 모델에 api 요청 성공 데이터 세팅
-    private void setFail(CommonResult result){
-        result.setSuccess(false);
-        result.setCode(CommonResponse.FAIL.getCode());
-        result.setMsg(CommonResponse.FAIL.getMsg());
     }
 }
