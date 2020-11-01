@@ -8,24 +8,24 @@
       <!-- <div class="theme-wrap d-flex align-center justify-center" style="background-color: white">
 
       </div> -->
-      <v-card :style="{'background-color' : selectedColor, 'color' : invertedTextColor}">
+      <v-card :style="{'background-color' : customTheme.background, 'color' : invertedTextColor}">
         <v-card-title>
           THEMEMEMEMEME
         </v-card-title>
         <div class="custom-theme-wrap d-flex align-center justify-center" :style="{'background-color' : 'rgb(255, 255, 255)'}">
-          <div class="theme color1" :class="[isActive0? 'active': '']" @click="clickTheme1" :style="{'background-color' : selectedTheme[0]}"></div>
-          <div class="theme color2" :class="[isActive1? 'active': '']" @click="clickTheme2" :style="{'background-color' : selectedTheme[1]}"></div>
-          <div class="theme color3" :class="[isActive2? 'active': '']" @click="clickTheme3" :style="{'background-color' : selectedTheme[2]}"></div>
-          <div class="theme color4" :class="[isActive3? 'active': '']" @click="clickTheme4" :style="{'background-color' : selectedTheme[3]}"></div>
-          <div class="theme color5" :class="[isActive4? 'active': '']" @click="clickTheme5" :style="{'background-color' : selectedTheme[4]}"></div>
+          <div class="theme color1" :class="[isActive0? 'active': '']" @click="clickTheme1" :style="{'background-color' : colors[0]}"></div>
+          <div class="theme color2" :class="[isActive1? 'active': '']" @click="clickTheme2" :style="{'background-color' : colors[1]}"></div>
+          <div class="theme color3" :class="[isActive2? 'active': '']" @click="clickTheme3" :style="{'background-color' : colors[2]}"></div>
+          <div class="theme color4" :class="[isActive3? 'active': '']" @click="clickTheme4" :style="{'background-color' : colors[3]}"></div>
+          <div class="theme color5" :class="[isActive4? 'active': '']" @click="clickTheme5" :style="{'background-color' : colors[4]}"></div>
         </div>
         <div v-if="colorIndex == -1">
           커스텀할 색이 있다면 선택해보세요
         </div>
-        <div v-if="colorIndex != -1" class="custom-color-range justify-center mb-2">
-          <input class="color-slider r" type="range" min="0" max="255" step="1" :value="r">
-          <input class="color-slider g" type="range" min="0" max="255" step="1" :value="g">
-          <input class="color-slider b" type="range" min="0" max="255" step="1" :value="b">
+        <div v-show="colorIndex != -1" class="custom-color-range justify-center mb-2">
+          <input class="color-slider r" type="range" min="0" max="255" step="1" :value="r" @input="colorChange">
+          <input class="color-slider g" type="range" min="0" max="255" step="1" :value="g" @input="colorChange">
+          <input class="color-slider b" type="range" min="0" max="255" step="1" :value="b" @input="colorChange">
         </div>
         <v-card-actions class="justify-end mr-2 pb-4">
           <v-btn @click="close">
@@ -44,19 +44,20 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 const landingStore = 'landingStore'
-const colorStore = 'colorStore'
+// const colorStore = 'colorStore'
+const customStore = 'customStore'
 
 export default {
   name: 'PaletteCustom',
   computed:{
     ...mapGetters( landingStore, {storeDialog: 'GE_DIALOG'}),
-    ...mapGetters( colorStore, {storeSelectedTheme: 'GE_SELECTED_THEME', storeSelectedColor : 'GE_SELECTED_COLOR'})
+    ...mapGetters(customStore, {storeCustomTheme: 'GE_CUSTOM_THEME'}),
   },
   data(){
     return{
       dialog: false,
-      selectedTheme: [],
-      selectedColor: '',
+      customTheme: null,
+      colors: [],
       invertedTextColor: 'black',
       colorIndex: -1,
       r: null,
@@ -71,23 +72,21 @@ export default {
   },
   watch: {
     storeDialog(val){
-      let color = this.selectedTheme[0];
-      color = color.replace("rgb(", "");
-      color = color.replace(")", "");
-      color = color.split(", ");
-      this.r = color[0];
-      this.g = color[1];
-      this.b = color[2];
-      console.log(color)
       this.dialog = val;
     },
-    storeSelectedTheme(val){
-      this.selectedTheme = val;
+    storeCustomTheme() {
+      this.customTheme = this.storeCustomTheme;
+      this.colors[0] = this.customTheme.color1;
+      this.colors[1] = this.customTheme.color2;
+      this.colors[2] = this.customTheme.color3;
+      this.colors[3] = this.customTheme.color4;
+      this.colors[4] = this.customTheme.color5;
+      this.setBackgroundColor(this.storeCustomTheme.background);
     },
     colorIndex(val) {
-      // document.querySelector('.custom-theme-wrap').children[val].setAttribute('class', 'active');
       // 선택 색깔이 바뀜
-      let color = this.selectedTheme[val];
+      if(val == -1) return;
+      let color = this.colors[val];
       color = color.replace("rgb(", "");
       color = color.replace(")", "");
       color = color.split(", ");
@@ -99,42 +98,21 @@ export default {
       document.querySelector('.color-slider.b').style.background = 'linear-gradient(to right, rgb(' + this.r + ', ' + this.g + ', 0), rgb(' + this.r + ', ' + this.g + ', 255))'
     }
   },
-  updated() {
-    // this.selectedTheme[0] = this.storeSelectedTheme[0];
-    // this.selectedTheme[1] = this.storeSelectedTheme[1];
-    // this.selectedTheme[2] = this.storeSelectedTheme[2];
-    // this.selectedTheme[3] = this.storeSelectedTheme[3];
-    // this.selectedTheme[4] = this.storeSelectedTheme[4];
-    this.selectedTheme[0] = this.storeSelectedTheme.selectedTheme.color1;
-    this.selectedTheme[1] = this.storeSelectedTheme.selectedTheme.color2;
-    this.selectedTheme[2] = this.storeSelectedTheme.selectedTheme.color3;
-    this.selectedTheme[3] = this.storeSelectedTheme.selectedTheme.color4;
-    this.selectedTheme[4] = this.storeSelectedTheme.selectedTheme.color5;
-    // this.selectedTheme = this.storeSelectedTheme.selectedTheme;
-    this.selectedColor = this.storeSelectedColor;
-    this.setBackgroundColor(this.selectedColor);
-    // r g b 값 받아오기
-    let color = this.selectedTheme[0];
-    color = color.replace("rgb(", "");
-    color = color.replace(")", "");
-    color = color.split(", ");
-    this.r = color[0];
-    this.g = color[1];
-    this.b = color[2];
+  beforeUpdate() {
+    this.customTheme = this.storeCustomTheme;
   },
   created(){
     this.dialog = this.storeDialog;
-  },
-  mounted() {
-    // document.querySelector('.color-slider.r').style.background = 'linear-gradient(to right, rgb(0, ' + this.g + ', ' + this.b + '), rgb(255, ' + this.g + ', ' + this.b + '))'
+    this.customTheme = this.storeCustomTheme;
   },
   beforeDestroy(){
-    this.AC_DIALOG(false)
+    this.AC_DIALOG(false);
   },
   methods: {
     ...mapActions(landingStore, ['AC_DIALOG']),
     close(){
       this.AC_DIALOG(false);
+      this.colorIndex = -1;
     },
     setBackgroundColor(color) {
       let hex = color.replace('#', '');
@@ -182,6 +160,18 @@ export default {
       this.initIsActive();
       this.isActive4 = true;   
       this.colorIndex = 4;
+    },
+    colorChange() {
+      var r = document.querySelector('.color-slider.r').value;
+      var g = document.querySelector('.color-slider.g').value;
+      var b = document.querySelector('.color-slider.b').value;
+      this.r = r;
+      this.g = g;
+      this.b = b;
+      document.querySelector('.color-slider.r').style.background = 'linear-gradient(to right, rgb(0, ' + this.g + ', ' + this.b + '), rgb(255, ' + this.g + ', ' + this.b + '))'
+      document.querySelector('.color-slider.g').style.background = 'linear-gradient(to right, rgb(' + this.r + ', 0, ' + this.b + '), rgb(' + this.r + ', 255, ' + this.b + '))'
+      document.querySelector('.color-slider.b').style.background = 'linear-gradient(to right, rgb(' + this.r + ', ' + this.g + ', 0), rgb(' + this.r + ', ' + this.g + ', 255))'
+      this.colors[this.colorIndex] = 'rgb(' + this.r + ', ' + this.g + ', ' + this.b + ')';
     }
   }
 }

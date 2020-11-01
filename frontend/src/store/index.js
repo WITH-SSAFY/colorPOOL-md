@@ -8,6 +8,7 @@ import colorStore from '@/store/modules/colorStore'
 import themeStore from '@/store/modules/themeStore'
 import landingStore from '@/store/modules/landingStore'
 import demoStore from '@/store/modules/demoStore'
+import customStore from '@/store/modules/customStore'
 
 export default new Vuex.Store({
   state: {
@@ -21,10 +22,11 @@ export default new Vuex.Store({
     themeStore,
     landingStore,
     demoStore,
+    customStore,
   },
   plugins: [
     createdPersistedState({
-      paths: ['landingStore', 'colorStore']
+      paths: ['landingStore', 'colorStore', 'customStore']
     })
   ]
 })

@@ -31,6 +31,7 @@ import PaletteCustom from '../select-palette/PaletteCustom'
 import { mapGetters, mapActions } from 'vuex'
 const landingStore = 'landingStore'
 const colorStore = 'colorStore'
+const customStore = 'customStore'
 
 export default {
   name: 'PaletteStack',
@@ -82,6 +83,7 @@ export default {
   methods:{
     ...mapActions(landingStore, ['AC_IS_GET', 'AC_IS_PICK', 'AC_DIALOG']),
     ...mapActions(colorStore, ['AC_SELECTED_COLOR', 'AC_SELECTED_THEME']),
+    ...mapActions(customStore, ['AC_CUSTOM_THEME']),
     goGetColor(){
       this.AC_IS_GET(true);
       this.AC_IS_PICK(false);
@@ -92,8 +94,9 @@ export default {
     },
     showDialog(theme){
       console.log('showDialog', theme);
-      this.AC_SELECTED_COLOR(theme.background);
-      this.AC_SELECTED_THEME([theme.color1, theme.color2, theme.color3, theme.color4, theme.color5]);
+      this.AC_CUSTOM_THEME(theme);
+      // this.AC_SELECTED_COLOR(theme.background);
+      // this.AC_SELECTED_THEME([theme.color1, theme.color2, theme.color3, theme.color4, theme.color5]);
       this.AC_DIALOG(true);
     },
   }
