@@ -28,7 +28,7 @@
           <input class="color-slider b" type="range" min="0" max="255" step="1" :value="b" @input="colorChange">
         </div>
         <v-card-actions class="justify-end mr-2 pb-4">
-          <v-btn @click="close">
+          <v-btn @click="submit">
             SUBMIT
           </v-btn>
           <v-btn @click="close">
@@ -37,7 +37,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-
+    <div v-if="isLoading" class="loading-layer"><img src="../../assets/loading.gif"></div>
   </div>
 </template>
 
@@ -68,6 +68,7 @@ export default {
       isActive2: false,
       isActive3: false,
       isActive4: false,
+      isLoading: false,
     }
   },
   watch: {
@@ -104,16 +105,28 @@ export default {
   created(){
     this.dialog = this.storeDialog;
     this.customTheme = this.storeCustomTheme;
+    this.isLoading = false;
   },
   beforeDestroy(){
     this.AC_DIALOG(false);
   },
   methods: {
     ...mapActions(landingStore, ['AC_DIALOG']),
+    ...mapActions(customStore, ['AC_FINAL_THEME']),
     close(){
       this.AC_DIALOG(false);
       this.initIsActive();
       this.colorIndex = -1;
+    },
+    submit() {
+      this.AC_DIALOG(false);
+      this.initIsActive();
+      this.colorIndex = -1;
+      this.AC_FINAL_THEME(this.colors);
+      this.isLoading = true;
+      setTimeout(() => {
+        this.$router.push({name: 'Edit'})
+      }, 1500);
     },
     setBackgroundColor(color) {
       let hex = color.replace('#', '');
@@ -259,4 +272,21 @@ export default {
 }
 
 /* =================================================================================== */
+.loading-layer {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, .6);
+}
+
+.loading-layer img {
+  width: 300px;
+  height: 300px;
+}
 </style>
