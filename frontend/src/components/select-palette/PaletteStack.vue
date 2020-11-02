@@ -60,7 +60,9 @@ export default {
     },
     storeSelectedTheme(val){
       val.selectedTheme.background = this.selectedColor;
-      this.stack.unshift(val.selectedTheme);
+      if(!this.stack.includes(val.selectedTheme)) {
+        this.stack.unshift(val.selectedTheme);
+      }
     },
     storeSelectedColor(val){
       this.selectedColor = val;

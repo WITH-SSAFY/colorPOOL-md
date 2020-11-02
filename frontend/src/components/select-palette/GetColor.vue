@@ -11,7 +11,7 @@
     </div>
 
     <!-- 검색 결과 -->
-    <div class="d-flex justify-center">
+    <div class="d-flex justify-center" style="height: 900px; width: 100%;">
       <div class="result wrap">
         <ul v-for="colorList in this.picularImages" :key="colorList.index">
           <li v-for="color in colorList" :key="color.color" @click="selectColor(color.color)">
@@ -168,8 +168,8 @@ export default {
 
 .result.wrap{
   width: 72%;
-  height: 70%;
-  overflow: scroll;
+  max-height: 70%;
+  overflow-y: scroll;
   transition-duration: 300ms;
   display: flex;
 }

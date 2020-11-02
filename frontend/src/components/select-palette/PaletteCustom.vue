@@ -19,10 +19,10 @@
           <div class="theme color4" :class="[isActive3? 'active': '']" @click="clickTheme4" :style="{'background-color' : colors[3]}"></div>
           <div class="theme color5" :class="[isActive4? 'active': '']" @click="clickTheme5" :style="{'background-color' : colors[4]}"></div>
         </div>
-        <div v-if="colorIndex == -1">
-          커스텀할 색이 있다면 선택해보세요
+        <div v-if="colorIndex == -1" style="display: flex; align-items: center; justify-content: center; text-align: center; height: 98px;">
+          <span style="font-size: 1.2em;">커스텀할 색이 있다면 선택해보세요</span>
         </div>
-        <div v-show="colorIndex != -1" class="custom-color-range justify-center mb-2">
+        <div v-show="colorIndex != -1" class="custom-color-range justify-center align-center mb-2">
           <input class="color-slider r" type="range" min="0" max="255" step="1" :value="r" @input="colorChange">
           <input class="color-slider g" type="range" min="0" max="255" step="1" :value="g" @input="colorChange">
           <input class="color-slider b" type="range" min="0" max="255" step="1" :value="b" @input="colorChange">
@@ -112,6 +112,7 @@ export default {
     ...mapActions(landingStore, ['AC_DIALOG']),
     close(){
       this.AC_DIALOG(false);
+      this.initIsActive();
       this.colorIndex = -1;
     },
     setBackgroundColor(color) {
@@ -223,6 +224,10 @@ export default {
 
 
 /* ============================== color range 관련 CSS ============================== */
+.custom-color-range {
+  margin-top: 10px;
+}
+
 .range-value {
     padding: 20px;
     font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
@@ -235,9 +240,11 @@ export default {
 .color-slider {
     height: 20px;
     width: 80%;
+    margin: 0;
+    margin-left: 10%;
     /* background-image: linear-gradient(to right, #FFEBEE, #B71C1C); */
     padding: 0 10px;
-    margin: 0;
+    
     -webkit-appearance: none;
     outline: none;
 }
