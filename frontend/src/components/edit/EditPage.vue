@@ -170,10 +170,10 @@
 
       </editor-menu-bar>
 
-      <div id="container" class="editor" :style="{'height': this.height}">
+      <section id="container" class="editor" :class="'item' + page" :style="{'height': this.height}">
         <editor-content class="editor__content" :editor="editor"/>
-        <div id="bottomSensor"></div>
-      </div>
+        <div class="bottomSensor" :class="'item' + page"></div>
+      </section>
 
       <!-- <div class="arrow">
         <div class="pre-arrow"></div>
@@ -213,10 +213,15 @@
   } from 'tiptap-extensions'
 
   export default {
-    name: 'Editing',
+    name: 'EditPage',
     components: {
       EditorContent,
       EditorMenuBar
+    },
+    props: {
+      page: {
+        default: void 0
+      }
     },
     data() {
       return {
@@ -249,7 +254,7 @@
           content: ''
         }),
         height: null,
-        templates: [],
+        isNewPage: false,
       }
     },
     mounted() {
@@ -267,19 +272,24 @@
         this.height = document.querySelector("#container").clientHeight
       },
       loadUntilSlideIsFull: function () {
+        if(this.isNewPage) return;
         document.querySelector("#container").style.height = this.height;
 
-        const containerElement = document.querySelector("#container")
+        const containerElement = document.querySelector(".editor.item" +this.page)
         const containerMonitor = scrollMonitor.createContainer(containerElement)
-
-        const bottomSensor = document.querySelector("#bottomSensor")
+        
+        const bottomSensor = document.querySelector(".bottomSensor.item" + this.page)
         const watcher = containerMonitor.create(bottomSensor)
 
         watcher.enterViewport(() => {
           console.log('____BOTTOMENTER____')
-        })  
+          if(!this.isNewPage) this.$emit('enterNewPage')
+          this.isNewPage = true;
+        })
         watcher.exitViewport(() => {
           console.log('____BOTTOMEXIT____')
+          if(this.isNewPage) this.$emit('exitNewPage')
+          this.isNewPage = false;
         })
       }
     },
@@ -346,7 +356,6 @@
 
   .slide-section .editor__content {
     position: absolute;
-    /* overflow: scroll; */
     background-color: #fff;
     padding: 5% 10%;
     top: 0;
