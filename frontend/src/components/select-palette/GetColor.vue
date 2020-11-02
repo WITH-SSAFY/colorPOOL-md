@@ -175,6 +175,7 @@ export default {
 }
 
 .result.wrap ul {
+  margin-top: 16px;
   width: 100%;
   height: 100%;
   list-style: none;
