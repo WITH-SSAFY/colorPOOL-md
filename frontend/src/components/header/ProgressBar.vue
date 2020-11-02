@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 프로그레스 바 -->
     <div class="progress">
       <div class="circle" :class="[page == 1 ? 'active' : '', page > 1 ? 'done': '']">
         <span class="label">1</span><br>
@@ -21,12 +22,24 @@
         <span class="title" style="margin-left: -5px;">Final</span>
       </div>
     </div>
+    
+    <!-- editPage : 최종 선택한 배색-->
+    <div v-if="page == 2 || page == 3" class="theme-wrap" style="background-color: white;">
+      <div class="theme color1" :style="{'background-color' : storeFinalTheme[0]}"></div>
+      <div class="theme color2" :style="{'background-color' : storeFinalTheme[1]}"></div>
+      <div class="theme color3" :style="{'background-color' : storeFinalTheme[2]}"></div>
+      <div class="theme color4" :style="{'background-color' : storeFinalTheme[3]}"></div>
+      <div class="theme color5" :style="{'background-color' : storeFinalTheme[4]}"></div>
+    </div>
+
   </div>
+
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 const landingStore = 'landingStore'
+const customStore = 'customStore'
 export default {
   props: {
     page: {
@@ -34,12 +47,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(landingStore, {storeIsPick: 'GE_IS_PICK', storeIsGet: 'GE_IS_GET'})
+    ...mapGetters(landingStore, {storeIsPick: 'GE_IS_PICK', storeIsGet: 'GE_IS_GET'}),
+    ...mapGetters(customStore, {storeFinalTheme: 'GE_FINAL_THEME'})
   },
   data() {
     return {
       // page: 0,
-      landText : ''
+      landText : '',
     }
   },
   created() {
@@ -75,11 +89,10 @@ export default {
   white-space: nowrap;
 }
 
-
 /* Form Progress */
 .progress {
   position : absolute;
-  top : 20px;
+  top : 6%;
   width: 50%;
   /* width: 1000px; */
   /* margin: 20px auto; */
@@ -155,4 +168,51 @@ export default {
 .progress .circle.active .title {
   color: #0c95be;
 }
+
+/* 최종선택배색 */
+.theme-wrap {
+  position: absolute;
+  right: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 17%;
+  height: 105px;
+  border: 4px solid #707070;
+  cursor:pointer;
+}
+
+.theme-wrap .theme {
+  width: 65px;
+  height: 65px;
+  border-radius: 75px;
+  border: 4px solid #707070;
+  transition-duration: 300ms;
+}
+
+.theme-wrap .theme.color1{
+  z-index: 50;
+}
+
+.theme-wrap .theme.color2{
+  margin-left: -30px;
+  z-index: 51;
+}
+
+.theme-wrap .theme.color3{
+  margin-left: -30px;
+  z-index: 52;
+}
+
+.theme-wrap .theme.color4{
+  margin-left: -30px;
+  z-index: 53;
+}
+
+.theme-wrap .theme.color5{
+  margin-left: -30px;
+  z-index: 54;
+}
+
+
 </style>
