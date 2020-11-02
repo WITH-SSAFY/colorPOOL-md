@@ -180,6 +180,10 @@ public class PdfService {
         MultipartFile result = new MockMultipartFile(newPdfFileName,
                 newPdfFileName, contentType, content);
 
+        //원본파일 삭제
+        if(pdfFile.isFile()){
+            pdfFile.delete();
+        }
         return result;
     }
 
