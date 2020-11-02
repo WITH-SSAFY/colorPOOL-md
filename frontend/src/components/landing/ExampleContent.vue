@@ -1,14 +1,43 @@
 <template>
-  <div class="background" :style="{'background-color': this.selectedDemoColors[0]}" style="user-select: none;" >
+  <div class="background" :style="{'background-color': this.selectedDemoColors[0]}" style="user-select: none; overflow: scroll;" >
     <h1 :style="{'color': this.selectedDemoColors[1]}">colorPOOL</h1>
-    <blockquote>colorPOOL의 빅데이터 풀에서 나의 own 컬러와 배색을 찾고, 나만의 컨텐츠를 만들어보세요</blockquote>
-    <h2>1. <samp>colorPOOL</samp>은 캐주얼한 컨텐츠로 소비될 수있는 서비스를 지향합니다.</h2>
-    <h3>2. <samp>colorPOOL</samp>은 멋진 배색을 찾고, 컬러 플레이를 즐기는 사용자를 대상으로 합니다.</h3>
-    <h3>3. <samp>colorPOOL</samp>은 온라인에서 다시 오프라인으로 이어지는 유저 경험을 제공합니다.</h3>
+    <blockquote>colorPOOL에서 나만의 배색을 찾고, 세련된 발표 자료를 간단하게 만들어보세요.</blockquote>
+    <h2>1. <samp>colorPOOL</samp>은 마크다운 기반으로 compact한 발표 자료를 만드는 서비스를 제공합니다.</h2>
+    <h3>2. <samp>colorPOOL</samp>은 배색을 추천하여, 발표 자료를 세련되게 꾸미는 기능을 제공합니다.</h3>
+    <h3>3. <samp>colorPOOL</samp>은 SNS를 통해 다양한 사람들과 공유하는 환경을 제공합니다.</h3>
+    <br>
+    <h2>colorPOOL 100% 활용하기</h2>
+    <h3>배색 선택하기</h3>
     <ul>
-      <li>메인컬러를 선택하여 배색을 추천받고, 배색을 포함하는 이미지로 매거진을 제작할 수 있습니다.</li>
-      <li>편집한 매거진은 인쇄를 통해 실물로 만나 볼 수 있습니다.</li>
+      <li><samp>with Team Color</samp>로 총 200여 개의 대표 컬러 중에 사용자가 직접 컬러를 선택할 수 있습니다. </li>
+      <li><samp>with Main Keyword</samp>를 통해 키워드 검색으로 컬러를 추천 받을 수 있습니다.</li>
+      <li>선택한 배색에 대해 사용자는 RGB 값, 순서, 비율을 커스텀하여, 나만의 배색을 구성할 수 있습니다.</li>
     </ul>
+    <h3>발표 자료 만들기</h3>
+    <ul>
+      <li>마크다운을 통해 발표 자료의 내용을 작성합니다. 또는 이전에 작성한 내용을 import합니다.</li>
+      <li>내용을 작성하면서 페이지를 구분하고, 선택한 배색을 바탕으로 강조를 하고 싶은 지점에 컬러를 부여합니다.</li>
+      <li>글꼴은 세리프/산세리프 두 가지를 제공합니다.</li>
+    </ul>
+    <h3>발표 자료 공유 및 추출하기</h3>
+    <ul>
+      <li>작성 완료한 발표 자료를 SNS를 통해 공유할 수 있습니다.</li>
+      <li>작성 완료한 발표 자료를 md파일과 pdf파일 형태로 추출할 수 있습니다.</li>
+    </ul>
+    <br>
+
+    <blockquote>마크다운이 무엇인가요?</blockquote>
+    <pre>  마크다운은 텍스트 기반의 마크업 언어 입니다.
+    특수기호와 문자를 이용한 매우 간단한 구조의 문법을 사용하여 빠르게 컨텐츠를 작성할 수 있습니다.
+    colorPOOL에서는 마크다운에 익숙하지 않은 사용자를 위해 toolbox를 제공하고 있습니다.
+    </pre>
+    
+
+    <blockquote>배색 추천은 어떻게 진행되는 건가요?</blockquote>
+    <pre>  배색 추천은 Abode Color CC의 배색 데이터를 기반으로 이뤄집니다.
+    대표 컬러 200개에 대해 디자이너 평가 점수가 높은 상위 10개의 배색을 추천합니다.
+    colorPOOL에서는 미세조정을 통해 선택한 배색의 컬러를 커스텀할 수 있습니다.
+    </pre>
   </div>
 </template>
 
