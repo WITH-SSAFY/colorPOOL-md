@@ -4,7 +4,7 @@
       <div class="info-section">
         info-section
       </div>
-      <component v-for="(template, index) in templates" v-bind:page="index" @newPage="createPage()" :key="index" :is="template"></component>
+      <component v-for="(template, index) in templates" v-bind:page="index" @enterNewPage="createPage()" @exitNewPage="deletePage()" :key="index" :is="template"></component>
       <!-- <div class="arrow">
         <div class="pre-arrow"></div>
         <div class="next-arrow"></div>
@@ -93,6 +93,9 @@
     methods: {
       createPage() {
         this.templates.push(EditPage)
+      },
+      deletePage() {
+        this.templates.pop(EditPage)
       }
     }
   }

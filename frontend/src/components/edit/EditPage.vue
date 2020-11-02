@@ -283,11 +283,12 @@
 
         watcher.enterViewport(() => {
           console.log('____BOTTOMENTER____')
-          if(!this.isNewPage) this.$emit('newPage')
+          if(!this.isNewPage) this.$emit('enterNewPage')
           this.isNewPage = true;
         })
         watcher.exitViewport(() => {
           console.log('____BOTTOMEXIT____')
+          if(this.isNewPage) this.$emit('exitNewPage')
           this.isNewPage = false;
         })
       }
@@ -355,7 +356,6 @@
 
   .slide-section .editor__content {
     position: absolute;
-    /* overflow: scroll; */
     background-color: #fff;
     padding: 5% 10%;
     top: 0;
