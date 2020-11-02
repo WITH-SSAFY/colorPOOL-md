@@ -41,6 +41,7 @@ public class PdfService {
     private final PdfJpaRepository pdfJpaRepository;
     private final S3api s3api;
     private final String pdfFolderPath = "../../colorpoolmd/pdf/";
+    private final String staticFoldelPath = "./src/main/resources/static/";
 
     public String savePDF(PdfModel pdfModel){
         String newPdfFileName = getNewPdfFileName(pdfModel);
@@ -144,11 +145,11 @@ public class PdfService {
 
         //css
         CSSResolver cssResolver = new StyleAttrCSSResolver();
-        CssFile cssFile = XMLWorkerHelper.getCSS(new FileInputStream(pdfFolderPath+"pdf.css"));
+        CssFile cssFile = XMLWorkerHelper.getCSS(new FileInputStream(staticFoldelPath+"pdf.css"));
         cssResolver.addCss(cssFile);
 
         XMLWorkerFontProvider fontProvider = new XMLWorkerFontProvider(XMLWorkerFontProvider.DONTLOOKFORFONTS);
-        fontProvider.register(pdfFolderPath + "NotoSansKR-Regular.otf", "NotoSansKR");
+        fontProvider.register(staticFoldelPath + "NotoSansKR-Regular.otf", "NotoSansKR");
         CssAppliers cssAppliers = new CssAppliersImpl(fontProvider);
 
         HtmlPipelineContext htmlContext = new HtmlPipelineContext(cssAppliers);
