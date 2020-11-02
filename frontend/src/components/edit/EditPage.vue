@@ -176,10 +176,10 @@
         <div class="bottomSensor" :class="'item' + page"></div>
       </section>
 
-      <!-- <div class="arrow">
+      <div class="arrow">
         <div class="pre-arrow"></div>
         <div class="next-arrow"></div>
-      </div> -->
+      </div>
 
     </div>
   </div>
@@ -256,6 +256,7 @@
         }),
         height: null,
         isNewPage: false,
+        // isNewPageCreated: true,
       }
     },
     mounted() {
@@ -283,12 +284,15 @@
         const watcher = containerMonitor.create(bottomSensor)
 
         watcher.enterViewport(() => {
-          console.log('____BOTTOMENTER____')
+          console.log('____BOTTOMENTER____' + this.page)
+          // this.isNewPageCreated = true;
           if(!this.isNewPage) this.$emit('enterNewPage')
           this.isNewPage = true;
         })
         watcher.exitViewport(() => {
-          console.log('____BOTTOMEXIT____')
+          console.log('____BOTTOMEXIT____' + this.page)
+          // if(this.isNewPageCreated) return;
+          // else this.isNewPageCreated = true;
           if(this.isNewPage) this.$emit('exitNewPage')
           this.isNewPage = false;
         })
@@ -330,17 +334,24 @@
   .slide-section .arrow .pre-arrow {
     width: 0; 
     height: 0;
+    position: fixed;
+    top: 50%;
     border-top: 2rem solid transparent;
     border-bottom: 2rem solid transparent; 
-    border-right: 2rem solid blue; 
+    border-right: 2rem solid #424242;
+    cursor: pointer;
   }
 
   .slide-section .arrow .next-arrow {
     width: 0; 
-    height: 0; 
+    height: 0;
+    position: fixed;
+    top: 50%;
+    right: 3.5%;
     border-top: 2rem solid transparent;
     border-bottom: 2rem solid transparent;
-    border-left: 2rem solid blue;
+    border-left: 2rem solid #424242;
+    cursor: pointer;
   }
 
   .slide-section .menu-box {
