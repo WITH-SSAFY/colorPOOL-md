@@ -170,10 +170,10 @@
 
       </editor-menu-bar>
 
-      <div id="container" class="editor" :style="{'height': this.height}">
+      <section id="container" class="editor" :class="'item' + page" :style="{'height': this.height}">
         <editor-content class="editor__content" :editor="editor"/>
-        <div id="bottomSensor"></div>
-      </div>
+        <div class="bottomSensor" :class="'item' + page"></div>
+      </section>
 
       <!-- <div class="arrow">
         <div class="pre-arrow"></div>
@@ -217,6 +217,11 @@
     components: {
       EditorContent,
       EditorMenuBar
+    },
+    props: {
+      page: {
+        default: void 0
+      }
     },
     data() {
       return {
@@ -270,17 +275,17 @@
         if(this.isNewPage) return;
         document.querySelector("#container").style.height = this.height;
 
-        const containerElement = document.querySelector("#container")
+        const containerElement = document.querySelector(".editor.item" +this.page)
         const containerMonitor = scrollMonitor.createContainer(containerElement)
-
-        const bottomSensor = document.querySelector("#bottomSensor")
+        
+        const bottomSensor = document.querySelector(".bottomSensor.item" + this.page)
         const watcher = containerMonitor.create(bottomSensor)
 
         watcher.enterViewport(() => {
           console.log('____BOTTOMENTER____')
           if(!this.isNewPage) this.$emit('newPage')
           this.isNewPage = true;
-        })  
+        })
         watcher.exitViewport(() => {
           console.log('____BOTTOMEXIT____')
           this.isNewPage = false;

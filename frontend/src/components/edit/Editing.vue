@@ -4,7 +4,7 @@
       <div class="info-section">
         info-section
       </div>
-      <component v-for="(template, index) in templates" @newPage="createPage()" :key="index" :is="template"></component>
+      <component v-for="(template, index) in templates" v-bind:page="index" @newPage="createPage()" :key="index" :is="template"></component>
       <!-- <div class="arrow">
         <div class="pre-arrow"></div>
         <div class="next-arrow"></div>
@@ -85,41 +85,14 @@
     created() {
       this.templates.push(EditPage)
     },
-    mounted() {
-      // window.addEventListener('resize', this.handleResize)
-      // this.loadUntilSlideIsFull()
-    },
     beforeDestroy() {
       this
         .editor
         .destroy()
-      // window.removeEventListener('resize', this.handleResize)
     },
     methods: {
-      // handleResize () {
-      //   this.height = document.querySelector("#container").clientHeight
-      // },
-      // loadUntilSlideIsFull () {
-      //   document.querySelector("#container").style.height = this.height;
-
-      //   const containerElement = document.querySelector("#container")
-      //   const containerMonitor = scrollMonitor.createContainer(containerElement)
-
-      //   const bottomSensor = document.querySelector("#bottomSensor")
-      //   const watcher = containerMonitor.create(bottomSensor)
-
-      //   watcher.enterViewport(() => {
-      //     console.log('____BOTTOMENTER____')
-      //     this.templates.push(EditPage)
-      //   })
-      //   watcher.exitViewport(() => {
-      //     console.log('____BOTTOMEXIT____')
-          
-      //   })
-      // },
       createPage() {
         this.templates.push(EditPage)
-        // props로 index 넘기기
       }
     }
   }
