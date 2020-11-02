@@ -16,9 +16,9 @@ public class PdfController {
     private final PdfService pdfService;
     private final ResponseService responseService;
 
-    @Operation(summary = "마크다운 및 pdf저장", description = "사용자가 작성한 마크다운의 내용을 저장하고 이를 pdf로 변환하여 저장한다.")
+    @Operation(summary = "마크다운 및 pdf저장", description = "사용자가 작성한 마크다운의 내용을 저장하고 이를 pdf로 변환하여 저장한 후 pdf저장 경로를 반환합니다.")
     @PostMapping("/save")
-    public SingleResult<Long> savePDF(@RequestBody PdfModel pdfModel){
+    public SingleResult<String> savePDF(@RequestBody PdfModel pdfModel){
         return responseService.getSingleResult(pdfService.savePDF(pdfModel));
     }
 }

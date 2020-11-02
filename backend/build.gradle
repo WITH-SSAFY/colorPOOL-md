@@ -35,6 +35,16 @@ dependencies {
     implementation 'net.rakugakibox.util:yaml-resource-bundle:1.1'
     /* messageSource */
 
+    /* AWS S3 */
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-aws', version: '2.2.1.RELEASE', ext: 'pom'
+    implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.327')
+    implementation 'com.amazonaws:aws-java-sdk-s3'
+    /* AWS S3 */
+
+    /* mock */
+    compile 'org.springframework:spring-mock:2.0.8'
+    /* mock */
+
     /* pdf */
     compile 'com.itextpdf:itextpdf:5.5.13'
     compile 'com.itextpdf:itext-pdfa:5.5.13'
