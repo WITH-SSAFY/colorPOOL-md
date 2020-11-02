@@ -14,7 +14,6 @@
 </template>
 
 <script>
-  // import scrollMonitor from 'scrollmonitor'
   import EditPage from './EditPage'
   require('../../assets/LiveEditStyle.css')
   import {Editor, EditorContent, EditorMenuBar} from 'tiptap'
@@ -97,7 +96,7 @@
       deletePage() {
         this.templates.pop(EditPage)
       }
-    }
+    },
   }
 </script>
 
@@ -172,7 +171,6 @@
 
   .editing-area.col .slide-section .editor__content {
     position: absolute;
-    /* overflow: scroll; */
     background-color: #fff;
     padding: 5% 10%;
     top: 0;
