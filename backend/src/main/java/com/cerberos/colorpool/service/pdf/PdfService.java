@@ -1,10 +1,11 @@
 package com.cerberos.colorpool.service.pdf;
 
+import com.cerberos.colorpool.advice.exception.CPdfNotCreateException;
+import com.cerberos.colorpool.advice.exception.CThemeNotFoundException;
 import com.cerberos.colorpool.entity.pdf.Pdf;
 import com.cerberos.colorpool.model.pdf.PdfModel;
 import com.cerberos.colorpool.repository.pdf.PdfJpaRepository;
 import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfDocument;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import com.itextpdf.tool.xml.XMLWorker;
@@ -23,14 +24,10 @@ import com.itextpdf.tool.xml.pipeline.html.HtmlPipeline;
 import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.*;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @Service
 @RequiredArgsConstructor
@@ -39,26 +36,21 @@ public class PdfService {
     private final String pdfFolderPath = "../../colorpoolmd/pdf/";
 
     @Transactional
-    public String savePDF(PdfModel pdfModel){
-        String result ="savePDF";
-
-        pdfModel.setPath(getNewPDFpath());
+    public long savePDF(PdfModel pdfModel){
+        long newPDFId = getNewPDFpath(pdfModel);
         System.out.println(pdfModel);
         //pdf 저장
         try {
             createPDF(pdfModel);
+            Pdf new_pdf = Pdf.builder()
+                    .contents(pdfModel.getContents())
+                    .path(pdfModel.getPath())
+                    .build();
+            pdfJpaRepository.save(new_pdf);
         }catch (Exception e){
-            e.printStackTrace();
+            throw new CPdfNotCreateException();
         }
-
-        Pdf new_pdf = Pdf.builder()
-                .contents(pdfModel.getContents())
-                .path(pdfModel.getPath())
-                .build();
-
-        //pdfJpaRepository.save(new_pdf);
-
-        return result;
+        return newPDFId;
     }
 
     @Transactional
@@ -76,13 +68,15 @@ public class PdfService {
 
 
     //pdf를 저장할 새로운 경로를 지정
-    public String getNewPDFpath(){
+    public long getNewPDFpath(PdfModel pdfModel) {
         String newPDFpath = "";
         //count 쿼리문 실행
-        long nextPDFid = pdfJpaRepository.count()+1;
-        newPDFpath += pdfFolderPath+Long.toString(nextPDFid);
-        return newPDFpath;
+        long nextPDFid = pdfJpaRepository.count() + 1;
+        newPDFpath += pdfFolderPath + nextPDFid;
+        pdfModel.setPath(newPDFpath);
+        return nextPDFid;
     }
+//    image to pdf
 //    public void createPDF(PdfModel pdfModel) throws DocumentException, IOException{
 //        String pdfFilePath = pdfModel.getPath();
 //        pdfFilePath += ".pdf";
@@ -110,7 +104,7 @@ public class PdfService {
 //
 //    }
     //html to pdf
-    public void createPDF(PdfModel pdfModel) throws DocumentException, IOException{
+    public void createPDF(PdfModel pdfModel) throws DocumentException, IOException, CPdfNotCreateException {
         String pdfFilePath = pdfModel.getPath();
         String pdfContents = pdfModel.getContents();
 
@@ -139,7 +133,7 @@ public class PdfService {
 //        //이미지 태그 절대경로 사용해야 한다.(반드시)
 //        //pdfContents = pdfContents.replaceAll("src=\"/", "src=\"http://127.0.0.1:8080/");
 //        //폰트를 설정한다. 폰트 설정 누락시 한글이 안보이는 경우 발생
-        pdfContents = "<html><body style='font-family: NanumGothic;'>" + pdfContents + "</body></html>";
+        pdfContents = "<html><body style='font-family: NotoSansKR;'>" + pdfContents + "</body></html>";
 
         XMLWorkerHelper helper = XMLWorkerHelper.getInstance();
 
@@ -149,7 +143,7 @@ public class PdfService {
         cssResolver.addCss(cssFile);
 
         XMLWorkerFontProvider fontProvider = new XMLWorkerFontProvider(XMLWorkerFontProvider.DONTLOOKFORFONTS);
-        fontProvider.register(pdfFolderPath + "NanumGothic-Regular.ttf", "NanumGothic");
+        fontProvider.register(pdfFolderPath + "NotoSansKR-Regular.otf", "NotoSansKR");
         CssAppliers cssAppliers = new CssAppliersImpl(fontProvider);
 
         HtmlPipelineContext htmlContext = new HtmlPipelineContext(cssAppliers);
