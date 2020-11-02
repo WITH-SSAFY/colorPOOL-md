@@ -170,8 +170,9 @@
 
       </editor-menu-bar>
 
-      <section id="container" class="editor" :class="'item' + page" :style="{'height': this.height}">
-        <editor-content class="editor__content" :editor="editor"/>
+      <!-- TODO : UX 개선 (Autofocus, hasFocused, scrollIntoView) -->
+      <section id="container" v-focus class="editor" :class="'item' + page" :style="{'height': this.height}">
+        <editor-content ref="input" class="editor__content" :editor="editor"/>
         <div class="bottomSensor" :class="'item' + page"></div>
       </section>
 
@@ -211,7 +212,7 @@
     TableCell,
     TableRow
   } from 'tiptap-extensions'
-
+  
   export default {
     name: 'EditPage',
     components: {
@@ -293,6 +294,24 @@
         })
       }
     },
+    directives: {
+      focus: {
+        inserted: function (el) {
+          console.log(el)
+          el.focus();
+          el.scrollIntoView(false);
+        }
+      }
+    },
+    watch: {
+      isNewPage (val) {
+        if (val) {
+          setTimeout(() => {
+            this.$refs.input.focus();
+          }, 10);
+        }
+      }
+    }
   }
 </script>
 
