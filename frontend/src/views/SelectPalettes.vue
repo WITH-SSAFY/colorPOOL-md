@@ -85,6 +85,7 @@ export default {
 
 .select-color{
   width: 53.5%;
+  overflow: hidden;
 }
 
 .progress-bar{

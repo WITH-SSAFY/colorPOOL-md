@@ -23,7 +23,7 @@ const themeStore = {
       axios.get(SERVER.ROUTES.getThemes + color)
       .then((res) => {
         console.log("getThemes - res : ", res)
-        const themes = res.data;
+        const themes = res.data.data;
         commit('MU_THEME_LIST', themes);
       })
       .catch((err) => {

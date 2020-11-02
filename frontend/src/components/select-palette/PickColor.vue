@@ -25,7 +25,6 @@
               + variations[4].hex + ' 40% 50%, ' + variations[5].hex + '  50% 60%, ' + variations[6].hex  + '  60% 70%,' 
               + variations[7].hex + ' 70% 80%, ' + variations[8].hex + '  80% 90%, ' + variations[9].hex + '  90%)'}"
       >
-      <div class="range-value" id="range-value"></div>   
     </div>
     <!-- <div class="d-flex justify-center">
       <div class="variations-wrap">
