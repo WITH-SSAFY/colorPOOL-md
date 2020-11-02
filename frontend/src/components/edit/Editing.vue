@@ -2,19 +2,16 @@
   <div>
     <v-col class="editing-area">
       <div class="info-section">
-        info-section
+        <div class="progress-bar"><progress-bar v-bind:page="2" /></div>
       </div>
       <component v-for="(template, index) in templates" v-bind:page="index" @enterNewPage="createPage()" @exitNewPage="deletePage()" :key="index" :is="template"></component>
-      <!-- <div class="arrow">
-        <div class="pre-arrow"></div>
-        <div class="next-arrow"></div>
-      </div> -->
     </v-col>
   </div>
 </template>
 
 <script>
   import EditPage from './EditPage'
+  import ProgressBar from '../../components/header/ProgressBar'
   require('../../assets/LiveEditStyle.css')
   import {Editor, EditorContent, EditorMenuBar} from 'tiptap'
   import {
@@ -45,7 +42,8 @@
     name: 'Editing',
     components: {
       EditorContent,
-      EditorMenuBar
+      EditorMenuBar,
+      ProgressBar
     },
     data() {
       return {
