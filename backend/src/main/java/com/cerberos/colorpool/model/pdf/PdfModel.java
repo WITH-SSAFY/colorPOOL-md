@@ -4,9 +4,7 @@ import lombok.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PdfModel {
     private String contents;
     private String path;
