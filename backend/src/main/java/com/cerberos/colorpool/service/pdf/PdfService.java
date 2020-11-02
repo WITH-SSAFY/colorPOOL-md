@@ -5,6 +5,7 @@ import com.cerberos.colorpool.advice.exception.CThemeNotFoundException;
 import com.cerberos.colorpool.entity.pdf.Pdf;
 import com.cerberos.colorpool.model.pdf.PdfModel;
 import com.cerberos.colorpool.repository.pdf.PdfJpaRepository;
+import com.cerberos.colorpool.s3.S3api;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -23,34 +24,40 @@ import com.itextpdf.tool.xml.pipeline.end.PdfWriterPipeline;
 import com.itextpdf.tool.xml.pipeline.html.HtmlPipeline;
 import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
 import lombok.RequiredArgsConstructor;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Service
 @RequiredArgsConstructor
 public class PdfService {
     private final PdfJpaRepository pdfJpaRepository;
+    private final S3api s3api;
     private final String pdfFolderPath = "../../colorpoolmd/pdf/";
 
-    @Transactional
-    public long savePDF(PdfModel pdfModel){
-        long newPDFId = getNewPDFpath(pdfModel);
-        System.out.println(pdfModel);
+    public String savePDF(PdfModel pdfModel){
+        String newPdfFileName = getNewPdfFileName(pdfModel);
+        String pdfS3FilePath = "https://colorpool-md.s3.ap-northeast-2.amazonaws.com/pdf/"+newPdfFileName;
         //pdf 저장
         try {
-            createPDF(pdfModel);
+            MultipartFile pdfFile = createPdf(pdfModel, newPdfFileName);
+            s3api.uploadPdf(pdfFile);
             Pdf new_pdf = Pdf.builder()
                     .contents(pdfModel.getContents())
                     .path(pdfModel.getPath())
                     .build();
             pdfJpaRepository.save(new_pdf);
         }catch (Exception e){
-            throw new CPdfNotCreateException();
+            e.printStackTrace();
         }
-        return newPDFId;
+        return pdfS3FilePath;
     }
 
     @Transactional
@@ -60,21 +67,18 @@ public class PdfService {
         return result;
     }
 
-    public String viewMyPDF(){
+    public String downloadPdf(){
         String result="";
 
         return result;
     }
 
 
-    //pdf를 저장할 새로운 경로를 지정
-    public long getNewPDFpath(PdfModel pdfModel) {
-        String newPDFpath = "";
+    //새로 저장할 pdf의 파일명을 지정
+    public String getNewPdfFileName(PdfModel pdfModel) {
         //count 쿼리문 실행
-        long nextPDFid = pdfJpaRepository.count() + 1;
-        newPDFpath += pdfFolderPath + nextPDFid;
-        pdfModel.setPath(newPDFpath);
-        return nextPDFid;
+        String nextPdfFileName = Long.toString(pdfJpaRepository.count() + 1)+".pdf";
+        return nextPdfFileName;
     }
 //    image to pdf
 //    public void createPDF(PdfModel pdfModel) throws DocumentException, IOException{
@@ -104,15 +108,16 @@ public class PdfService {
 //
 //    }
     //html to pdf
-    public void createPDF(PdfModel pdfModel) throws DocumentException, IOException, CPdfNotCreateException {
-        String pdfFilePath = pdfModel.getPath();
+    public MultipartFile createPdf(PdfModel pdfModel, String newPdfFileName) throws DocumentException, IOException, CPdfNotCreateException {
+        String pdfFilePath = pdfFolderPath+newPdfFileName;
+        pdfModel.setPath(pdfFilePath);
         String pdfContents = pdfModel.getContents();
+
 
         File saveFolder = new File(pdfFolderPath);
         if(!saveFolder.exists() || saveFolder.isFile()){
             saveFolder.mkdirs();
         }
-        pdfFilePath += ".pdf";
 
         //pdf 설정
         Rectangle pageSize = new RectangleReadOnly(960,540);//ppt real size
@@ -161,5 +166,21 @@ public class PdfService {
         xmlParser.parse(strReader);
         document.close();
         writer.close();
+
+        //egov의 첨부파일 형태로 추가하기 위해서 MultipartFile을 만들어 준다.
+        Path path = Paths.get(pdfFilePath);
+        String contentType = "application/pdf";
+        byte[] content = null;
+        try {
+            content = Files.readAllBytes(path);
+        } catch (final IOException e) {
+        }
+
+        MultipartFile result = new MockMultipartFile(newPdfFileName,
+                newPdfFileName, contentType, content);
+
+        return result;
     }
+
+
 }
