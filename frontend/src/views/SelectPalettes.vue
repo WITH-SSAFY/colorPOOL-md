@@ -91,7 +91,8 @@ export default {
 .progress-bar{
   height: 20vh;
   width: 100%;
-  background-color: burlywood;
+  margin: 0;
+  padding-left: 3rem;
 }
 
 .get-color-area.wrap{
