@@ -13,8 +13,8 @@
         <!-- 다음 단계로 넘어가는 버튼-->
         <div class="button-group">
           <h1>Create Presentation</h1>
-          <div type="button" class="button d-flex align-center" @click="goPickColor">with Team Color</div>
-          <div type="button" class="button d-flex align-center" @click="goGetColor">with Main Keyword</div>
+          <div type="button" class="button" @click="goPickColor">with Team Color</div>
+          <div type="button" class="button" @click="goGetColor">with Main Keyword</div>
         </div>
       </div>
 
@@ -135,122 +135,108 @@ export default {
 </script>
 
 <style scoped>
-.example-area.col{
-  padding: 0;
-}
+  .example-area.col{
+    padding: 0;
+  }
 
-.toggle-button-group{
-  padding: 1% 5%;
-  height: 8vh;
-  width: 100%;
-}
+  .toggle-button-group{
+    padding: 1% 5%;
+    height: 8vh;
+    width: 100%;
+  }
 
-.toggle-button-group button{
-  float: right;
-}
+  .toggle-button-group button{
+    float: right;
+  }
 
-.example-md{
-  margin: 0;
-  padding: 2%;
-  height: 62vh;
-  width: 100%;
-  float: left;
-}
+  .example-md{
+    margin: 0;
+    padding: 2%;
+    height: 62vh;
+    width: 100%;
+    float: left;
+  }
 
-.example-content{
-  height: 100%; 
-  width: 100%;
-}
+  .example-content{
+    height: 100%; 
+    width: 100%;
+  }
 
-.button-group{
-  float: left;
-  padding-top: 20%;
-  padding-right: 2%;
-  height: 62vh;
-  width: 30%;
-  height: 100%;
-  user-select: none;
-}
+  .button-group{
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    width: 27.5%;
+    height: 100%;
+    padding-left: 2%;
+    user-select: none;
+  }
 
-.button-group h1{
-  padding-left: 10%;
-  margin-bottom: 3%;
-}
+  .button-group .button{
+    height: 70px;
+    width: 95%;
+    margin-bottom: 5%;
+    padding: 5%;
+    background-color: #ee7771;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    color: #232a46; 
+  }
 
-.button-group button{
-  margin-right: 5%; 
-  margin-left: 5%; 
-  margin-bottom: 7%; 
-  display: block;
-  font-size: 1.5rem;
-}
+  .button:hover{
+    background-color: #d16a64;
+  }
 
-.button{
-  height: 68px;
-  width: 95%;
-  margin-left: 5%;
-  margin-bottom: 5%;
-  padding-left: 5%;
-  background-color: #ee7771;
-  font-size: 1.5rem;
-  font-weight: bolder;
-  color: #232a46;
-}
+  .example-content{
+    float: left;
+    width: 70%;
+    height: 100%;
+  }
 
-.button:hover{
-  background-color: #d16a64;
-}
+  .example-palette{
+    margin: 0;
+    padding-left: 3%;
+    user-select: none;
+  }
 
-.example-content{
-  float: left;
-  width: 70%;
-  height: 100%;
-}
+  .palette-content{
+    cursor:pointer;
+    width: 100%;
+    height: 100%;
+  }
 
-.example-palette{
-  margin: 0;
-  padding-left: 3%;
-  user-select: none;
-}
+  .palette-content .color-info{
+    border: 4px solid #707070;
+    float: left;
+    height: 90px;
+    width: 30%;
+    margin-right: 3%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 
-.palette-content{
-  cursor:pointer;
-  width: 100%;
-  height: 100%;
-}
+  .palette-content .color-info .color{
+    height: 50px;
+    width: 50px;
+    border-radius: 75px;
+    border: 4px solid #707070;
+    margin-left: 8%; 
+    margin-right: 3%;
+  }
 
-.palette-content .color-info{
-  border: 4px solid #707070;
-  float: left;
-  height: 90px;
-  width: 30%;
-  margin-right: 3%;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
+  .animation-in{
+    /* -webkit-filter: blur(0); */
+    transform: scale(1.2);
+    transition-duration: 0.3s;
+  }
 
-.palette-content .color-info .color{
-  height: 50px;
-  width: 50px;
-  border-radius: 75px;
-  border: 4px solid #707070;
-  margin-left: 8%; 
-  margin-right: 3%;
-}
+  .animation-out{
+    /* -webkit-filter: blur(0); */
+    transform: scale(1);
+    transition-duration: 0.1s;
+  }
 
-.animation-in{
-  /* -webkit-filter: blur(0); */
-  transform: scale(1.2);
-  transition-duration: 0.3s;
-}
-
-.animation-out{
-  /* -webkit-filter: blur(0); */
-  transform: scale(1);
-  transition-duration: 0.1s;
-}
-
-.palette-content .color-info .desc{
-  font-size: 1.3rem;
-}
+  .palette-content .color-info .desc{
+    font-size: 1.3rem;
+  }
 </style>
