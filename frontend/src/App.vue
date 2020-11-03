@@ -75,11 +75,16 @@
 
 <script>
 // import HelloWorld from './components/HelloWorld';
+import { mapActions } from 'vuex'
+const landingStore = 'landingStore'
 
 export default {
   name: 'App',
   components: {
     // HelloWorld,
+  },
+  computed: {
+    
   },
   data: () => ({
     //
@@ -87,10 +92,13 @@ export default {
     group: null,
   }),
   methods: {
+    ...mapActions(landingStore, ['AC_IS_PICK', 'AC_IS_GET']),
     goHome () {
       this.$router.push({name: 'Landing'});
     },
     goPickColor () {
+      this.AC_IS_PICK(true);
+      this.AC_IS_GET(false);
       this.$router.push({name: 'Select'});
     },
     goEditing () {
