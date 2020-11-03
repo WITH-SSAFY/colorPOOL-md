@@ -43,9 +43,15 @@ public class PdfService {
     private final String pdfFolderPath = "../../colorpoolmd/pdf/";
     private final String staticFoldelPath = "./src/main/resources/static/";
     private final String newPdfFileFolder = "http://k3a501.p.ssafy.io/api-pdf/";
-    //"https://colorpool-md.s3.ap-northeast-2.amazonaws.com/pdf/"
+
+    public String getHash(String newPdfFileName){
+        long hash = 17;
+        hash = 31 * hash + newPdfFileName.hashCode();
+        return Long.toString(hash);
+    }
+
     public String savePDF(PdfModel pdfModel){
-        String newPdfFileName = getNewPdfFileName(pdfModel);
+        String newPdfFileName = getNewPdfFileName(pdfModel)+".pdf";
         String pdfS3FilePath = newPdfFileFolder+newPdfFileName;
         //pdf 저장
         try {
@@ -78,8 +84,11 @@ public class PdfService {
 
     //새로 저장할 pdf의 파일명을 지정
     public String getNewPdfFileName(PdfModel pdfModel) {
+        //난수 생성 (0~1사이)
         //count 쿼리문 실행
-        String nextPdfFileName = Long.toString(pdfJpaRepository.count() + 1)+".pdf";
+        long newPdfId = pdfJpaRepository.count() + 1;
+        String nextPdfFileName = newPdfId+".pdf";
+        nextPdfFileName = getHash(nextPdfFileName);
         return nextPdfFileName;
     }
 //    image to pdf
