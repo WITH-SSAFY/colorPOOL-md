@@ -107,7 +107,6 @@
     margin: 0;
     padding: 2%;
     height: 20vh;
-    background-color: cadetblue;
   }
 
   .editing-area.col .slide-section {

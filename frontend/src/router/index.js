@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 // import Home from '../views/Home.vue'
 import Landing from '../views/Landing.vue'
 import Edit from '../views/Edit.vue'
+import Result from '../views/Result.vue'
 import SelectPalettes from '../views/SelectPalettes'
 
 import EditKang from '../views/EditKang.vue'
@@ -47,7 +48,12 @@ const routes = [
     path: '/themeTest',
     name: 'ThemeTest',
     component: () => import('../views/getThemeTest.vue')
-  }
+  },
+  {
+    path: '/result',
+    name: 'Result',
+    component: Result
+  },
 ]
 
 const router = new VueRouter({
