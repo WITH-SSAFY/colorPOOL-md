@@ -83,9 +83,6 @@ export default {
   components: {
     // HelloWorld,
   },
-  computed: {
-    
-  },
   data: () => ({
     //
     drawer: false,

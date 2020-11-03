@@ -105,7 +105,7 @@
 
   .editing-area.col .info-section {
     margin: 0;
-    padding: 2%;
     height: 20vh;
+    padding-left: 3rem;
   }
 </style>
