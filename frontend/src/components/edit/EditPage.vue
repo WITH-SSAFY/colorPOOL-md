@@ -107,6 +107,10 @@
               <v-icon>mdi-redo-variant</v-icon>
             </button>
 
+            <button class="menubar__button" @click="showImagePrompt(commands.image)">
+              <v-icon>mdi-image-outline</v-icon>
+            </button>
+
             <button
               class="menubar__button"
               @click="commands.createTable({rowsCount: 3, colsCount: 3, withHeaderRow: false })">
@@ -148,14 +152,31 @@
               <button class="menubar__button" @click="commands.toggleCellMerge">
                   <v-icon>mdi-table-merge-cells</v-icon>
               </button>
-
+            </span>
+            <span v-if="isImage">
+              <button class="menubar__button" @click="imageSize = 0">
+                <v-icon>mdi-size-xs</v-icon>
+              </button>
+              <button class="menubar__button" @click="imageSize = 1">
+                <v-icon>mdi-size-s</v-icon>
+              </button>
+              <button class="menubar__button" @click="imageSize = 2">
+                <v-icon>mdi-size-m</v-icon>
+              </button>
+              <button class="menubar__button" @click="imageSize = 3">
+                <v-icon>mdi-size-l</v-icon>
+              </button>
+              <button class="menubar__button" @click="imageSize = 4">
+                <v-icon>mdi-size-xl</v-icon>
+              </button>
             </span>
           </div>
 
           <v-btn
             color="blue-grey"
             class="ma-2 white--text"
-            @click="loader = 'loading3'"
+            @click="clickBtn()"
+            
           >
             Import MD
             <v-icon
@@ -165,14 +186,16 @@
               mdi-file-upload
             </v-icon>
           </v-btn>
+          <input type="file" class="importMd" :class="'item' + page" accept="" @change="changeVal" style="visibility: hidden">
 
         </div>
-
       </editor-menu-bar>
 
+        
+        
       <!-- TODO : UX 개선 (Autofocus, hasFocused, scrollIntoView) -->
       <section id="container" v-focus class="editor" :class="'item' + page" :style="{'height': this.height}">
-        <editor-content ref="input" class="editor__content" :editor="editor"/>
+        <editor-content ref="input" class="editor__content" :class="'item' + page" :editor="editor"/>
         <div class="bottomSensor" :class="'item' + page"></div>
       </section>
 
@@ -182,11 +205,17 @@
       </div>
 
     </div>
+    <div class="toolbox" :class="[isToolBoxShow? 'show': '']">
+      <button style="background-color : red" @click="red">red</button>
+      <button style="background-color : blue" @click="blue">blue</button>
+      <button style="background-color : green" @click="green">green</button>
+    </div>
   </div>
 </template>
 
 <script>
   import scrollMonitor from 'scrollmonitor'
+  import markdownIt from 'markdown-it'
   require('../../assets/LiveEditStyle.css')
   import {Editor, EditorContent, EditorMenuBar} from 'tiptap'
   import {
@@ -210,8 +239,11 @@
     Table,
     TableHeader,
     TableCell,
-    TableRow
+    TableRow,
+    Image
   } from 'tiptap-extensions'
+
+  const md = new markdownIt();
   
   export default {
     name: 'EditPage',
@@ -250,18 +282,93 @@
             new Table(),
             new TableHeader(),
             new TableCell(),
-            new TableRow()
+            new TableRow(),
+            new Image(),
           ],
           content: ''
         }),
         height: null,
         isNewPage: false,
+        isToolBoxShow: false,
+        isBlock: false,
+        target: null,
+        targetStr: '',
+        isImage: false,
+        imageSize: 0,
+        img: null,
         // isNewPageCreated: true,
       }
     },
     mounted() {
       window.addEventListener('resize', this.handleResize)
-      this.loadUntilSlideIsFull()
+      this.loadUntilSlideIsFull();
+
+      // 툴박스 mouseup 이벤트 리스너
+      // document.addEventListener('mouseup', (e) => {
+      //   let str = window.getSelection().toString();
+      //   if(e.target.localName == 'button') {
+      //     this.isToolBoxShow = false;
+      //     return;
+      //   }
+      //   if(str.length == 0) {
+      //     this.target = null;
+      //     this.targetStr = '';
+      //     this.isToolBoxShow = false;
+      //   } else {
+      //     this.target = e.target;
+      //     this.targetStr = str;
+      //     this.isBlock = true;
+      //     let toolbox = document.querySelector('.toolbox');
+      //     toolbox.style.left = (e.screenX) + 'px';
+      //     toolbox.style.top = (e.screenY - 50) + 'px';
+      //     this.isToolBoxShow = true;
+      //   }
+      // })
+
+      // 이미지 이벤트 리스너
+      document.addEventListener('click', (e) => {
+        if(e.target.className.includes('mdi-size-') && this.img != null) {
+          // 이미지에 대한 크기 변경 0 -> 1 -> 2 -> 3 -> 4
+          console.log(this.imageSize, this.img);
+          // let width = this.img.target.clientWidth;
+          // let height = this.img.target.clientHeight;
+          if(this.imageSize == 0) {
+            this.img.target.style.width = '50%'
+            this.img.target.style.height = '50%'
+            // this.img.target.style.width = parseInt(width / 2);
+            // this.img.target.style.height = parseInt(height / 2);
+          } else if(this.imageSize == 1) {
+            this.img.target.style.width = '70%'
+            this.img.target.style.height = '70%'
+            // this.img.target.style.width = parseInt(width / 1.5);
+            // this.img.target.style.height = parseInt(height / 1.5);
+          } else if(this.imageSize == 2) {
+            this.img.target.style.width = '80%'
+            this.img.target.style.height = '80%'
+            // this.img.target.style.width = parseInt(width / 1.2);
+            // this.img.target.style.height = parseInt(height / 1.2);
+          } else if(this.imageSize == 3) {
+            this.img.target.style.width = '100%'
+            this.img.target.style.height = '100%'
+            // this.img.target.style.width = width;
+            // this.img.target.style.height = height;
+          } else if(this.imageSize == 4) {
+            this.img.target.style.width = '120%'
+            this.img.target.style.height = '120%'
+            // this.img.target.style.width = parseInt(width / 0.9);
+            // this.img.target.style.height = parseInt(height / 0.9);
+          }
+          this.isImage = false;
+          this.img = null;
+          return;
+        } 
+        if(e.target.localName != 'img') {
+          this.isImage = false;
+          return;
+        }
+        this.isImage = true;
+        this.img = e;
+      })
     },
     beforeDestroy() {
       this
@@ -296,6 +403,58 @@
           if(this.isNewPage) this.$emit('exitNewPage')
           this.isNewPage = false;
         })
+      },
+      red() {
+        if(this.isBlock) {
+          console.log(this.target);
+          console.log(this.target.innerHTML);
+          console.log(this.targetStr)
+          this.target.innerHTML = this.target.innerHTML.replace(this.targetStr, '<a style="color: red">' + this.targetStr + '</a>')
+        }
+        this.isBlock = false;
+        this.isToolBoxShow = false;
+      },
+      blue() {
+        if(this.isBlock) {
+          this.target.innerHTML = this.target.innerHTML.replace(this.targetStr, '<a style="color: blue">' + this.targetStr + '</a>')
+        }
+        this.isBlock = false;
+        this.isToolBoxShow = false;
+      },
+      green() {
+        if(this.isBlock) {
+          this.target.innerHTML = this.target.innerHTML.replace(this.targetStr, '<a style="color: green">' + this.targetStr + '</a>')
+        }
+        this.isBlock = false;
+        this.isToolBoxShow = false;
+      },
+      async changeVal(val) {
+        let file = val.target.files[0]
+        var reader = new FileReader();
+        
+      
+        reader.readAsText(file, /* optional */ "utf-8");
+
+        const result = await new Promise((resolve) => {
+          reader.onload = function(event) {
+            console.log(event);
+            resolve(md.render(reader.result))
+          }
+        })
+        this.editor.content = result;
+        // console.log(document.querySelector('.editor__content.item' + this.page + ' .ProseMirror').innerHTML)
+        document.querySelector('.editor__content.item' + this.page + ' .ProseMirror').innerHTML = result;
+        console.log(document.querySelector('.editor__content.item' + this.page + ' .ProseMirror').innerHTML)
+      },
+      clickBtn() {
+        document.querySelector('.importMd.item' + this.page).click();
+        this.loader = 'loading3'
+      },
+      showImagePrompt(command) {
+        const src = prompt('Enter the url of your image here')
+        if (src !== null) {
+          command({ src })
+        }
       }
     },
     directives: {
@@ -307,15 +466,15 @@
         }
       }
     },
-    watch: {
-      isNewPage (val) {
-        if (val) {
-          setTimeout(() => {
-            this.$refs.input.focus();
-          }, 10);
-        }
-      }
-    }
+    // watch: {
+    //   isNewPage (val) {
+    //     if (val) {
+    //       setTimeout(() => {
+    //         this.$refs.input.focus();
+    //       }, 10);
+    //     }
+    //   }
+    // }
   }
 </script>
 
@@ -397,5 +556,28 @@
     -moz-box-shadow: 5px 5px 10px -5px rgba(0,0,0,0.75);
     box-shadow: 5px 5px 10px -5px rgba(0,0,0,0.75);
   }
+
+  /* =================== TOOL BOX COLOR =================== */
+  .toolbox {
+    position: absolute;
+    width: 200px;
+    height: 50px;
+    /* visibility: hidden; */
+    opacity: 0;
+    transition-duration: 300ms;
+  }
+
+  .toolbox.show {
+    /* visibility: visible; */
+    opacity: 1;
+    transition-duration: 300ms;
+  }
+
+  * >>> blockquote {
+    border-left: 8px solid #ccc;
+    margin: 10px;
+    padding: 10px;
+  }
+  /* ====================================================== */
 
 </style>
