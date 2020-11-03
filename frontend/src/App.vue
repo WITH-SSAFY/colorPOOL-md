@@ -61,3 +61,6 @@ export default {
   }),
 };
 </script>
+<style>
+  *{ font-family: 'Proxima Nova Alt', 'Spoqa Han Sans'; }
+</style>
