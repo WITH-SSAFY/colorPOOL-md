@@ -42,10 +42,11 @@ public class PdfService {
     private final S3api s3api;
     private final String pdfFolderPath = "../../colorpoolmd/pdf/";
     private final String staticFoldelPath = "./src/main/resources/static/";
-
+    private final String newPdfFileFolder = "http://k3a501.p.ssafy.io/api-pdf/";
+    //"https://colorpool-md.s3.ap-northeast-2.amazonaws.com/pdf/"
     public String savePDF(PdfModel pdfModel){
         String newPdfFileName = getNewPdfFileName(pdfModel);
-        String pdfS3FilePath = "https://colorpool-md.s3.ap-northeast-2.amazonaws.com/pdf/"+newPdfFileName;
+        String pdfS3FilePath = newPdfFileFolder+newPdfFileName;
         //pdf 저장
         try {
             MultipartFile pdfFile = createPdf(pdfModel, newPdfFileName);
@@ -111,7 +112,7 @@ public class PdfService {
     //html to pdf
     public MultipartFile createPdf(PdfModel pdfModel, String newPdfFileName) throws DocumentException, IOException, CPdfNotCreateException {
         String pdfFilePath = pdfFolderPath+newPdfFileName;
-        pdfModel.setPath(pdfFilePath);
+        pdfModel.setPath(newPdfFileFolder+newPdfFileName);
         String pdfContents = pdfModel.getContents();
 
 
