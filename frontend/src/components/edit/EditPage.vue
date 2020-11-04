@@ -191,7 +191,7 @@
         </div>
       </editor-menu-bar>
 
-      <section id="container" class="editor" :class="'item' + page" :style="{'height': this.height}">
+      <section id="container" class="editor" :class="'item' + page" :style="{'height': this.height}" style="overflow: hidden;">
         <editor-content v-focus class="editor__content" :class="'item' + page" :editor="editor"/>
         <div class="bottomSensor" :class="'item' + page"></div>
       </section>
@@ -508,11 +508,16 @@
   }
 
   .slide-section .menu-box .menubar {
-    width: 70%;
+    width: 100%;
   }
 
   .slide-section .menu-box .menubar button {
     margin: 0 0.5%;
+  }
+
+  .slide-section section {
+    overflow: hidden;
+    min-width: 800px;
   }
 
   .slide-section .editor {
@@ -522,7 +527,7 @@
     overflow-y: scroll;
   }
   
-  .slide-section .editor:before {
+  .slide-section .editor:before {   
     content: "";
     display: block;
     padding-top: 56.25%;
