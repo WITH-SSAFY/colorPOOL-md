@@ -191,9 +191,8 @@
         </div>
       </editor-menu-bar>
 
-      <!-- TODO : UX 개선 (Autofocus, hasFocused, scrollIntoView) -->
-      <section id="container" v-focus class="editor" :class="'item' + page" :style="{'height': this.height}">
-        <editor-content ref="input" class="editor__content" :class="'item' + page" :editor="editor"/>
+      <section id="container" class="editor" :class="'item' + page" :style="{'height': this.height}">
+        <editor-content v-focus class="editor__content" :class="'item' + page" :editor="editor"/>
         <div class="bottomSensor" :class="'item' + page"></div>
       </section>
 
@@ -375,10 +374,10 @@
       window.removeEventListener('resize', this.handleResize)
     },
     methods: {
-      handleResize() {
+      handleResize () {
         this.height = document.querySelector("#container").clientHeight
       },
-      loadUntilSlideIsFull: function () {
+      loadUntilSlideIsFull () {
         if(this.isNewPage) return;
         document.querySelector("#container").style.height = this.height;
 
@@ -457,22 +456,14 @@
     },
     directives: {
       focus: {
-        inserted: function (el) {
-          console.log(el)
-          el.focus();
-          el.scrollIntoView(false);
+        inserted (el) {
+          setTimeout(() => {
+            el.firstChild.focus();
+            el.scrollIntoView({behavior: "smooth"});
+          }, 10);
         }
       }
     },
-    // watch: {
-    //   isNewPage (val) {
-    //     if (val) {
-    //       setTimeout(() => {
-    //         this.$refs.input.focus();
-    //       }, 10);
-    //     }
-    //   }
-    // }
   }
 </script>
 
