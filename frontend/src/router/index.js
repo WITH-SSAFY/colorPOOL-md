@@ -7,6 +7,8 @@ import Result from '../views/Result.vue'
 import SelectPalettes from '../views/SelectPalettes'
 
 import EditKang from '../views/EditKang.vue'
+import Editing from '../components/edit/Editing'
+import Coloring from '../components/edit/Coloring'
 
 Vue.use(VueRouter)
 
@@ -24,7 +26,19 @@ const routes = [
   {
     path: '/edit',
     name: 'Edit',
-    component: Edit
+    component: Edit,
+    children: [
+      {
+        path: 'md',
+        name: 'Editing',
+        component: Editing
+      },
+      {
+        path: 'color',
+        name: 'Coloring',
+        component: Coloring
+      }
+    ]
   },
   {
     path: '/edit_kang',

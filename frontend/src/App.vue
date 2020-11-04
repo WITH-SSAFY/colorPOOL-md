@@ -99,10 +99,10 @@ export default {
       this.$router.push({name: 'Select'});
     },
     goEditing () {
-      this.$router.push({name: 'Edit'});
+      this.$router.push({name: 'Editing'});
     },
     goColoring () {
-      this.$router.push({name: 'Edit'});
+      this.$router.push({name: 'Coloring'});
     },
     goFinal () {
       this.$router.push({name: 'Result'});

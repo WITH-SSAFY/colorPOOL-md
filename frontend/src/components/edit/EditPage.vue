@@ -175,7 +175,7 @@
 
           <v-btn
             color="blue-grey"
-            class="ma-2 white--text"
+            class="btnImport ma-2 white--text"
             @click="clickBtn()"
           >
             Import MD
@@ -202,17 +202,19 @@
       </div>
 
     </div>
-    <div class="toolbox" :class="[isToolBoxShow? 'show': '']">
+    <!-- 컬러 툴박스 (임시) -->
+    <!-- <div class="toolbox" :class="[isToolBoxShow? 'show': '']">
       <button style="background-color : red" @click="red">red</button>
       <button style="background-color : blue" @click="blue">blue</button>
       <button style="background-color : green" @click="green">green</button>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
   import scrollMonitor from 'scrollmonitor'
   import markdownIt from 'markdown-it'
+  import {mapActions} from 'vuex'
   require('../../assets/LiveEditStyle.css')
   import {Editor, EditorContent, EditorMenuBar} from 'tiptap'
   import {
@@ -239,9 +241,10 @@
     TableRow,
     Image
   } from 'tiptap-extensions'
-
-  const md = new markdownIt();
   
+  const md = new markdownIt();
+  const contentStore = 'contentStore';
+
   export default {
     name: 'EditPage',
     components: {
@@ -286,18 +289,25 @@
         }),
         height: null,
         isNewPage: false,
-        isToolBoxShow: false,
-        isBlock: false,
-        target: null,
-        targetStr: '',
+        // isToolBoxShow: false,
+        // isBlock: false,
+        // target: null,
+        // targetStr: '',
         isImage: false,
         imageSize: 0,
         img: null,
+        isContentStored: false,
+        handler: null,
         // isNewPageCreated: true,
       }
     },
     mounted() {
       window.addEventListener('resize', this.handleResize)
+      // window.addEventListener('keydown', this.handleContent);
+      this.handler = setInterval(() => {
+        this.handleContent();
+      }, 3000);
+
       this.loadUntilSlideIsFull();
 
       // 툴박스 mouseup 이벤트 리스너
@@ -330,28 +340,28 @@
           // let width = this.img.target.clientWidth;
           // let height = this.img.target.clientHeight;
           if(this.imageSize == 0) {
-            this.img.target.style.width = '50%'
-            this.img.target.style.height = '50%'
+            this.img.target.style.width = '20%'
+            this.img.target.style.height = '20%'
             // this.img.target.style.width = parseInt(width / 2);
             // this.img.target.style.height = parseInt(height / 2);
           } else if(this.imageSize == 1) {
-            this.img.target.style.width = '70%'
-            this.img.target.style.height = '70%'
+            this.img.target.style.width = '40%'
+            this.img.target.style.height = '40%'
             // this.img.target.style.width = parseInt(width / 1.5);
             // this.img.target.style.height = parseInt(height / 1.5);
           } else if(this.imageSize == 2) {
-            this.img.target.style.width = '80%'
-            this.img.target.style.height = '80%'
+            this.img.target.style.width = '50%'
+            this.img.target.style.height = '50%'
             // this.img.target.style.width = parseInt(width / 1.2);
             // this.img.target.style.height = parseInt(height / 1.2);
           } else if(this.imageSize == 3) {
-            this.img.target.style.width = '100%'
-            this.img.target.style.height = '100%'
+            this.img.target.style.width = '80%'
+            this.img.target.style.height = '80%'
             // this.img.target.style.width = width;
             // this.img.target.style.height = height;
           } else if(this.imageSize == 4) {
-            this.img.target.style.width = '120%'
-            this.img.target.style.height = '120%'
+            this.img.target.style.width = '100%'
+            this.img.target.style.height = '100%'
             // this.img.target.style.width = parseInt(width / 0.9);
             // this.img.target.style.height = parseInt(height / 0.9);
           }
@@ -372,12 +382,24 @@
         .editor
         .destroy()
       window.removeEventListener('resize', this.handleResize)
+      clearInterval(this.handler);
     },
     methods: {
-      handleResize () {
+      ...mapActions(contentStore, ['AC_CONTENTS']),
+      handleResize() {
         this.height = document.querySelector("#container").clientHeight
       },
-      loadUntilSlideIsFull () {
+      handleContent () {
+        // if(this.isContentStored) return;
+        // this.isContentStored = true;
+        const payload = {
+          page: this.page,
+          content: document.querySelector('.editor__content.item' + this.page +' .ProseMirror').innerHTML
+        }
+        this.AC_CONTENTS(payload);
+        // setTimeout(() => {this.isContentStored = false}, 3000);
+      },
+      loadUntilSlideIsFull: function () {
         if(this.isNewPage) return;
         document.querySelector("#container").style.height = this.height;
 
@@ -464,6 +486,19 @@
         }
       }
     },
+    computed: {
+    },
+    watch: {
+    }
+    // watch: {
+    //   isNewPage (val) {
+    //     if (val) {
+    //       setTimeout(() => {
+    //         this.$refs.input.focus();
+    //       }, 10);
+    //     }
+    //   }
+    // }
   }
 </script>
 
@@ -503,12 +538,12 @@
     justify-content: space-between;
     align-items: center;
     height: 10vh;
-    width: 85%;
+    width: 100%;
     margin-left: 7.5%;
   }
 
   .slide-section .menu-box .menubar {
-    width: 70%;
+    width: 100%;
   }
 
   .slide-section .menu-box .menubar button {
@@ -567,6 +602,10 @@
     border-left: 8px solid #ccc;
     margin: 10px;
     padding: 10px;
+  }
+
+  .btnImport {
+    
   }
   /* ====================================================== */
 
