@@ -96,7 +96,7 @@
             </button>
 
             <button class="menubar__button" @click="commands.horizontal_rule">
-              hr
+              <p style="font-size: 1.2rem; font-weight: bold; color: #666;">hr</p>
             </button>
 
             <button class="menubar__button" @click="commands.undo">
@@ -153,6 +153,7 @@
                   <v-icon>mdi-table-merge-cells</v-icon>
               </button>
             </span>
+
             <span v-if="isImage">
               <button class="menubar__button" @click="imageSize = 0">
                 <v-icon>mdi-size-xs</v-icon>
@@ -176,7 +177,6 @@
             color="blue-grey"
             class="ma-2 white--text"
             @click="clickBtn()"
-            
           >
             Import MD
             <v-icon
@@ -191,8 +191,6 @@
         </div>
       </editor-menu-bar>
 
-        
-        
       <!-- TODO : UX 개선 (Autofocus, hasFocused, scrollIntoView) -->
       <section id="container" v-focus class="editor" :class="'item' + page" :style="{'height': this.height}">
         <editor-content ref="input" class="editor__content" :class="'item' + page" :editor="editor"/>
@@ -479,10 +477,6 @@
 </script>
 
 <style scoped>
-  .slide-section {
-    background-color: rgba(238, 238, 238, 0.7);
-  }
-
   .slide-section .arrow {
     display: flex;
     margin: 0 3.5%;
@@ -555,6 +549,11 @@
     -webkit-box-shadow: 5px 5px 10px -5px rgba(0,0,0,0.75);
     -moz-box-shadow: 5px 5px 10px -5px rgba(0,0,0,0.75);
     box-shadow: 5px 5px 10px -5px rgba(0,0,0,0.75);
+  }
+
+  .v-btn {
+    font-size: 1.1rem;
+    font-weight: bold;
   }
 
   /* =================== TOOL BOX COLOR =================== */
