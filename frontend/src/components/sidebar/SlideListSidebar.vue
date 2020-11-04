@@ -34,9 +34,13 @@ export default {
 </script>
 
 <style scoped>
+  html, body {
+    height: 100%;
+  }
+
   .slide-list-wrap{
     width: 100%;
-    height: 100vh;
+    height: 100%;
     padding-top: 25px;
     border-right: 3px solid #707070;
     overflow: scroll;
