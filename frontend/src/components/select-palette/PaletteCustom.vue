@@ -125,7 +125,7 @@ export default {
       this.AC_FINAL_THEME(this.colors);
       this.isLoading = true;
       setTimeout(() => {
-        this.$router.push({name: 'Edit'})
+        this.$router.push({name: 'Editing'})
       }, 1500);
     },
     setBackgroundColor(color) {
