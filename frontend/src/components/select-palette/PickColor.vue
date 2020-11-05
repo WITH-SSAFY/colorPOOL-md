@@ -44,28 +44,15 @@ const themeStore = 'themeStore'
 
 export default {
   name: 'PickColor',
+
   created() {
     if(this.storeSelectedColor == null) {
-      this.AC_SELECTED_COLOR('#F44336');
-      this.AC_THEME_LIST(6);
-      this.currentColor = '#F44336';
-      this.currentColorName = 'Red Orange'
+      this.setInitColor('#F44336')
     } else {
-      this.materialColors.forEach((color) => {
-        color.variations.forEach((ele) => {
-          if(ele.hex == this.storeSelectedColor) {
-            this.currentColor = ele.hex;
-            this.currentColorName = ele.name;
-            this.AC_THEME_LIST(ele.id);
-            this.variations = color.variations;
-            return;
-          }
-        })
-      })
+      this.setInitColor(this.storeSelectedColor);
     }
-    
-    // console.log(this.storeSelectedColor)
   },
+
   computed : {
     ...mapGetters(colorStore, { storeSelectedColor: 'GE_SELECTED_COLOR'})
   },
@@ -81,6 +68,28 @@ export default {
   methods:{
     ...mapActions(colorStore, ['AC_SELECTED_COLOR']),
     ...mapActions(themeStore, ['AC_THEME_LIST']),
+
+    /* 
+      색깔 hex값을 parameter로 하는 함수
+      - parameter : 색깔 hex
+      - result :  현재 색깔(currentColor), 이름(currentColorName),
+                  배색 (AC_THEME_LIST), 변주(variations)
+    */
+    setInitColor(storedColor) {
+      this.materialColors.forEach((color) => {
+        color.variations.forEach((ele) => {
+          if(ele.hex == storedColor) {
+            this.currentColor = ele.hex;
+            this.currentColorName = ele.name;
+            this.AC_THEME_LIST(ele.id);
+            this.variations = color.variations;
+            return;
+          }
+        })
+      })
+    },
+
+
     selectColor(color){
       // alert('selected Color : '+this.currentColor)
       this.selectedColor = color.hex;

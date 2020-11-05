@@ -3,7 +3,7 @@
     <v-row class="edit wrap">
       <div class="slide-sidebar wrap"><slide-list-sidebar/></div>
       <!-- <div class="editing-area wrap"><editing/></div> -->
-      <router-view></router-view>
+      <router-view style="width: 70%"></router-view>
     </v-row>
   </div>
 </template>
