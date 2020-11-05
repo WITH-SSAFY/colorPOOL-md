@@ -44,13 +44,13 @@ public class S3api {
                 .build();
     }
 
-    public String upload(MultipartFile file, String fileType) throws IOException {
+    public String upload(MultipartFile file, String subPath) throws IOException {
         String fileName = file.getOriginalFilename();
         ObjectMetadata meta = new ObjectMetadata();
         meta.setContentLength(file.getSize());
-        String bucketName = bucket+"/"+fileType;
+        String realPath = bucket+subPath;
 
-        s3Client.putObject(new PutObjectRequest(bucketName, fileName, file.getInputStream(), meta)
+        s3Client.putObject(new PutObjectRequest(realPath, fileName, file.getInputStream(), meta)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
         return s3Client.getUrl(bucket, fileName).toString();
     }

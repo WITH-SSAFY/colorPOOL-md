@@ -38,33 +38,27 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class PdfService {
     private final PdfJpaRepository pdfJpaRepository;
     private final S3api s3api;
-    private final String pdfFolderPath = "../../colorpoolmd/pdf/";
+
+    private final String tempPdfFolder = "../../colorpoolmd/pdf/";
     private final String imageFolderPath = "../../colorpoolmd/image/";
+    private final String staticFolder = "./src/main/resources/static/";
+    private final String pdfFolder = "http://k3a501.p.ssafy.io/api-pdf/";
+    private final String imageFolder = "http://k3a501.p.ssafy.io/api-image/";
 
-    private final String staticFoldelPath = "./src/main/resources/static/";
-    private final String newPdfFileFolder = "http://k3a501.p.ssafy.io/api-pdf/";
-    private final String newImageFileFolder = "http://k3a501.p.ssafy.io/api-image/";
+    public String uploadPdf(PdfModel pdfModel){
+        String newPdfName = getNewPdfName();
+        String newPdfPath = pdfFolder+newPdfName;
 
-
-    public String getHash(String newPdfFileName){
-        long hash = 17;
-        hash = 31 * hash + newPdfFileName.hashCode();
-        return Long.toString(hash);
-    }
-
-    public String savePDF(PdfModel pdfModel){
-        String newPdfFileName = getNewPdfFileName()+".pdf";
-        String pdfS3FilePath = newPdfFileFolder+newPdfFileName;
-        //pdf 저장
         try {
-            MultipartFile pdfFile = createPdf(pdfModel, newPdfFileName);
-            s3api.upload(pdfFile,"pdf");
+            MultipartFile pdfFile = createPdf(pdfModel, newPdfName);
+            s3api.upload(pdfFile,"/pdf");
             Pdf new_pdf = Pdf.builder()
                     .contents(pdfModel.getContents())
                     .path(pdfModel.getPath())
@@ -73,38 +67,138 @@ public class PdfService {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return pdfS3FilePath;
-//        return createPdfByWk();
-//        return createPdfhtmltopdf(pdfModel.getContents());
-//        return createPdfByopenhtml(pdfModel.getContents());
+        return newPdfPath;
     }
 
-    @Transactional
-    public String updatePDF(Pdf pdf){
-        String result="";
+    public String uploadImage(){
+        String newImageName = "batt.jpg";
+        String newImagePath = imageFolder+newImageName;
+        String type = newImageName.split("[.]")[1];
 
-        return result;
+        //////// this codes will be removed, just for test //////
+        Path path = Paths.get(imageFolderPath+newImageName);
+        String contentType = getContentType(type);
+        byte[] content = null;
+        try {
+            content = Files.readAllBytes(path);
+        } catch (final IOException e) {
+        }
+        /////////////////////////////////////////////////////////
+
+        MultipartFile imageMultipartFile = new MockMultipartFile(newImageName,
+                newImageName, contentType, content);
+        try{
+            s3api.upload(imageMultipartFile,"/image");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return newImagePath;
     }
 
-    public String downloadPdf(){
-        String result="";
-
-        return result;
+    public String getNewPdfName() {
+        Optional<Pdf> lastPdf = pdfJpaRepository.findFirstByOrderByIdDesc();
+        long newPdfId = 1;
+        if(lastPdf.isPresent()){
+            newPdfId = lastPdf.get().getId()+1;
+        }
+        String newPdfName = newPdfId+".pdf";
+        newPdfName = getHash(newPdfName)+".pdf";
+        return newPdfName;
     }
 
-
-    //새로 저장할 pdf의 파일명을 지정
-    public String getNewPdfFileName() {
-        //난수 생성 (0~1사이)
-        //count 쿼리문 실행
-        long newPdfId = pdfJpaRepository.count() + 1;
-        String nextPdfFileName = newPdfId+".pdf";
-        nextPdfFileName = getHash(nextPdfFileName);
-        return nextPdfFileName;
+    private String getContentType(String type) {
+        if(type.equals("jpg")){
+            type = "jpeg";
+        }
+        return "application/"+type;
     }
 
+    public String getHash(String newPdfFileName){
+        long hash = 17;
+        hash = 31 * hash + newPdfFileName.hashCode();
+        return Long.toString(hash);
+    }
 
-//    image to pdf
+    //html to pdf using itext
+    public MultipartFile createPdf(PdfModel pdfModel, String newPdfName) throws DocumentException, IOException, CPdfNotCreateException {
+        String tempPdfPath = tempPdfFolder+newPdfName;
+        pdfModel.setPath(pdfFolder+newPdfName);
+        String contents = pdfModel.getContents();
+
+        String pageCloseTag = "</div>";
+        String[] pageContentsArr = contents.split(pageCloseTag);
+        ArrayList<String> pageContentsList = new ArrayList<>();
+        for(String pageContents : pageContentsArr){
+            pageContents += pageCloseTag;
+            pageContentsList.add(pageContents);
+        }
+
+        File tempSaveFolder = new File(tempPdfFolder);
+        if(!tempSaveFolder.exists() || tempSaveFolder.isFile()){
+            tempSaveFolder.mkdirs();
+        }
+
+        File tempPdf = new File(tempPdfPath);
+        if(tempPdf.isFile()){
+            tempPdf.delete();
+        }
+
+        //pdf init settings
+        Rectangle pageSize = new RectangleReadOnly(795,445);
+        Document document = new Document(pageSize,0,0,0,0);
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(tempPdfPath));
+        document.open();
+
+        for(String pageContents : pageContentsList){
+            String realContents = "<html><body style='family: NotoSansKR;'>" + pageContents + "</body></html>";
+            XMLWorkerHelper helper = XMLWorkerHelper.getInstance();
+
+            //css
+            CSSResolver cssResolver = new StyleAttrCSSResolver();
+            CssFile cssFile = helper.getCSS(new FileInputStream(staticFolder+"pdf.css"));
+            cssResolver.addCss(cssFile);
+
+            //font
+            XMLWorkerFontProvider fontProvider = new XMLWorkerFontProvider(XMLWorkerFontProvider.DONTLOOKFORFONTS);
+            fontProvider.register(staticFolder + "NotoSansKR-Regular.otf", "NotoSansKR");
+            CssAppliers cssAppliers = new CssAppliersImpl(fontProvider);
+
+            HtmlPipelineContext htmlContext = new HtmlPipelineContext(cssAppliers);
+            htmlContext.setTagFactory(Tags.getHtmlTagProcessorFactory());
+
+            PdfWriterPipeline pdf = new PdfWriterPipeline(document, writer);
+            HtmlPipeline html = new HtmlPipeline(htmlContext, pdf);
+            CssResolverPipeline css = new CssResolverPipeline(cssResolver, html);
+
+            XMLWorker worker = new XMLWorker(css, true);
+            XMLParser xmlParser = new XMLParser(worker, Charset.forName("UTF-8"));
+
+            StringReader strReader = new StringReader(realContents);
+            xmlParser.parse(strReader);
+            document.newPage();
+        }
+        document.close();
+        writer.close();
+
+        // transform pdf to multipartfile
+        Path path = Paths.get(tempPdfPath);
+        String contentType = "application/pdf";
+        byte[] content = null;
+        try {
+            content = Files.readAllBytes(path);
+        } catch (IOException e) {
+        }
+        MultipartFile pdfMultipartFile = new MockMultipartFile(newPdfName,
+                newPdfName, contentType, content);
+
+        //remove tempPdfFile
+        if(tempPdf.isFile()){
+            tempPdf.delete();
+        }
+
+        return pdfMultipartFile;
+    }
+    //    image to pdf
 //    public void createPDF(PdfModel pdfModel) throws DocumentException, IOException{
 //        String pdfFilePath = pdfModel.getPath();
 //        pdfFilePath += ".pdf";
@@ -131,98 +225,6 @@ public class PdfService {
 //        System.out.println("Image added");
 //
 //    }
-    //html to pdf using itext
-    public MultipartFile createPdf(PdfModel pdfModel, String newPdfFileName) throws DocumentException, IOException, CPdfNotCreateException {
-        String pdfFilePath = pdfFolderPath+newPdfFileName;
-        pdfModel.setPath(newPdfFileFolder+newPdfFileName);
-        String pdfContents = pdfModel.getContents();
-        ///section tag parsing
-        String[] sectionArr = pdfContents.split("</section>");
-        ArrayList<String> sectionPdfContents = new ArrayList<>();
-        for(String section : sectionArr){
-            String[] tmp = section.split("<section>");
-            sectionPdfContents.add(tmp[1]);
-        }
-
-        File saveFolder = new File(pdfFolderPath);
-        if(!saveFolder.exists() || saveFolder.isFile()){
-            saveFolder.mkdirs();
-        }
-
-        //pdf 설정
-        Rectangle pageSize = new RectangleReadOnly(795,445);//ppt real size (960,540)
-        Document document = new Document(pageSize,80,80,40,40);
-
-        //public static final Rectangle A4 = new RectangleReadOnly(595,842);
-        ///** This is the a5 format *
-        ///public static final Rectangle A5 = new RectangleReadOnly(420,595);
-        File pdfFile = new File(pdfFilePath);
-        if(pdfFile.isFile()){
-            pdfFile.delete();
-        }
-
-        //pdf를 만드는 작업
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
-        document.open();
-
-        //이미지 태그 절대경로 사용해야 한다.(반드시)
-        //pdfContents = pdfContents.replaceAll("src=\"/", "src=\"http://127.0.0.1:8080/");
-
-        //img src가 local 인 경우
-        //s3 저장해야함
-
-        //폰트를 설정한다. 폰트 설정 누락시 한글이 안보이는 경우 발생
-        for(String contents : sectionPdfContents){
-            String realContents = "<html><body style='font-family: NotoSansKR;'>" + contents + "</body></html>";
-            XMLWorkerHelper helper = XMLWorkerHelper.getInstance();
-
-            //System.out.println(realContents);
-            //css
-            CSSResolver cssResolver = new StyleAttrCSSResolver();
-            CssFile cssFile = helper.getCSS(new FileInputStream(staticFoldelPath+"pdf.css"));
-            cssResolver.addCss(cssFile);
-
-            //font
-            XMLWorkerFontProvider fontProvider = new XMLWorkerFontProvider(XMLWorkerFontProvider.DONTLOOKFORFONTS);
-            fontProvider.register(staticFoldelPath + "NotoSansKR-Regular.otf", "NotoSansKR");
-            CssAppliers cssAppliers = new CssAppliersImpl(fontProvider);
-
-            HtmlPipelineContext htmlContext = new HtmlPipelineContext(cssAppliers);
-            htmlContext.setTagFactory(Tags.getHtmlTagProcessorFactory());
-
-            // html을 pdf로 변환시작
-            PdfWriterPipeline pdf = new PdfWriterPipeline(document, writer);
-            HtmlPipeline html = new HtmlPipeline(htmlContext, pdf);
-            CssResolverPipeline css = new CssResolverPipeline(cssResolver, html);
-
-            XMLWorker worker = new XMLWorker(css, true);
-            XMLParser xmlParser = new XMLParser(worker, Charset.forName("UTF-8"));
-
-            StringReader strReader = new StringReader(realContents);
-            xmlParser.parse(strReader);
-            document.newPage();
-        }
-        document.close();
-        writer.close();
-
-        //첨부파일 형태로 추가하기 위해서 MultipartFile을 만들어 준다.
-        Path path = Paths.get(pdfFilePath);
-        String contentType = "application/pdf";
-        byte[] content = null;
-        try {
-            content = Files.readAllBytes(path);
-        } catch (final IOException e) {
-        }
-
-        MultipartFile result = new MockMultipartFile(newPdfFileName,
-                newPdfFileName, contentType, content);
-
-        //원본파일 삭제
-        if(pdfFile.isFile()){
-            pdfFile.delete();
-        }
-        return result;
-    }
 
 //    public String createPdfByWk(){
 //        //com.github.jhonnymertz.wkhtmltopdf.wrapper.Pdf pdfWrapper =  new com.github.jhonnymertz.wkhtmltopdf.wrapper.Pdf();
