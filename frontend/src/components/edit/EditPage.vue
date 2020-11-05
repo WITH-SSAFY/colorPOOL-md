@@ -254,6 +254,9 @@
     props: {
       page: {
         default: void 0
+      },
+      content_parent: {
+        default: void 0
       }
     },
     data() {
@@ -285,7 +288,7 @@
             new TableRow(),
             new Image(),
           ],
-          content: ''
+          content: this.content_parent
         }),
         height: null,
         isNewPage: false,
@@ -302,6 +305,7 @@
       }
     },
     mounted() {
+      // this.editor.content = this.content_parent;
       window.addEventListener('resize', this.handleResize)
       // window.addEventListener('keydown', this.handleContent);
       this.handler = setInterval(() => {
@@ -394,7 +398,7 @@
         // this.isContentStored = true;
         const payload = {
           page: this.page,
-          content: document.querySelector('.editor__content.item' + this.page +' .ProseMirror').innerHTML
+          content: '<section>' + document.querySelector('.editor__content.item' + this.page +' .ProseMirror').innerHTML + '</section>'
         }
         this.AC_CONTENTS(payload);
         // setTimeout(() => {this.isContentStored = false}, 3000);
