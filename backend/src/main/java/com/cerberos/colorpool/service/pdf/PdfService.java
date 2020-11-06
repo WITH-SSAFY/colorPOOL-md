@@ -1,5 +1,6 @@
 package com.cerberos.colorpool.service.pdf;
 
+import com.cerberos.colorpool.advice.exception.CImageNotUploadException;
 import com.cerberos.colorpool.advice.exception.CPdfNotCreateException;
 import com.cerberos.colorpool.advice.exception.CThemeNotFoundException;
 import com.cerberos.colorpool.entity.pdf.Pdf;
@@ -24,6 +25,7 @@ import com.itextpdf.tool.xml.pipeline.css.CssResolverPipeline;
 import com.itextpdf.tool.xml.pipeline.end.PdfWriterPipeline;
 import com.itextpdf.tool.xml.pipeline.html.HtmlPipeline;
 import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
+import javassist.tools.reflect.CannotInvokeException;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.mock.web.MockMultipartFile;
@@ -65,7 +67,7 @@ public class PdfService {
                     .build();
             pdfJpaRepository.save(new_pdf);
         }catch (Exception e){
-            e.printStackTrace();
+            throw new CPdfNotCreateException();
         }
         return newPdfPath;
     }
@@ -81,7 +83,7 @@ public class PdfService {
         byte[] content = null;
         try {
             content = Files.readAllBytes(path);
-        } catch (final IOException e) {
+        } catch (IOException e) {
         }
         /////////////////////////////////////////////////////////
 
@@ -90,7 +92,7 @@ public class PdfService {
         try{
             s3api.upload(imageMultipartFile,"/image");
         }catch (Exception e){
-            e.printStackTrace();
+            throw new CImageNotUploadException();
         }
         return newImagePath;
     }

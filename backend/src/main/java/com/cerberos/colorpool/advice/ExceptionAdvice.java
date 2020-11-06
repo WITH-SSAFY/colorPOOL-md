@@ -1,5 +1,6 @@
 package com.cerberos.colorpool.advice;
 
+import com.cerberos.colorpool.advice.exception.CImageNotUploadException;
 import com.cerberos.colorpool.advice.exception.CPdfNotCreateException;
 import com.cerberos.colorpool.advice.exception.CThemeNotFoundException;
 import com.cerberos.colorpool.repository.response.CommonResult;
@@ -37,6 +38,12 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult pdfNotCreateException(HttpServletRequest request, CPdfNotCreateException e){
         return responseService.getFailResult(Integer.parseInt(getMessage("pdfNotCreateException.code")),getMessage("pdfNotCreateException.msg"));
+    }
+
+    @ExceptionHandler(CImageNotUploadException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult imageNotUploadException(HttpServletRequest request, CImageNotUploadException e){
+        return responseService.getFailResult(Integer.parseInt(getMessage("imageNotUploadException.code")),getMessage("imageNotUploadException.msg"));
     }
 
 
