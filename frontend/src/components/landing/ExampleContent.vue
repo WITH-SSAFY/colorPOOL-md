@@ -140,7 +140,8 @@ h1, h2, h3{
 }
 
 .background{
-  padding: 5%;
+  padding: 0 5%;
+  padding-bottom: 5%;
   height: 100%;
   width: 100%;
 }
