@@ -214,6 +214,8 @@
 <script>
   import scrollMonitor from 'scrollmonitor'
   import markdownIt from 'markdown-it'
+  import hljs from 'highlight.js/lib/core'
+  import 'highlight.js/styles/github.css'
   import {mapActions} from 'vuex'
   require('../../assets/LiveEditStyle.css')
   import {Editor, EditorContent, EditorMenuBar} from 'tiptap'
@@ -315,6 +317,9 @@
         handler: null,
         // isNewPageCreated: true,
       }
+    },
+    created() {
+      hljs.initHighlightingOnLoad()
     },
     mounted() {
       // this.editor.content = this.content_parent;
@@ -620,6 +625,8 @@
 </style>
 
 <style lang="scss">
+  @import '~highlight.js/styles/github.css';
+  // @import '~highlight.js/styles/atom-one-dark.css';
   pre {
     &::before {
       content: attr(data-language);
