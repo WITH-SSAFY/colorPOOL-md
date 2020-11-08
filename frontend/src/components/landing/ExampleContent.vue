@@ -66,7 +66,6 @@ export default {
       this.changeColors();
     },
     storeIsFlagChanged() {
-      // alert("!!")
       console.log(this.storeFlagDemoTheme);
       this.flagDemoTheme = this.storeFlagDemoTheme;
       this.changeColors();
