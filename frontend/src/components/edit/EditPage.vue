@@ -1,8 +1,37 @@
 <template>
   <div>
     <div class="slide-section">
+      
       <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
+        
         <div class="menu-box">
+          <!-- <div class="toolbox" :class="['item' + page, isToolBoxShow? 'show': '']">
+            <button
+              class="toolbox-btn" :style="{'background-color': storeFinalTheme[0]}"
+              :class="{ 'is-active': isActive.customstyle({ level: 'color1' }) }"
+              @click="commands.customstyle({ level: 'color1' })"
+            ></button>
+            <button
+              class="toolbox-btn" :style="{'background-color': storeFinalTheme[1]}"
+              :class="{ 'is-active': isActive.customstyle({ level: 'color2' }) }"
+              @click="commands.customstyle({ level: 'color2' })"
+            ></button>
+            <button
+              class="toolbox-btn" :style="{'background-color': storeFinalTheme[2]}"
+              :class="{ 'is-active': isActive.customstyle({ level: 'color3' }) }"
+              @click="commands.customstyle({ level: 'color3' })"
+            ></button>
+            <button
+              class="toolbox-btn" :style="{'background-color': storeFinalTheme[3]}"
+              :class="{ 'is-active': isActive.customstyle({ level: 'color4' }) }"
+              @click="commands.customstyle({ level: 'color4' })"
+            ></button>
+            <button
+              class="toolbox-btn" :style="{'background-color': storeFinalTheme[4]}"
+              :class="{ 'is-active': isActive.customstyle({ level: 'color5' }) }"
+              @click="commands.customstyle({ level: 'color5' })"
+            ></button>        
+            </div> -->
           <div class="menubar">
             <button
               class="menubar__button"
@@ -117,10 +146,48 @@
               <v-icon>mdi-table-large</v-icon>
             </button>
 
-            <br>
+            <span>
+              <br>
+              <button
+                class="toolbox-btn" :style="{'background-color': 'black'}"
+                :class="{ 'is-active': isActive.customstyle({ level: 'black' }) }"
+                @click="commands.customstyle({ level: 'black' })"
+              ></button>
+              <button
+                class="toolbox-btn" :style="{'background-color': 'white'}"
+                :class="{ 'is-active': isActive.customstyle({ level: 'white' }) }"
+                @click="commands.customstyle({ level: 'white' })"
+              ></button>
+              <button
+                class="toolbox-btn" :style="{'background-color': storeFinalTheme[0]}"
+                :class="{ 'is-active': isActive.customstyle({ level: 'color1' }) }"
+                @click="commands.customstyle({ level: colors[0] })"
+              ></button>
+              <button
+                class="toolbox-btn" :style="{'background-color': storeFinalTheme[1]}"
+                :class="{ 'is-active': isActive.customstyle({ level: 'color2' }) }"
+                @click="commands.customstyle({ level: colors[1] })"
+              ></button>
+              <button
+                class="toolbox-btn" :style="{'background-color': storeFinalTheme[2]}"
+                :class="{ 'is-active': isActive.customstyle({ level: 'color3' }) }"
+                @click="commands.customstyle({ level: colors[2] })"
+              ></button>
+              <button
+                class="toolbox-btn" :style="{'background-color': storeFinalTheme[3]}"
+                :class="{ 'is-active': isActive.customstyle({ level: 'color4' }) }"
+                @click="commands.customstyle({ level: colors[3] })"
+              ></button>
+              <button
+                class="toolbox-btn" :style="{'background-color': storeFinalTheme[4]}"
+                :class="{ 'is-active': isActive.customstyle({ level: 'color5' }) }"
+                @click="commands.customstyle({ level: colors[4] })"
+              ></button>        
+            </span>
+            
 
             <span v-if="isActive.table()">
-
+              <br>
               <button class="menubar__button" @click="commands.deleteTable">
                 <v-icon>mdi-table-large-remove</v-icon>
               </button>
@@ -155,6 +222,7 @@
             </span>
 
             <span v-if="isImage">
+              <br>
               <button class="menubar__button" @click="imageSize = 0">
                 <v-icon>mdi-size-xs</v-icon>
               </button>
@@ -190,12 +258,17 @@
 
         </div>
       </editor-menu-bar>
-
-      <section id="container" class="editor" :class="'item' + page" :style="{'height': this.height}">
-        <editor-content v-focus class="editor__content" :class="'item' + page" :editor="editor"/>
-        <div class="bottomSensor" :class="'item' + page"></div>
-      </section>
-
+      <div style="width: 100%; display: flex;">
+        <section id="container" class="editor" :class="'item' + page" :style="{'height': this.height}">
+          <editor-content v-focus class="editor__content" :class="'item' + page" :editor="editor"/>
+          <div class="bottomSensor" :class="'item' + page"></div>
+        </section>
+        <div class="background-box">
+          <button style="background-color: black;" @click="changeBackground('black')"></button>
+          <button style="background-color: white;" @click="changeBackground('white')"></button>
+          <button v-for="(color, index) in colors" :key="index" :style="{'background-color' : color}" @click="changeBackground(color)"></button>
+        </div>
+      </div>
       <div class="arrow">
         <div class="pre-arrow"></div>
         <div class="next-arrow"></div>
@@ -208,15 +281,19 @@
       <button style="background-color : blue" @click="blue">blue</button>
       <button style="background-color : green" @click="green">green</button>
     </div> -->
+    
+
   </div>
 </template>
 
 <script>
   import scrollMonitor from 'scrollmonitor'
   import markdownIt from 'markdown-it'
-  import {mapActions} from 'vuex'
+  import {mapActions, mapGetters} from 'vuex'
   require('../../assets/LiveEditStyle.css')
   import {Editor, EditorContent, EditorMenuBar} from 'tiptap'
+  import CustomStyle from "../../assets/CustomStyle";
+
   import {
     Blockquote,
     CodeBlock,
@@ -244,6 +321,8 @@
   
   const md = new markdownIt();
   const contentStore = 'contentStore';
+  const customStore = 'customStore'
+  const boxStore = 'boxStore';
 
   export default {
     name: 'EditPage',
@@ -263,6 +342,7 @@
       return {
         editor: new Editor({
           extensions: [
+            new CustomStyle(),
             new Blockquote(),
             new BulletList(),
             new CodeBlock(),
@@ -301,84 +381,122 @@
         img: null,
         isContentStored: false,
         handler: null,
-        // isNewPageCreated: true,
+        /* 색깔 지정 변수들 */
+        colors: [],
+        isToolBoxShow: false,
+        target: null,
+        // targetStr: '',
+        // isTotal: false,
+        // targetParent: null,
+
+
+        // target: null,
+        // targetStr: '',
+        // isTotal: false,
+        // targetParent: null,
       }
     },
+    computed: {
+      ...mapGetters(customStore, {storeFinalTheme: 'GE_FINAL_THEME'})
+    },
+    created() {
+      this.colors = this.storeFinalTheme;
+    },
     mounted() {
-      // this.editor.content = this.content_parent;
+      // console.log(document.querySelector('.toolbox.item' + this.page));
+      // this.editor.setContent(this.content_parent)
+
       window.addEventListener('resize', this.handleResize)
-      // window.addEventListener('keydown', this.handleContent);
       this.handler = setInterval(() => {
         this.handleContent();
       }, 3000);
 
+
       this.loadUntilSlideIsFull();
 
-      // 툴박스 mouseup 이벤트 리스너
-      // document.addEventListener('mouseup', (e) => {
-      //   let str = window.getSelection().toString();
-      //   if(e.target.localName == 'button') {
-      //     this.isToolBoxShow = false;
-      //     return;
-      //   }
-      //   if(str.length == 0) {
-      //     this.target = null;
-      //     this.targetStr = '';
-      //     this.isToolBoxShow = false;
-      //   } else {
-      //     this.target = e.target;
-      //     this.targetStr = str;
-      //     this.isBlock = true;
-      //     let toolbox = document.querySelector('.toolbox');
-      //     toolbox.style.left = (e.screenX) + 'px';
-      //     toolbox.style.top = (e.screenY - 50) + 'px';
-      //     this.isToolBoxShow = true;
-      //   }
-      // })
+      // 컬러 이벤트 리스너
+      // document.addEventListener('click', this.handleColor);
 
       // 이미지 이벤트 리스너
+      
       document.addEventListener('click', (e) => {
+        /*
+        if(window.getSelection().toString().length == 0) {
+          // this.isToolBoxShow = false;
+          // document.querySelector('.toolbox.item' + this.page).classList.remove('show')
+          this.target = null;
+        }
+        else {
+
+          // let toolbox = document.querySelector('.toolbox');
+          // toolbox.style.left = (e.pageX - 100) + 'px';
+          // toolbox.style.top = (e.pageY - 60) + 'px';
+
+
+          // this.isToolBoxShow = true;
+          // document.querySelector('.toolbox.item' + this.page).classList.add('show')
+          if(e.target.localName != 'button') {
+            this.target = e;
+          } else {
+            // this.isToolBoxShow = false;
+            // document.querySelector('.toolbox.item' + this.page).classList.remove('show')
+            console.log(this.target);
+            if(this.target.target.className == 'span') {
+              let name = this.target.target.className;
+              if(name == 'color1') this.target.target.style.color = this.colors[0];
+              else if(name == 'color2') this.target.target.style.color = this.colors[1];
+              else if(name == 'color3') this.target.target.style.color = this.colors[2];
+              else if(name == 'color4') this.target.target.style.color = this.colors[3];
+              else if(name == 'color5') this.target.target.style.color = this.colors[4];
+              this.target.target.className = '';
+            } else {
+              this.target.target.children.forEach((child) => {
+              if(child.className != '') {
+                if(child.className == 'color1') child.style.color = this.colors[0];
+                else if(child.className == 'color2') child.style.color = this.colors[1];
+                else if(child.className == 'color3') child.style.color = this.colors[2];
+                else if(child.className == 'color4') child.style.color = this.colors[3];
+                else if(child.className == 'color5') child.style.color = this.colors[4];
+                child.className = "";
+              }
+              
+            })
+            }
+            
+            
+            this.target = null;
+          }
+          
+        } 
+        */
         if(e.target.className.includes('mdi-size-') && this.img != null) {
           // 이미지에 대한 크기 변경 0 -> 1 -> 2 -> 3 -> 4
-          console.log(this.imageSize, this.img);
-          // let width = this.img.target.clientWidth;
-          // let height = this.img.target.clientHeight;
           if(this.imageSize == 0) {
             this.img.target.style.width = '20%'
             this.img.target.style.height = '20%'
-            // this.img.target.style.width = parseInt(width / 2);
-            // this.img.target.style.height = parseInt(height / 2);
           } else if(this.imageSize == 1) {
             this.img.target.style.width = '40%'
             this.img.target.style.height = '40%'
-            // this.img.target.style.width = parseInt(width / 1.5);
-            // this.img.target.style.height = parseInt(height / 1.5);
           } else if(this.imageSize == 2) {
             this.img.target.style.width = '50%'
             this.img.target.style.height = '50%'
-            // this.img.target.style.width = parseInt(width / 1.2);
-            // this.img.target.style.height = parseInt(height / 1.2);
           } else if(this.imageSize == 3) {
             this.img.target.style.width = '80%'
             this.img.target.style.height = '80%'
-            // this.img.target.style.width = width;
-            // this.img.target.style.height = height;
           } else if(this.imageSize == 4) {
             this.img.target.style.width = '100%'
             this.img.target.style.height = '100%'
-            // this.img.target.style.width = parseInt(width / 0.9);
-            // this.img.target.style.height = parseInt(height / 0.9);
           }
           this.isImage = false;
           this.img = null;
           return;
         } 
-        if(e.target.localName != 'img') {
+        if(e.target.localName == 'img') {
+          this.isImage = true;
+          this.img = e;
+        } else {
           this.isImage = false;
-          return;
         }
-        this.isImage = true;
-        this.img = e;
       })
     },
     beforeDestroy() {
@@ -390,6 +508,7 @@
     },
     methods: {
       ...mapActions(contentStore, ['AC_CONTENTS']),
+      ...mapActions(boxStore, ['AC_IS_BOX', 'AC_TARGET']),
       handleResize() {
         this.height = document.querySelector("#container").clientHeight
       },
@@ -403,6 +522,76 @@
         this.AC_CONTENTS(payload);
         // setTimeout(() => {this.isContentStored = false}, 3000);
       },
+      // handleColor(e) {
+      //   if(!e.target.parentElement.className.includes('ProseMirror')) {
+      //     this.target = null;
+      //     this.targetStr = '';
+      //     this.AC_IS_BOX(false);
+      //     return;
+      //   }
+      //   // 두 가지 경우 ( 드래그해서 window.getSelection 하는 경우 )
+      //   // 나머지 경우 ( ToolBox에서 색을 선택한 경우 => Editing에서 색깔을 바꿔줌 -> storeColor를 가져옴 -> 색깔 지정)
+      //   // if(e.target.offsetParent == null || !e.target.offsetParent.className.includes('editor')) {
+      //   //   // 클릭한 곳이 부모가 없거나 || editor 내부가 아닌 곳을 선택한 경우?
+      //   //   this.target = null;
+      //   //   this.targetStr = '';
+      //   //   this.AC_IS_BOX(false);
+      //   //   return;
+      //   // }
+      //   // 드래그해서 블록 처리된 스트링
+      //   let str = window.getSelection().toString();
+      //   if(str.length == 0) {
+      //     this.target = null;
+      //     this.targetStr = '';
+      //     this.AC_IS_BOX(false);
+      //   } else {
+      //     e.target.focus();
+      //     if(e.target.innerHTML == str && e.target.parentElement.localName == 'blockquote') {
+      //       this.isTotal = true;
+      //       this.targetParent = e.target.parentElement;
+      //     }
+      //     let toolbox = document.querySelector('.toolbox');
+      //     toolbox.style.left = (e.pageX - 100) + 'px';
+      //     toolbox.style.top = (e.pageY - 60) + 'px';
+      //     this.target = e.target;
+      //     this.targetStr = str;
+      //     this.AC_IS_BOX(true);
+      //   }
+      // },
+      // handleColor(e) {
+      //    if(e.target.offsetParent == null) {
+      //     this.target = null;
+      //     this.targetStr = '';
+      //     this.isToolBoxShow = false;
+      //     return;
+      //   }
+      //   if(!e.target.offsetParent.className.includes('editor')) {
+      //     this.target = null;
+      //     this.targetStr = '';
+      //     this.isToolBoxShow = false;
+      //     return;
+      //   }
+        
+      //   let str = window.getSelection().toString();
+      //   if(str.length == 0) {
+      //     this.target = null;
+      //     this.targetStr = '';
+      //     this.isToolBoxShow = false;
+      //   } else {
+      //     e.target.focus();
+      //     if(e.target.innerHTML == str && e.target.parentElement.localName == 'blockquote') {
+      //       this.isTotal = true;
+      //       this.targetParent = e.target.parentElement;
+      //     }
+                  
+      //     let toolbox = document.querySelector('.toolbox');
+      //     toolbox.style.left = (e.pageX - 100) + 'px';
+      //     toolbox.style.top = (e.pageY - 60) + 'px';
+      //     this.target = e.target;
+      //     this.targetStr = str;
+      //     this.isToolBoxShow = true;
+      //   }
+      // },
       loadUntilSlideIsFull: function () {
         if(this.isNewPage) return;
         document.querySelector("#container").style.height = this.height;
@@ -427,34 +616,9 @@
           this.isNewPage = false;
         })
       },
-      red() {
-        if(this.isBlock) {
-          console.log(this.target);
-          console.log(this.target.innerHTML);
-          console.log(this.targetStr)
-          this.target.innerHTML = this.target.innerHTML.replace(this.targetStr, '<a style="color: red">' + this.targetStr + '</a>')
-        }
-        this.isBlock = false;
-        this.isToolBoxShow = false;
-      },
-      blue() {
-        if(this.isBlock) {
-          this.target.innerHTML = this.target.innerHTML.replace(this.targetStr, '<a style="color: blue">' + this.targetStr + '</a>')
-        }
-        this.isBlock = false;
-        this.isToolBoxShow = false;
-      },
-      green() {
-        if(this.isBlock) {
-          this.target.innerHTML = this.target.innerHTML.replace(this.targetStr, '<a style="color: green">' + this.targetStr + '</a>')
-        }
-        this.isBlock = false;
-        this.isToolBoxShow = false;
-      },
       async changeVal(val) {
         let file = val.target.files[0]
         var reader = new FileReader();
-        
       
         reader.readAsText(file, /* optional */ "utf-8");
 
@@ -465,9 +629,8 @@
           }
         })
         this.editor.content = result;
-        // console.log(document.querySelector('.editor__content.item' + this.page + ' .ProseMirror').innerHTML)
+        
         document.querySelector('.editor__content.item' + this.page + ' .ProseMirror').innerHTML = result;
-        console.log(document.querySelector('.editor__content.item' + this.page + ' .ProseMirror').innerHTML)
       },
       clickBtn() {
         document.querySelector('.importMd.item' + this.page).click();
@@ -478,6 +641,9 @@
         if (src !== null) {
           command({ src })
         }
+      },
+      changeBackground(color) {
+        document.querySelector('.editor__content.item' + this.page).style.backgroundColor = color;
       }
     },
     directives: {
@@ -490,19 +656,8 @@
         }
       }
     },
-    computed: {
-    },
     watch: {
     }
-    // watch: {
-    //   isNewPage (val) {
-    //     if (val) {
-    //       setTimeout(() => {
-    //         this.$refs.input.focus();
-    //       }, 10);
-    //     }
-    //   }
-    // }
   }
 </script>
 
@@ -558,6 +713,10 @@
     position: relative;
     margin-left: 7.5%;
     width: 85%;
+    /* 강세응이 추가함 */
+    float: left;
+    margin-right: 0;
+    /* 강세응이 추가함 */
     overflow-y: scroll;
   }
   
@@ -590,16 +749,25 @@
   .toolbox {
     position: absolute;
     width: 200px;
-    height: 50px;
-    /* visibility: hidden; */
+    height: 40px;
     opacity: 0;
+    visibility: hidden;
     transition-duration: 300ms;
   }
 
   .toolbox.show {
-    /* visibility: visible; */
     opacity: 1;
-    transition-duration: 300ms;
+    z-index: 95;
+    visibility: visible;
+  }
+
+  .toolbox-btn {
+    width: 30px;
+    height: 30px;
+    /* width: 20%; 
+    height: 100%;  */
+    border-radius: 70%;
+    border: 2px solid slategray;
   }
 
   * >>> blockquote {
@@ -608,9 +776,56 @@
     padding: 10px;
   }
 
+
   .btnImport {
     
   }
+  
   /* ====================================================== */
 
+  /* =================== BACKGROUND BOX =================== */
+
+  .background-box {
+    /* position: absolute; */
+    /* margin-top: 100px; */
+    float: right;
+    margin-left: -2px;
+    /* left: 85%; */
+    z-index: 95;
+    width: 80px;
+    height: 280px;
+  }
+
+  .background-box button {
+    width: 100%;
+    height: 40px;
+    border: 3px solid slategray;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-left: none;
+  }
+
+  /* ====================================================== */
+
+
+
+  /* .color1 {
+    color: red;
+  }
+
+  .color2 {
+    color: blue;
+  }
+
+  .color3 {
+    color: green;
+  }
+
+  .color4 {
+    color: yellow;
+  }
+
+  .color5 {
+    color: orange;
+  } */
 </style>

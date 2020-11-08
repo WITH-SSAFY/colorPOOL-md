@@ -2,7 +2,7 @@
   <div>
     <v-col class="editing-area">
       <div class="toolbox" :class="[isToolBoxShow? 'show': '']">
-        <button class="toolbox-btn" style="width: 20%; height: 100%; border-radius: 70%;" v-for="color in colors" :style="{'background-color': color}" :key="color" @click="clickColor(color)"></button>
+        <button class="toolbox-btn" style="width: 20%; height: 100%; border-radius: 70%;" v-for="(color, index) in colors" :style="{'background-color': color}" :key="index" @click="clickColor(color, index)"></button>
       </div>
       <div class="info-section">
         <div class="progress-bar"><progress-bar v-bind:page="3" /></div>
@@ -48,9 +48,9 @@ export default {
   },
   mounted () {
     window.addEventListener('click', this.handleDrag);
-    document.querySelectorAll('h1').forEach((node) => {
-      node.classList.add('active');
-    })
+    // document.querySelectorAll('h1').forEach((node) => {
+    //   node.classList.add('active');
+    // })
   },
   created() {
     this.contents = this.storeContents;
@@ -97,7 +97,7 @@ export default {
         this.isToolBoxShow = true;
       }
     },
-    clickColor(color) {
+    clickColor(color, index) {
       // 만약 텍스트를 전체 선택한 거라면?
       if(this.isTotal){
         this.isTotal = false;
@@ -106,8 +106,11 @@ export default {
       }
       // 단순히 텍스트를 바꾸는 효과
       
+      this.target.className = "";
+      this.target.classList.add('color' + index);
       
-      this.target.innerHTML = this.target.innerHTML.replace(this.targetStr, "<span style='color:" + color + "'>" + this.targetStr + '</span>')
+      
+      // this.target.innerHTML = this.target.innerHTML.replace(this.targetStr, "<span style='color:" + color + "'>" + this.targetStr + '</span>')
       const payload = {
         page: this.pageIndex,
         content:  '<section>' + document.querySelector('.editor__content.item' + this.pageIndex).innerHTML + '</section>'
@@ -194,4 +197,25 @@ export default {
     padding: 10px;
   }
   /* ====================================================== */
+
+
+  .color1 {
+    color: red;
+  }
+
+  .color2 {
+    color: blue;
+  }
+
+  .color3 {
+    color: green;
+  }
+
+  .color4 {
+    color: yellow;
+  }
+
+  .color5 {
+    color: orange;
+  }
 </style>

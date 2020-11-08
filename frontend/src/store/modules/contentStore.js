@@ -9,12 +9,19 @@ const contentStore = {
   mutations: {
     MU_CONTENTS: (state, payload) => {
       state.contents[payload.page] = payload.content;
+      // console.log(state.contents)
     },
+    MU_CONTENTS_NULL: (state) => {
+      state.contents = [];
+    }
   },
   actions: {
     AC_CONTENTS: ({commit}, payload) => {
       commit('MU_CONTENTS', payload);
     },
+    AC_CONTENTS_NULL: ({commit}) => {
+      commit('MU_CONTENTS_NULL')
+    }
   }
 }
 
