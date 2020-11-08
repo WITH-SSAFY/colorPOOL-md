@@ -33,10 +33,23 @@ export default {
   created(){
     this.demoThemes = this.storeDemoThemes;
     this.demoThemes.forEach(ele => {
-      let r = parseInt((ele.red1 + ele.red2 + ele.red3 + ele.red4 + ele.red5) / 5);
-      let g = parseInt((ele.green1 + ele.green2 + ele.green3 + ele.green4 + ele.green5) / 5);
-      let b = parseInt((ele.blue1 + ele.blue2 + ele.blue3 + ele.blue4 + ele.blue5) / 5);
-      ele.background = 'rgb(' + r + ', ' + g + ', ' + b + ')';
+      
+      // 배경색 결정
+      let r = parseInt((ele.red1 + ele.red2 + ele.red3 + ele.red4 + ele.red5) / 5)
+      let g = parseInt((ele.green1 + ele.green2 + ele.green3 + ele.green4 + ele.green5) / 5)
+      let b = parseInt((ele.blue1 + ele.blue2 + ele.blue3 + ele.blue4 + ele.blue5) / 5)
+      const val = r + g + b
+      if (val < 630 ) { // 밝은 배경
+        r = r + 75
+        g = g + 75
+        b = b + 75
+      } else { // 어두운 배경
+        r = r - 175
+        g = g - 175
+        b = b - 175
+      }
+      ele.background = 'rgb(' + r + ', ' + g + ', ' + b + ')'
+  
     })
     this.selectedDemoTheme = this.demoThemes[0];
     this.AC_SELECTED_DEMO_THEME(this.selectedDemoTheme);
