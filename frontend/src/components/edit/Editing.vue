@@ -33,7 +33,9 @@
     },
     created() {
       this.templates = this.storeContents;
-      // this.templates.push(EditPage)
+      if (this.templates.length == 0) {
+        this.templates.push(EditPage)
+      }
     },
     methods: {
       createPage() {

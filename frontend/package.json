@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
+    "highlight.js": "^10.3.2",
     "markdown-it": "^12.0.1",
     "markdown-it-emoji": "^2.0.0",
     "scrollmonitor": "^1.2.4",
