@@ -1,7 +1,7 @@
 package com.cerberos.colorpool.controller.pdf;
 
 import com.cerberos.colorpool.model.pdf.PdfModel;
-import com.cerberos.colorpool.repository.response.SingleResult;
+import com.cerberos.colorpool.model.response.SingleResult;
 import com.cerberos.colorpool.service.ResponseService;
 import com.cerberos.colorpool.service.pdf.PdfService;
 import io.swagger.v3.oas.annotations.Operation;

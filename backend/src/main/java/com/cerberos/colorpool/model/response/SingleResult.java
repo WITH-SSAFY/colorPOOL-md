@@ -1,4 +1,4 @@
-package com.cerberos.colorpool.repository.response;
+package com.cerberos.colorpool.model.response;
 
 import lombok.Getter;
 import lombok.Setter;
