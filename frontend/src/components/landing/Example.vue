@@ -1,15 +1,20 @@
 <template>
   <div>
     <v-col class="example-area">
-      <play-content/>
-      <!-- 상단에 toggle 버튼-->
-      <div class="toggle-button-group" :style="{'background-color': color1 }">
-        <v-btn large text>toggle themes</v-btn>
-        <v-btn large text>toggle palette</v-btn>
+      <!-- 상단 toggle 버튼-->
+      <div class="toggle-button-group">
+        <button>toggle themes</button>
+        <button>toggle palette</button>
       </div>
+
+      <!--컨셉 컨텐츠 -->
+      <play-content/>
 
       <!-- exapmle ui와 버튼 -->
       <div class="example-md" :style="{'background-color': color1 }">
+        <div class="arrow arrow-first"></div>
+        <div class="arrow arrow-second"></div>
+
         <div class="example-content"><example-content/></div>
         <!-- 다음 단계로 넘어가는 버튼-->
         <div class="button-group">
@@ -147,18 +152,23 @@ export default {
   .toggle-button-group {
     display: flex;
     justify-content: flex-end;    
-    padding: 1% 5%;
+    padding: 0 5%;
     height: 8vh;
     width: 100%;
+    background-color: #232a46;
   }
 
   .toggle-button-group button {
+    font-size: 1.3rem;
+    font-weight: bolder;
+    padding: 0 2rem;
+    color: #ee7771;
     display: inline;
   }
 
   .example-md {
     margin: 0;
-    padding: 0 2%;
+    padding: 5% 2%;
     padding-bottom: 2%;
     height: 62vh;
     width: 100%;
@@ -220,10 +230,6 @@ export default {
     clear: both; 
   }
 
-  .example-palette .palette-content h1 {
-    /* margin-top: 1.5rem; */
-  }
-
   .example-palette .palette-content .color-info {
     border: 4px solid #707070;
     float: left;
@@ -258,4 +264,80 @@ export default {
   .palette-content .color-info .desc{
     font-size: 1.3rem;
   }
+
+  /* 스크롤 유도 화살표 */
+  .arrow {
+    opacity: 0;
+    position: absolute;
+    right: 5%;
+    top: 70%;
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+    -webkit-transform: translate3d(-50%, -50%, 0);
+            transform: translate3d(-50%, -50%, 0);
+  }
+
+  .arrow-first {
+    -webkit-animation: arrow-movement 2s ease-in-out infinite;
+            animation: arrow-movement 2s ease-in-out infinite;
+  }
+
+  .arrow-second {
+    -webkit-animation: arrow-movement 2s 1s ease-in-out infinite;
+            animation: arrow-movement 2s 1s ease-in-out infinite;
+  }
+
+  .arrow:before,
+  .arrow:after {
+    background: white;
+    content: '';
+    display: block;
+    height: 3px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+  }
+
+  .arrow:before {
+    -webkit-transform: rotate(45deg) translateX(-23%);
+            transform: rotate(45deg) translateX(-23%);
+    -webkit-transform-origin: top left;
+            transform-origin: top left;
+  }
+
+  .arrow:after {
+    -webkit-transform: rotate(-45deg) translateX(23%);
+            transform: rotate(-45deg) translateX(23%);
+    -webkit-transform-origin: top right;
+            transform-origin: top right;
+  }
+
+  @-webkit-keyframes arrow-movement {
+    0% {
+      opacity: 0;
+      top: 65%;
+    }
+    70% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes arrow-movement {
+    0% {
+      opacity: 0;
+      top: 65%;
+    }
+    70% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+
 </style>

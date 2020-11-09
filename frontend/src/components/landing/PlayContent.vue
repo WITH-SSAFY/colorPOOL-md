@@ -95,6 +95,7 @@
         </section>
       </div>
     </div>
+
   </div>
 
 </template>
@@ -326,10 +327,10 @@ export default {
   }
 
   @media (min-width:768px) {
-      .page-content {
-        padding: 6rem 0;
-        padding-left: 6rem
-      }
+    .page-content {
+      padding-bottom: 6rem;
+      padding-left: 6rem;
+    }
   }[data-mode=dark] .page-content {
       color: #fff;
       background: #232a46
@@ -750,6 +751,12 @@ export default {
     opacity: 0;
     -webkit-transform: translateY(3rem);
     transform: translateY(3rem)
+  }
+
+  .next-arrow {
+    position: absolute;
+    color: white;
+    right: 4rem;
   }
 
 </style>
