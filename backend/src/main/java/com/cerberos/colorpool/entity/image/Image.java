@@ -13,7 +13,7 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IMAGE_ID",nullable = false)
     private Integer id;
-    @Column(name = "PATH",nullable = false)
+    @Column(name = "PATH", nullable = false)
     private String path;
 
     @Builder

@@ -16,10 +16,10 @@ public class Pdf {
     private Integer id;
 
     @Lob
-    @Column(name="CONTENTS")
+    @Column(name="CONTENTS", nullable = false)
     private String contents;
 
-    @Column(name="PATH")
+    @Column(name="PATH",nullable = false, unique = true)
     private String path;
 
     @Builder
