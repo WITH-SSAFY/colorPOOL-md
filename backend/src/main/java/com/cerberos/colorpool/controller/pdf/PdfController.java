@@ -20,7 +20,7 @@ public class PdfController {
 
     @Operation(summary = "마크다운 및 pdf저장", description = "사용자가 작성한 마크다운의 내용을 저장하고 이를 pdf로 변환하여 저장한 후 pdf저장 경로를 반환합니다.")
     @PostMapping("/pdf")
-    public SingleResult<String> uploacPdf(@RequestBody PdfModel pdfModel){
-        return responseService.getSingleResult(pdfService.uploadPdf(pdfModel));
+    public SingleResult<PdfModel.Res> uploadPdf(@RequestBody PdfModel.Req pdfModel){
+        return responseService.getSingleResult(pdfService.uploadPdfAndMarkdown(pdfModel));
     }
 }

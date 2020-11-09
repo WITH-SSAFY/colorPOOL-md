@@ -54,19 +54,25 @@ public class PdfService {
     private final String pdfFolder = "http://k3a501.p.ssafy.io/api-pdf/";
     private final String imageFolder = "http://k3a501.p.ssafy.io/api-image/";
 
-    public String uploadPdf(PdfModel pdfModel){
+    public PdfModel.Res uploadPdfAndMarkdown(PdfModel.Req pdfReq){
         String newPdfName = getNewPdfName();
         String newPdfPath = pdfFolder+newPdfName;
-        String contents = pdfModel.getContents();
+        String contents = pdfReq.getContents();
+        PdfModel.Res pdfRes = PdfModel.Res.builder()
+                                .contents(contents)
+                                .path(newPdfPath)
+                                .build();
         try {
+            //upload pdf to S3
             MultipartFile pdfFile = createPdf(contents, newPdfName);
             s3api.upload(pdfFile,"/pdf",pdfFile.getOriginalFilename());
-            Pdf new_pdf = pdfModel.toEntity(contents, newPdfPath);
+
+            Pdf new_pdf = pdfRes.toEntity();
             pdfJpaRepository.save(new_pdf);
         }catch (Exception e){
             throw new CPdfNotCreateException();
         }
-        return newPdfPath;
+        return pdfRes;
     }
 
 //    public String uploadImage(){
@@ -183,15 +189,8 @@ public class PdfService {
         writer.close();
 
         // transform pdf to multipartfile
-        Path path = Paths.get(tempPdfPath);
         String contentType = "application/pdf";
-        byte[] content = null;
-        try {
-            content = Files.readAllBytes(path);
-        } catch (IOException e) {
-        }
-        MultipartFile pdfMultipartFile = new MockMultipartFile(newPdfName,
-                newPdfName, contentType, content);
+        MultipartFile pdfMultipartFile = getMultipartFile(newPdfName,tempPdfPath,contentType);
 
         //remove tempPdfFile
         if(tempPdf.isFile()){
@@ -199,6 +198,18 @@ public class PdfService {
         }
 
         return pdfMultipartFile;
+    }
+
+    public MultipartFile getMultipartFile(String fileName,String filePath, String contentType){
+        Path path = Paths.get(filePath);
+        byte[] content = null;
+        try {
+            content = Files.readAllBytes(path);
+        } catch (IOException e) {
+        }
+        MultipartFile multipartFile = new MockMultipartFile(fileName,
+                fileName, contentType, content);
+        return multipartFile;
     }
     //    image to pdf
 //    public void createPDF(PdfModel pdfModel) throws DocumentException, IOException{
