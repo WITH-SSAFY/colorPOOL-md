@@ -40,6 +40,7 @@
 import { mapGetters, mapActions } from 'vuex'
 const landingStore = 'landingStore'
 const customStore = 'customStore'
+const editStore = 'editStore'
 export default {
   props: {
     page: {
@@ -71,16 +72,21 @@ export default {
   },
   methods: {
     ...mapActions(landingStore, ['AC_IS_PICK', 'AC_IS_GET']),
+    ...mapActions(editStore, ['AC_PAGE']),
     goPickColor () {
       this.AC_IS_PICK(true);
       this.AC_IS_GET(false);
       this.$router.push({name: 'Select'});
     },
     goEditing () {
-      this.$router.push({name: 'Editing'});
+      if(this.page != 2 && this.page != 3) this.$router.push({name : 'Edit'})
+      this.AC_PAGE(0);
+      // this.$router.push({name: 'Editing'});
     },
     goColoring () {
-      this.$router.push({name: 'Coloring'});
+      if(this.page != 2 && this.page != 3) this.$router.push({name : 'Edit'})
+      this.AC_PAGE(1);
+      // this.$router.push({name: 'Coloring'});
     },
     goFinal () {
       this.$router.push({name: 'Result'});
@@ -170,6 +176,7 @@ export default {
 }
 .progress .bar.active {
   background: linear-gradient(to right, #EEE 40%, #FFF 60%);
+  transition-duration: 300ms;
 }
 .progress .circle.done .label {
   color: #FFF;
