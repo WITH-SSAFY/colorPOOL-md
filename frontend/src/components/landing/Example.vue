@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-col class="example-area">
+      <play-content/>
       <!-- 상단에 toggle 버튼-->
       <div class="toggle-button-group" :style="{'background-color': color1 }">
         <v-btn large text>toggle themes</v-btn>
@@ -44,12 +45,14 @@
           </div>
         </div>
       </div>
+      <!-- <test-content/> -->
     </v-col>
   </div>
 </template>
 
 <script>
 import ExampleContent from './ExampleContent'
+import PlayContent from './PlayContent'
 import { mapGetters, mapActions } from 'vuex'
 const demoStore = 'demoStore'
 const landingStore = 'landingStore'
@@ -58,6 +61,7 @@ export default {
   name: 'Example',
   components: {
     ExampleContent,
+    PlayContent,
   },
   computed:{
     ...mapGetters(demoStore, {storeSelectedDemoTheme: 'GE_SELECTED_DEMO_THEME', storeFlagDemoTheme: 'GE_FLAG_DEMO_THEME'}),
