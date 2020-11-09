@@ -114,7 +114,7 @@
               <v-icon>mdi-image-outline</v-icon>
             </button>
 
-            <button class="menubar__button">
+            <button class="menubar__button" @click="clickPhotoUpload(commands.image)">
               <v-icon>mdi-image</v-icon>
             </button>
 
@@ -124,7 +124,7 @@
               <v-icon>mdi-table-large</v-icon>
             </button>
 
-            <input type="file" id="photo_upload" >
+            <input type="file" accept="image/gif, image/jpeg, image/png" class="photo_upload" :class="'item' + page" style="visibility: hidden;">
             </span>
 
             <span v-if="storePage == 1">
@@ -366,6 +366,7 @@
         colors: [],
         isToolBoxShow: false,
         target: null,
+        command: null,
         // targetStr: '',
         // isTotal: false,
         // targetParent: null,
@@ -387,7 +388,7 @@
     mounted() {
       // console.log(document.querySelector('.toolbox.item' + this.page));
       // this.editor.setContent(this.content_parent)
-      document.querySelector('#photo_upload').addEventListener('change', (e) => {
+      document.querySelector('.photo_upload.item' + this.page).addEventListener('change', (e) => {
         console.log(e);
         this.readUploadImage(e);
       })
@@ -642,14 +643,23 @@
       goColor() {
         this.AC_PAGE(1);
       },
+      clickPhotoUpload (command) {
+        // console.log(document.querySelector('.photo_upload.item' + this.page))
+        document.querySelector('.photo_upload.item' + this.page).click();
+        this.command = command;
+      },
       readUploadImage( inputObject ) {
         console.log(inputObject)
         var formData = new FormData();
         formData.append('imageMultipartFile', inputObject.target.files[0])
         axios.post('/image', formData, { headers: {accpet: 'application/json'}})
-        .then(res => console.log(res))
+        .then(res => {
+          console.log(res)
+          let src = res.data.data
+          this.command({ src })
+        })
         .catch(err => console.log(err))
-        }
+      }
     },
     directives: {
       focus: {
