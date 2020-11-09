@@ -1,14 +1,14 @@
 <template>
   <div>
-    <v-col class="example-area" :style="{'background-color': color1 }">
+    <v-col class="example-area">
       <!-- 상단에 toggle 버튼-->
-      <div class="toggle-button-group">
+      <div class="toggle-button-group" :style="{'background-color': color1 }">
         <v-btn large text>toggle themes</v-btn>
         <v-btn large text>toggle palette</v-btn>
       </div>
 
       <!-- exapmle ui와 버튼 -->
-      <div class="example-md">
+      <div class="example-md" :style="{'background-color': color1 }">
         <div class="example-content"><example-content/></div>
         <!-- 다음 단계로 넘어가는 버튼-->
         <div class="button-group">
@@ -137,34 +137,36 @@ export default {
 <style scoped>
   .example-area.col{
     padding: 0;
-    transition-duration: 400ms;  
+    transition-duration: 400ms;
   }
 
-  .toggle-button-group{
+  .toggle-button-group {
+    display: flex;
+    justify-content: flex-end;    
     padding: 1% 5%;
     height: 8vh;
     width: 100%;
   }
 
-  .toggle-button-group button{
-    float: right;
+  .toggle-button-group button {
+    display: inline;
   }
 
-  .example-md{
+  .example-md {
     margin: 0;
     padding: 0 2%;
     padding-bottom: 2%;
     height: 62vh;
     width: 100%;
-    float: left;
   }
 
-  .example-content{
-    height: 100%; 
-    width: 100%;
+  .example-md:after {
+    display: block;
+    content: "";
+    clear: both;
   }
 
-  .button-group{
+  .example-md .button-group {
     display: flex;
     justify-content: flex-end;
     flex-direction: column;
@@ -174,7 +176,7 @@ export default {
     user-select: none;
   }
 
-  .button-group .button{
+  .example-md .button-group .button {
     height: 70px;
     width: 95%;
     margin-bottom: 5%;
@@ -185,29 +187,40 @@ export default {
     color: #232a46; 
   }
 
-  .button:hover{
+  .example-md .button-group .button:hover {
     background-color: #d16a64;
   }
 
-  .example-content{
+  .example-md .example-content {
     float: left;
     width: 70%;
     height: 100%;
   }
 
-  .example-palette{
+  .example-palette {
     margin: 0;
+    padding: 2% 0;
     padding-left: 3%;
     user-select: none;
   }
 
-  .palette-content{
-    cursor:pointer;
+  .example-palette .palette-content {
+    cursor: pointer;
     width: 100%;
     height: 100%;
   }
 
-  .palette-content .color-info{
+  .example-palette .palette-content:after {
+    display: block;
+    content: "";
+    clear: both; 
+  }
+
+  .example-palette .palette-content h1 {
+    /* margin-top: 1.5rem; */
+  }
+
+  .example-palette .palette-content .color-info {
     border: 4px solid #707070;
     float: left;
     height: 90px;
@@ -217,7 +230,7 @@ export default {
     margin-bottom: 10px;
   }
 
-  .palette-content .color-info .color{
+  .example-palette .palette-content .color-info .color {
     height: 50px;
     width: 50px;
     border-radius: 75px;
