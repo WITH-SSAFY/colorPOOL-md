@@ -57,14 +57,11 @@ public class PdfService {
     public String uploadPdf(PdfModel pdfModel){
         String newPdfName = getNewPdfName();
         String newPdfPath = pdfFolder+newPdfName;
-
+        String contents = pdfModel.getContents();
         try {
-            MultipartFile pdfFile = createPdf(pdfModel, newPdfName);
-            s3api.upload(pdfFile,"/pdf");
-            Pdf new_pdf = Pdf.builder()
-                    .contents(pdfModel.getContents())
-                    .path(pdfModel.getPath())
-                    .build();
+            MultipartFile pdfFile = createPdf(contents, newPdfName);
+            s3api.upload(pdfFile,"/pdf",pdfFile.getOriginalFilename());
+            Pdf new_pdf = pdfModel.toEntity(contents, newPdfPath);
             pdfJpaRepository.save(new_pdf);
         }catch (Exception e){
             throw new CPdfNotCreateException();
@@ -72,30 +69,33 @@ public class PdfService {
         return newPdfPath;
     }
 
-    public String uploadImage(){
-        String newImageName = "batt.jpg";
-        String newImagePath = imageFolder+newImageName;
-        String type = newImageName.split("[.]")[1];
-
-        //////// this codes will be removed, just for test //////
-        Path path = Paths.get(imageFolderPath+newImageName);
-        String contentType = getContentType(type);
-        byte[] content = null;
-        try {
-            content = Files.readAllBytes(path);
-        } catch (IOException e) {
-        }
-        /////////////////////////////////////////////////////////
-
-        MultipartFile imageMultipartFile = new MockMultipartFile(newImageName,
-                newImageName, contentType, content);
-        try{
-            s3api.upload(imageMultipartFile,"/image");
-        }catch (Exception e){
-            throw new CImageNotUploadException();
-        }
-        return newImagePath;
-    }
+//    public String uploadImage(){
+//        String newImageName = "batt.jpg";
+//        String newImagePath = imageFolder+newImageName;
+//        String type = newImageName.split("[.]")[1];
+//
+//        //////// this codes will be removed, just for test //////
+//        Path path = Paths.get(imageFolderPath+newImageName);
+//        String contentType = getContentType(type);
+//        byte[] content = null;
+//        try {
+//            content = Files.readAllBytes(path);
+//        } catch (IOException e) {
+//        }
+//        /////////////////////////////////////////////////////////
+//
+//
+//
+//        MultipartFile imageMultipartFile = new MockMultipartFile(newImageName,
+//                newImageName, contentType, content);
+//        System.out.println("image Content- Type : "+imageMultipartFile.getContentType());
+//        try{
+//            s3api.upload(imageMultipartFile,"/image");
+//        }catch (Exception e){
+//            throw new CImageNotUploadException();
+//        }
+//        return newImagePath;
+//    }
 
     public String getNewPdfName() {
         Optional<Pdf> lastPdf = pdfJpaRepository.findFirstByOrderByIdDesc();
@@ -122,10 +122,10 @@ public class PdfService {
     }
 
     //html to pdf using itext
-    public MultipartFile createPdf(PdfModel pdfModel, String newPdfName) throws DocumentException, IOException, CPdfNotCreateException {
+    public MultipartFile createPdf(String contents, String newPdfName) throws DocumentException, IOException, CPdfNotCreateException {
         String tempPdfPath = tempPdfFolder+newPdfName;
-        pdfModel.setPath(pdfFolder+newPdfName);
-        String contents = pdfModel.getContents();
+        //pdfModel.setPath(pdfFolder+newPdfName);
+        //String contents = pdfModel.getContents();
 
         String pageCloseTag = "</div>";
         String[] pageContentsArr = contents.split(pageCloseTag);
