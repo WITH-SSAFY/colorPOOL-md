@@ -8,3 +8,6 @@ themeNotFoundException:
 pdfNotCreateException:
   code: "-2000"
   msg: "pdf 생성 중 오류가 발생하였습니다."
+imageNotUploadException:
+  code: "-3000"
+  msg: "image 업로드 생성 중 오류가 발생하였습니다."

@@ -268,6 +268,8 @@
 <script>
   import scrollMonitor from 'scrollmonitor'
   import markdownIt from 'markdown-it'
+  import hljs from 'highlight.js/lib/core'
+  import 'highlight.js/styles/github.css'
   import {mapActions, mapGetters} from 'vuex'
   require('../../assets/LiveEditStyle.css')
   import {Editor, EditorContent, EditorMenuBar} from 'tiptap'
@@ -296,9 +298,14 @@
     TableHeader,
     TableCell,
     TableRow,
-    Image
+    Image,
+    // 코드 하이라이팅
+    CodeBlockHighlight
   } from 'tiptap-extensions'
   
+  import javascript from 'highlight.js/lib/languages/javascript'
+  import css from 'highlight.js/lib/languages/css'
+
   const md = new markdownIt();
   const contentStore = 'contentStore';
   const customStore = 'customStore'
@@ -348,6 +355,13 @@
             new TableCell(),
             new TableRow(),
             new Image(),
+            // 코드 하이라이팅
+            new CodeBlockHighlight({
+              languages: {
+                javascript,
+                css,
+              },
+            }),
           ],
           content: this.content_parent
         }),
@@ -384,6 +398,7 @@
     },
     created() {
       this.colors = this.storeFinalTheme;
+      hljs.initHighlightingOnLoad()
     },
     mounted() {
       // console.log(document.querySelector('.toolbox.item' + this.page));
@@ -743,6 +758,11 @@
     margin: 0 0.5%;
   }
 
+  .slide-section section {
+    overflow: hidden;
+    min-width: 800px;
+  }
+
   .slide-section .editor {
     position: relative;
     margin-left: 7.5%;
@@ -754,7 +774,7 @@
     overflow-y: scroll;
   }
   
-  .slide-section .editor:before {
+  .slide-section .editor:before {   
     content: "";
     display: block;
     padding-top: 56.25%;
@@ -841,25 +861,65 @@
 
   /* ====================================================== */
 
+</style>
 
-
-  /* .color1 {
-    color: red;
+<style lang="scss">
+  @import '~highlight.js/styles/github.css';
+  // @import '~highlight.js/styles/atom-one-dark.css';
+  pre {
+    &::before {
+      content: attr(data-language);
+      text-transform: uppercase;
+      display: block;
+      text-align: right;
+      font-weight: bold;
+      font-size: 0.6rem;
+    }
+    code {
+      .hljs-comment,
+      .hljs-quote {
+        color: #999999;
+      }
+      .hljs-variable,
+      .hljs-template-variable,
+      .hljs-attribute,
+      .hljs-tag,
+      .hljs-name,
+      .hljs-regexp,
+      .hljs-link,
+      .hljs-name,
+      .hljs-selector-id,
+      .hljs-selector-class {
+        color: #f2777a;
+      }
+      .hljs-number,
+      .hljs-meta,
+      .hljs-built_in,
+      .hljs-builtin-name,
+      .hljs-literal,
+      .hljs-type,
+      .hljs-params {
+        color: #f99157;
+      }
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-bullet {
+        color: #99cc99;
+      }
+      .hljs-title,
+      .hljs-section {
+        color: #ffcc66;
+      }
+      .hljs-keyword,
+      .hljs-selector-tag {
+        color: #6699cc;
+      }
+      .hljs-emphasis {
+        font-style: italic;
+      }
+      .hljs-strong {
+        font-weight: 700;
+      }
+    }
   }
-
-  .color2 {
-    color: blue;
-  }
-
-  .color3 {
-    color: green;
-  }
-
-  .color4 {
-    color: yellow;
-  }
-
-  .color5 {
-    color: orange;
-  } */
 </style>

@@ -1,8 +1,8 @@
 package com.cerberos.colorpool.service;
 
-import com.cerberos.colorpool.repository.response.CommonResult;
-import com.cerberos.colorpool.repository.response.ListResult;
-import com.cerberos.colorpool.repository.response.SingleResult;
+import com.cerberos.colorpool.model.response.CommonResult;
+import com.cerberos.colorpool.model.response.ListResult;
+import com.cerberos.colorpool.model.response.SingleResult;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-col class="example-area">
+    <v-col class="example-area" :style="{'background-color': color1 }">
       <!-- 상단에 toggle 버튼-->
       <div class="toggle-button-group">
         <v-btn large text>toggle themes</v-btn>
@@ -21,7 +21,7 @@
       <!-- 선택한 theme 팔레트에 표시-->
       <div class="example-palette">
         <div class="palette-content">
-        <h1>Palettes in Markdown</h1>
+          <h1>Palettes in Markdown</h1>
           <div class="color-info d-flex align-center" @mouseover="overColor(0)" @mouseout="outColor(0)" @click="applyColor(0)">
             <div class="color" :style="{'background-color': color1 }"></div>
             <div class="desc">Background</div>
@@ -137,6 +137,7 @@ export default {
 <style scoped>
   .example-area.col{
     padding: 0;
+    transition-duration: 400ms;  
   }
 
   .toggle-button-group{
@@ -151,7 +152,8 @@ export default {
 
   .example-md{
     margin: 0;
-    padding: 2%;
+    padding: 0 2%;
+    padding-bottom: 2%;
     height: 62vh;
     width: 100%;
     float: left;

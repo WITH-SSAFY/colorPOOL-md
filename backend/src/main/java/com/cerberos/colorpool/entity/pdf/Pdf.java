@@ -7,9 +7,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="PDF")
 public class Pdf {
     @Id
@@ -18,9 +16,15 @@ public class Pdf {
     private Integer id;
 
     @Lob
-    @Column(name="CONTENTS")
+    @Column(name="CONTENTS", nullable = false)
     private String contents;
 
-    @Column(name="PATH")
+    @Column(name="PATH",nullable = false, unique = true)
     private String path;
+
+    @Builder
+    public Pdf(String contents, String path){
+        this.contents = contents;
+        this.path = path;
+    }
 }

@@ -66,7 +66,6 @@ export default {
       this.changeColors();
     },
     storeIsFlagChanged() {
-      // alert("!!")
       console.log(this.storeFlagDemoTheme);
       this.flagDemoTheme = this.storeFlagDemoTheme;
       this.changeColors();
@@ -133,6 +132,7 @@ export default {
 <style scoped>
 * {
   transition-duration: 400ms;
+  transition-property: background-color;
 }
 
 h1, h2, h3{
@@ -140,7 +140,8 @@ h1, h2, h3{
 }
 
 .background{
-  padding: 5%;
+  padding: 0 5%;
+  padding-bottom: 5%;
   height: 100%;
   width: 100%;
 }
@@ -156,10 +157,16 @@ blockquote{
   background-color: rgba(156, 156, 156, 0.1);
 }
 
-codeblock{
+code {
   padding: 6px 4px;
   border-radius: 3px;
   background-color: rgb(156, 156, 156, 0.5);
+}
+
+samp {
+  background-color: rgba(255, 255, 254, 0.5);
+  border: 0.5px solid rgba(156, 156, 156, 0.1);
+  border-radius: 4px;
 }
 
 ul {

@@ -44,11 +44,12 @@ public class S3api {
                 .build();
     }
 
-    public String uploadPdf(MultipartFile file) throws IOException {
-        String fileName = file.getOriginalFilename();
+    public String upload(MultipartFile file, String subPath, String fileName) throws IOException {
         ObjectMetadata meta = new ObjectMetadata();
         meta.setContentLength(file.getSize());
-        s3Client.putObject(new PutObjectRequest(bucket+"/pdf", fileName, file.getInputStream(), meta)
+        String realPath = bucket+subPath;
+
+        s3Client.putObject(new PutObjectRequest(realPath, fileName, file.getInputStream(), meta)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
         return s3Client.getUrl(bucket, fileName).toString();
     }
