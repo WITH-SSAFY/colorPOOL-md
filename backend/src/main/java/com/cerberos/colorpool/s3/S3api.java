@@ -44,8 +44,7 @@ public class S3api {
                 .build();
     }
 
-    public String upload(MultipartFile file, String subPath) throws IOException {
-        String fileName = file.getOriginalFilename();
+    public String upload(MultipartFile file, String subPath, String fileName) throws IOException {
         ObjectMetadata meta = new ObjectMetadata();
         meta.setContentLength(file.getSize());
         String realPath = bucket+subPath;
