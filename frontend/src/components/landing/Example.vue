@@ -10,11 +10,16 @@
       <!--컨셉 컨텐츠 -->
       <play-content/>
 
-      <!-- exapmle ui와 버튼 -->
-      <div class="example-md" :style="{'background-color': color1 }">
+      <div class="indicator" :style="{'background-color': color1 }">
         <div class="arrow arrow-first"></div>
         <div class="arrow arrow-second"></div>
-
+        <!-- TODO : 의논하기 - 튜토리얼 버튼? 스타트 버튼? -->
+        <!-- TODO : 버튼에 scrollIntoView 걸기 -> 튜토리얼 화면으로 연결 -->
+        <button class="getting-started" :style="{'background-color': color3 }">Getting Started</button>
+      </div>
+      
+      <!-- exapmle ui와 버튼 -->
+      <div class="example-md" :style="{'background-color': color1 }">
         <div class="example-content"><example-content/></div>
         <!-- 다음 단계로 넘어가는 버튼-->
         <div class="button-group">
@@ -50,7 +55,7 @@
           </div>
         </div>
       </div>
-      <!-- <test-content/> -->
+
     </v-col>
   </div>
 </template>
@@ -265,7 +270,11 @@ export default {
     font-size: 1.3rem;
   }
 
-  /* 스크롤 유도 화살표 */
+  /*
+  =======================================================
+  스크롤 유도 화살표
+  =======================================================
+  */
   .arrow {
     opacity: 0;
     position: absolute;
@@ -339,5 +348,80 @@ export default {
     }
   }
 
+  /*
+  =======================================================
+  Getting Started 버튼
+  =======================================================
+  */
 
+  .indicator {
+    padding-top: 3%;
+    text-align: center;
+  }
+
+  .indicator button {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    vertical-align: middle;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-family: inherit;
+  }
+  .indicator button.getting-started {
+    font-weight: bolder;
+    color: #382b22;
+    text-transform: uppercase;
+    padding: 1.25em 2em;
+    /* background: #fff0f0; */
+    border: 2px solid #b18597;
+    border-radius: 0.75em;
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+    -webkit-transition: background 150ms cubic-bezier(0, 0, 0.58, 1), -webkit-transform 150ms cubic-bezier(0, 0, 0.58, 1);
+    transition: background 150ms cubic-bezier(0, 0, 0.58, 1), -webkit-transform 150ms cubic-bezier(0, 0, 0.58, 1);
+    transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), background 150ms cubic-bezier(0, 0, 0.58, 1);
+    transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), background 150ms cubic-bezier(0, 0, 0.58, 1), -webkit-transform 150ms cubic-bezier(0, 0, 0.58, 1);
+  }
+  .indicator button.getting-started::before {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 227, 226, .5);
+    border-radius: inherit;
+    box-shadow: 0 0 0 2px #b18597, 0 0.625em 0 0 rgba(255, 227, 226, .5);
+    -webkit-transform: translate3d(0, 0.75em, -1em);
+            transform: translate3d(0, 0.75em, -1em);
+    -webkit-transition: box-shadow 150ms cubic-bezier(0, 0, 0.58, 1), -webkit-transform 150ms cubic-bezier(0, 0, 0.58, 1);
+    transition: box-shadow 150ms cubic-bezier(0, 0, 0.58, 1), -webkit-transform 150ms cubic-bezier(0, 0, 0.58, 1);
+    transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), box-shadow 150ms cubic-bezier(0, 0, 0.58, 1);
+    transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), box-shadow 150ms cubic-bezier(0, 0, 0.58, 1), -webkit-transform 150ms cubic-bezier(0, 0, 0.58, 1);
+  }
+  .indicator button.getting-started:hover {
+    background: rgba(255, 227, 226, .5);
+    -webkit-transform: translate(0, 0.25em);
+            transform: translate(0, 0.25em);
+  }
+  .indicator button.getting-started:hover::before {
+    box-shadow: 0 0 0 2px #b18597, 0 0.5em 0 0 rgba(255, 227, 226, .5);
+    -webkit-transform: translate3d(0, 0.5em, -1em);
+            transform: translate3d(0, 0.5em, -1em);
+  }
+  .indicator button.getting-started:active {
+    background: rgba(255, 227, 226, .5);
+    -webkit-transform: translate(0em, 0.75em);
+            transform: translate(0em, 0.75em);
+  }
+  .indicator button.getting-started:active::before {
+    box-shadow: 0 0 0 2px #b18597, 0 0 rgba(255, 227, 226, .5);
+    -webkit-transform: translate3d(0, 0, -1em);
+            transform: translate3d(0, 0, -1em);
+  }
 </style>

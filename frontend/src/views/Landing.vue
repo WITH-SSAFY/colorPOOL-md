@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-row class="landing wrap">
+      <!-- TODO : 화면 조정 -> 사이드바 fixed, 사이드와 메인이 각자 스크롤 -->
       <div class="theme-sidebar wrap"><demo-theme-sidebar/></div>
       <div class="example-area wrap"><example/></div>
     </v-row>
