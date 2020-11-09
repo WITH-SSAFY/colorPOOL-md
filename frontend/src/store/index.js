@@ -11,6 +11,7 @@ import demoStore from '@/store/modules/demoStore'
 import customStore from '@/store/modules/customStore'
 import contentStore from '@/store/modules/contentStore'
 import boxStore from '@/store/modules/boxStore'
+import editStore from '@/store/modules/editStore'
 
 export default new Vuex.Store({
   state: {
@@ -27,6 +28,7 @@ export default new Vuex.Store({
     customStore,
     contentStore,
     boxStore,
+    editStore
   },
   plugins: [
     createdPersistedState({

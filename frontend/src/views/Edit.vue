@@ -2,21 +2,21 @@
   <div>
     <v-row class="edit wrap">
       <div class="slide-sidebar wrap"><slide-list-sidebar/></div>
-      <!-- <div class="editing-area wrap"><editing/></div> -->
-      <router-view style="width: 70%"></router-view>
+      <div class="editing-area wrap"><editing/></div>
+      <!-- <router-view style="width: 70%"></router-view> -->
     </v-row>
   </div>
 </template>
 
 <script>
 import SlideListSidebar from '../components/sidebar/SlideListSidebar'
-// import Editing from '../components/edit/Editing'
+import Editing from '../components/edit/Editing'
 
 export default {
   name: 'Edit',
   components: {
     SlideListSidebar,
-    // Editing,
+    Editing,
   },
 }
 </script>

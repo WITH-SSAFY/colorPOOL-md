@@ -5,34 +5,8 @@
       <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
         
         <div class="menu-box">
-          <!-- <div class="toolbox" :class="['item' + page, isToolBoxShow? 'show': '']">
-            <button
-              class="toolbox-btn" :style="{'background-color': storeFinalTheme[0]}"
-              :class="{ 'is-active': isActive.customstyle({ level: 'color1' }) }"
-              @click="commands.customstyle({ level: 'color1' })"
-            ></button>
-            <button
-              class="toolbox-btn" :style="{'background-color': storeFinalTheme[1]}"
-              :class="{ 'is-active': isActive.customstyle({ level: 'color2' }) }"
-              @click="commands.customstyle({ level: 'color2' })"
-            ></button>
-            <button
-              class="toolbox-btn" :style="{'background-color': storeFinalTheme[2]}"
-              :class="{ 'is-active': isActive.customstyle({ level: 'color3' }) }"
-              @click="commands.customstyle({ level: 'color3' })"
-            ></button>
-            <button
-              class="toolbox-btn" :style="{'background-color': storeFinalTheme[3]}"
-              :class="{ 'is-active': isActive.customstyle({ level: 'color4' }) }"
-              @click="commands.customstyle({ level: 'color4' })"
-            ></button>
-            <button
-              class="toolbox-btn" :style="{'background-color': storeFinalTheme[4]}"
-              :class="{ 'is-active': isActive.customstyle({ level: 'color5' }) }"
-              @click="commands.customstyle({ level: 'color5' })"
-            ></button>        
-            </div> -->
           <div class="menubar">
+            <span v-if="storePage == 0">
             <button
               class="menubar__button"
               :class="{ 'is-active': isActive.bold() }"
@@ -140,13 +114,20 @@
               <v-icon>mdi-image-outline</v-icon>
             </button>
 
+            <button class="menubar__button">
+              <v-icon>mdi-image</v-icon>
+            </button>
+
             <button
               class="menubar__button"
               @click="commands.createTable({rowsCount: 3, colsCount: 3, withHeaderRow: false })">
               <v-icon>mdi-table-large</v-icon>
             </button>
 
-            <span>
+            <input type="file" id="photo_upload" >
+            </span>
+
+            <span v-if="storePage == 1">
               <br>
               <button
                 class="toolbox-btn" :style="{'background-color': 'black'}"
@@ -186,7 +167,7 @@
             </span>
             
 
-            <span v-if="isActive.table()">
+            <span v-if="storePage == 0 && isActive.table()">
               <br>
               <button class="menubar__button" @click="commands.deleteTable">
                 <v-icon>mdi-table-large-remove</v-icon>
@@ -221,7 +202,7 @@
               </button>
             </span>
 
-            <span v-if="isImage">
+            <span v-if="storePage == 0 && isImage">
               <br>
               <button class="menubar__button" @click="imageSize = 0">
                 <v-icon>mdi-size-xs</v-icon>
@@ -263,15 +244,15 @@
           <editor-content v-focus class="editor__content" :class="'item' + page" :editor="editor"/>
           <div class="bottomSensor" :class="'item' + page"></div>
         </section>
-        <div class="background-box">
+        <div class="background-box" v-if="storePage == 1">
           <button style="background-color: black;" @click="changeBackground('black')"></button>
           <button style="background-color: white;" @click="changeBackground('white')"></button>
           <button v-for="(color, index) in colors" :key="index" :style="{'background-color' : color}" @click="changeBackground(color)"></button>
         </div>
       </div>
-      <div class="arrow">
-        <div class="pre-arrow"></div>
-        <div class="next-arrow"></div>
+      <div class="arrow" v-if="page == 0">
+        <div class="pre-arrow" v-if="storePage == 1" @click="goEdit" ></div>
+        <div class="next-arrow" v-if="storePage == 0" @click="goColor"></div>
       </div>
 
     </div>
@@ -281,8 +262,6 @@
       <button style="background-color : blue" @click="blue">blue</button>
       <button style="background-color : green" @click="green">green</button>
     </div> -->
-    
-
   </div>
 </template>
 
@@ -293,6 +272,7 @@
   require('../../assets/LiveEditStyle.css')
   import {Editor, EditorContent, EditorMenuBar} from 'tiptap'
   import CustomStyle from "../../assets/CustomStyle";
+  import axios from '../../api/axiosCommon'
 
   import {
     Blockquote,
@@ -323,6 +303,7 @@
   const contentStore = 'contentStore';
   const customStore = 'customStore'
   const boxStore = 'boxStore';
+  const editStore = 'editStore';
 
   export default {
     name: 'EditPage',
@@ -397,7 +378,8 @@
       }
     },
     computed: {
-      ...mapGetters(customStore, {storeFinalTheme: 'GE_FINAL_THEME'})
+      ...mapGetters(customStore, {storeFinalTheme: 'GE_FINAL_THEME'}),
+      ...mapGetters(editStore, {storePage: 'GE_PAGE'})
     },
     created() {
       this.colors = this.storeFinalTheme;
@@ -405,6 +387,10 @@
     mounted() {
       // console.log(document.querySelector('.toolbox.item' + this.page));
       // this.editor.setContent(this.content_parent)
+      document.querySelector('#photo_upload').addEventListener('change', (e) => {
+        console.log(e);
+        this.readUploadImage(e);
+      })
 
       window.addEventListener('resize', this.handleResize)
       this.handler = setInterval(() => {
@@ -509,15 +495,20 @@
     methods: {
       ...mapActions(contentStore, ['AC_CONTENTS']),
       ...mapActions(boxStore, ['AC_IS_BOX', 'AC_TARGET']),
+      ...mapActions(editStore, ['AC_PAGE']),
       handleResize() {
         this.height = document.querySelector("#container").clientHeight
       },
       handleContent () {
         // if(this.isContentStored) return;
         // this.isContentStored = true;
+        // console.log(document.querySelector('.editor__content.item' + this.page).innerHTML);
+        // console.log(document.querySelector('.editor__content.item' + this.page).style.backgroundColor);
+        let background = document.querySelector('.editor__content.item' + this.page).style.backgroundColor;
+        if(background == '') background = 'white'
         const payload = {
           page: this.page,
-          content: '<section>' + document.querySelector('.editor__content.item' + this.page +' .ProseMirror').innerHTML + '</section>'
+          content: "<div style='background-color : " + background + "'>" + document.querySelector('.editor__content.item' + this.page +' .ProseMirror').innerHTML + '</div>'
         }
         this.AC_CONTENTS(payload);
         // setTimeout(() => {this.isContentStored = false}, 3000);
@@ -644,7 +635,21 @@
       },
       changeBackground(color) {
         document.querySelector('.editor__content.item' + this.page).style.backgroundColor = color;
-      }
+      },
+      goEdit() {
+        this.AC_PAGE(0);
+      },
+      goColor() {
+        this.AC_PAGE(1);
+      },
+      readUploadImage( inputObject ) {
+        console.log(inputObject)
+        var formData = new FormData();
+        formData.append('imageMultipartFile', inputObject.target.files[0])
+        axios.post('/image', formData, { headers: {accpet: 'application/json'}})
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+        }
     },
     directives: {
       focus: {
@@ -657,6 +662,12 @@
       }
     },
     watch: {
+      storePage() {
+        document.querySelector('.menubar').classList.add('active')
+        setTimeout(() => {
+          document.querySelector('.menubar').classList.remove('active')
+        }, 250);
+      }
     }
   }
 </script>
@@ -704,6 +715,19 @@
   .slide-section .menu-box .menubar {
     width: 100%;
   }
+
+  .menubar {
+    transition-duration: 250ms;
+    transform: translateX(0em);
+    opacity: 1;
+  }
+
+  .menubar.active {
+    transition-duration: 0s;
+    transform: translateX(5em);
+    opacity: 0;
+  }
+
 
   .slide-section .menu-box .menubar button {
     margin: 0 0.5%;

@@ -47,6 +47,7 @@ const landingStore = 'landingStore'
 // const colorStore = 'colorStore'
 const customStore = 'customStore'
 const contentStore = 'contentStore'
+const editStore = 'editStore'
 
 export default {
   name: 'PaletteCustom',
@@ -115,6 +116,7 @@ export default {
     ...mapActions(landingStore, ['AC_DIALOG']),
     ...mapActions(customStore, ['AC_FINAL_THEME']),
     ...mapActions(contentStore, ['AC_CONTENTS_NULL']),
+    ...mapActions(editStore, ['AC_PAGE']),
     close(){
       this.AC_DIALOG(false);
       this.initIsActive();
@@ -128,7 +130,8 @@ export default {
       this.isLoading = true;
       this.AC_CONTENTS_NULL();
       setTimeout(() => {
-        this.$router.push({name: 'Editing'})
+        this.AC_PAGE(0);
+        this.$router.push({name: 'Edit'})
       }, 1500);
     },
     setBackgroundColor(color) {

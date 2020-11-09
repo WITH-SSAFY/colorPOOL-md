@@ -2,54 +2,18 @@
   <div>
     <v-col class="editing-area">
       <div class="info-section">
-        <div class="progress-bar"><progress-bar v-bind:page="2" /></div>
+        <div class="progress-bar"><progress-bar v-bind:page="storePage + 2" /></div>
       </div>
-      <!-- <div class="toolbox" :class="[isToolBoxShow? 'show': '']">
-        <button class="toolbox-btn" @click="commands.customStyle({level:'color1'})"  style="width: 20%; height: 100%; border-radius: 70%;" :style="{'background-color': colors[0]}"></button>
-        <button class="toolbox-btn" @click="commands.customStyle({level:'color2'})"  style="width: 20%; height: 100%; border-radius: 70%;" :style="{'background-color': colors[1]}"></button>
-        <button class="toolbox-btn" @click="commands.customStyle({level:'color3'})"  style="width: 20%; height: 100%; border-radius: 70%;" :style="{'background-color': colors[2]}"></button>
-        <button class="toolbox-btn" @click="commands.customStyle({level:'color4'})"  style="width: 20%; height: 100%; border-radius: 70%;" :style="{'background-color': colors[3]}"></button>
-        <button class="toolbox-btn" @click="commands.customStyle({level:'color5'})"  style="width: 20%; height: 100%; border-radius: 70%;" :style="{'background-color': colors[4]}"></button>
-      </div> -->
       <EditPage v-for="(template, index) in templates" v-bind:page="index" @enterNewPage="createPage()" @exitNewPage="deletePage()" :key="index" v-bind:content_parent="template"></EditPage>
     </v-col>
+    <button @click="sendPDF">보내기</button>
   </div>
 </template>
-
- <!-- <button
-              class="menubar__button"
-              :class="{ 'is-active': isActive.bold() }"
-                @click="commands.bold"
-              >Bold</button>
-            <button
-              class="menubar__button"
-              :class="{ 'is-active': isActive.customstyle({ level: 'color1' }) }"
-              @click="commands.customstyle({ level: 'color1' })"
-            >1</button>
-            <button
-              class="menubar__button"
-              :class="{ 'is-active': isActive.customstyle({ level: 'color2' }) }"
-              @click="commands.customstyle({ level: 'color2' })"
-            >2</button>
-            <button
-              class="menubar__button"
-              :class="{ 'is-active': isActive.customstyle({ level: 'color3' }) }"
-              @click="commands.customstyle({ level: 'color3' })"
-            >3</button>
-            <button
-              class="menubar__button"
-              :class="{ 'is-active': isActive.customstyle({ level: 'color4' }) }"
-              @click="commands.customstyle({ level: 'color4' })"
-            >4</button>
-            <button
-              class="menubar__button"
-              :class="{ 'is-active': isActive.customstyle({ level: 'color5' }) }"
-              @click="commands.customstyle({ level: 'color5' })"
-            >5</button>         -->
 
 <script>
   import EditPage from './EditPage'
   import ProgressBar from '../../components/header/ProgressBar'
+  import axios from '../../api/axiosCommon'
   // import CustomStyle from "../../assets/CustomStyle";
   require('../../assets/LiveEditStyle.css')
   
@@ -58,6 +22,7 @@
   const contentStore = 'contentStore'
   const customStore = 'customStore'
   const boxStore = 'boxStore'
+  const editStore = 'editStore'
 
   export default {
     name: 'Editing',
@@ -75,7 +40,8 @@
     computed : {
       ...mapGetters(contentStore, {storeContents: 'GE_CONTENTS'}),
       ...mapGetters(boxStore, {storeIsBox: 'GE_IS_BOX'}),
-      ...mapGetters(customStore, {storeFinalTheme: 'GE_FINAL_THEME'})
+      ...mapGetters(customStore, {storeFinalTheme: 'GE_FINAL_THEME'}),
+      ...mapGetters(editStore, {storePage: 'GE_PAGE'}),
     },
     created() {
       this.templates = this.storeContents;
@@ -113,11 +79,30 @@
         // console.log(e);
         // this.isToolBoxShow = true;
         // e.target.style.color="red"
+      },
+      /* TEST PDF */
+      sendPDF() {
+        console.log(this.templates)
+        let str = ""
+        this.templates.forEach(template => {
+          template = template.replaceAll('"', "'");
+          template = template.replaceAll('<br>', '<br/>');
+          str += template;
+        })
+        console.log(str);
+        // const payload = {
+        //   path : '',
+        //   contents: str
+        // }
+        axios.post('/pdf', {'contents': str}).then((res) => console.log(res)).catch((err) => console.log(err));
       }
     },
     watch: {
       storeIsBox (val) {
         this.isToolBoxShow = val;
+      },
+      storePage () {
+
       }
     }
   }
