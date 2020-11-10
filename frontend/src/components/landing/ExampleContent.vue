@@ -91,13 +91,23 @@ export default {
         else this.selectedDemoColors[index] = '';
       })
       this.addOpacity(this.selectedDemoColors[4]);
-      document.querySelector('.background').style.backgroundColor = this.selectedDemoColors[0];
-      document.querySelector('h1').style.color = this.selectedDemoColors[1];
-      document.querySelector('hr').style.borderColor = this.selectedDemoColors[1];
-      document.querySelector('blockquote').style.borderColor = this.selectedDemoColors[4];
-      document.querySelector('blockquote').style.backgroundColor = this.quoteBackColor;
-      document.querySelector('h2').style.color = this.selectedDemoColors[2];
-      document.querySelector('samp').style.backgroundColor = this.selectedDemoColors[3];
+      console.log(this.selectedDemoColors[0])
+      if (this.selectedDemoColors[0] == '') {
+        document.querySelector('.indicator').style.backgroundColor = 'white'
+        document.querySelector('.example-md').style.backgroundColor = 'white'
+      } else {
+        document.querySelector('.indicator').style.backgroundColor = this.selectedDemoColors[0]
+        document.querySelector('.example-md').style.backgroundColor = this.selectedDemoColors[0]
+      }
+      document.querySelectorAll('.background h1').forEach(node => node.style.color = this.selectedDemoColors[1])
+      document.querySelectorAll('.background blockquote').forEach(node => node.style.borderColor = this.selectedDemoColors[4])
+      document.querySelectorAll('.background blockquote').forEach(node => node.style.backgroundColor = this.quoteBackColor)
+      document.querySelectorAll('.background h2').forEach(node => node.style.color = this.selectedDemoColors[2])
+      document.querySelectorAll('.background samp').forEach(node => node.style.backgroundColor = this.selectedDemoColors[3])
+      document.querySelectorAll('.page-content hr').forEach(node => node.style.borderColor = this.selectedDemoColors[1])
+      document.querySelectorAll('.page-content blockquote').forEach(node => node.style.borderColor = this.selectedDemoColors[4])
+      document.querySelectorAll('.page-content blockquote').forEach(node => node.style.backgroundColor = this.quoteBackColor)
+      document.querySelectorAll('.page-content samp').forEach(node => node.style.backgroundColor = this.selectedDemoColors[3])
 
       this.setBackgroundColor(this.selectedDemoColors);
       console.log('changeColors', this.selectedDemoColors);
