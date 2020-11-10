@@ -93,6 +93,7 @@ export default {
       this.addOpacity(this.selectedDemoColors[4]);
       document.querySelector('.background').style.backgroundColor = this.selectedDemoColors[0];
       document.querySelector('h1').style.color = this.selectedDemoColors[1];
+      document.querySelector('hr').style.borderColor = this.selectedDemoColors[1];
       document.querySelector('blockquote').style.borderColor = this.selectedDemoColors[4];
       document.querySelector('blockquote').style.backgroundColor = this.quoteBackColor;
       document.querySelector('h2').style.color = this.selectedDemoColors[2];

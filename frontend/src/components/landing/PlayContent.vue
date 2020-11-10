@@ -101,8 +101,17 @@
 </template>
 
 <script>
-export default {
 
+export default {
+  name: 'PlayContent',
+  computed: {
+
+  },
+  data() {
+    return {
+
+    }
+  }
 }
 </script>
 
@@ -307,6 +316,7 @@ export default {
   .page-content {
     height: 100%;
     padding: 2rem;
+    user-select: none;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
