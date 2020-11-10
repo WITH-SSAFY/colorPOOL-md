@@ -158,7 +158,7 @@ public class PdfService {
         document.open();
 
         for(String pageContents : pageContentsList){
-            String realContents = "<html><body style='family: NotoSansKR;'>" + pageContents + "</body></html>";
+            String realContents = "<html><body style='family: NanumGothic;'>" + pageContents + "</body></html>";
             XMLWorkerHelper helper = XMLWorkerHelper.getInstance();
 
             //css
@@ -168,7 +168,7 @@ public class PdfService {
 
             //font
             XMLWorkerFontProvider fontProvider = new XMLWorkerFontProvider(XMLWorkerFontProvider.DONTLOOKFORFONTS);
-            fontProvider.register(staticFolder + "NotoSansKR-Regular.otf", "NotoSansKR");
+            fontProvider.register(staticFolder + "NanumGothic-Regular.ttf", "NanumGothic");
             CssAppliers cssAppliers = new CssAppliersImpl(fontProvider);
 
             HtmlPipelineContext htmlContext = new HtmlPipelineContext(cssAppliers);
