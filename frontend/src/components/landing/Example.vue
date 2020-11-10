@@ -1,14 +1,25 @@
 <template>
   <div>
-    <v-col class="example-area" :style="{'background-color': color1 }">
-      <!-- 상단에 toggle 버튼-->
+    <v-col class="example-area">
+      <!-- 상단 toggle 버튼-->
       <div class="toggle-button-group">
-        <v-btn large text>toggle themes</v-btn>
-        <v-btn large text>toggle palette</v-btn>
+        <button>toggle themes</button>
+        <button>toggle palette</button>
       </div>
 
+      <!--컨셉 컨텐츠 -->
+      <play-content/>
+
+      <div class="indicator" :style="{'background-color': color1 }">
+        <div class="arrow arrow-first"></div>
+        <div class="arrow arrow-second"></div>
+        <!-- TODO : 의논하기 - 튜토리얼 버튼? 스타트 버튼? -->
+        <!-- TODO : 버튼에 scrollIntoView 걸기 -> 튜토리얼 화면으로 연결 -->
+        <button class="getting-started" :style="{'background-color': color3 }">Getting Started</button>
+      </div>
+      
       <!-- exapmle ui와 버튼 -->
-      <div class="example-md">
+      <div class="example-md" :style="{'background-color': color1 }">
         <div class="example-content"><example-content/></div>
         <!-- 다음 단계로 넘어가는 버튼-->
         <div class="button-group">
@@ -44,12 +55,14 @@
           </div>
         </div>
       </div>
+
     </v-col>
   </div>
 </template>
 
 <script>
 import ExampleContent from './ExampleContent'
+import PlayContent from './PlayContent'
 import { mapGetters, mapActions } from 'vuex'
 const demoStore = 'demoStore'
 const landingStore = 'landingStore'
@@ -58,6 +71,7 @@ export default {
   name: 'Example',
   components: {
     ExampleContent,
+    PlayContent,
   },
   computed:{
     ...mapGetters(demoStore, {storeSelectedDemoTheme: 'GE_SELECTED_DEMO_THEME', storeFlagDemoTheme: 'GE_FLAG_DEMO_THEME'}),
@@ -137,34 +151,41 @@ export default {
 <style scoped>
   .example-area.col{
     padding: 0;
-    transition-duration: 400ms;  
+    transition-duration: 400ms;
   }
 
-  .toggle-button-group{
-    padding: 1% 5%;
+  .toggle-button-group {
+    display: flex;
+    justify-content: flex-end;    
+    padding: 0 5%;
     height: 8vh;
     width: 100%;
+    background-color: #232a46;
   }
 
-  .toggle-button-group button{
-    float: right;
+  .toggle-button-group button {
+    font-size: 1.3rem;
+    font-weight: bolder;
+    padding: 0 2rem;
+    color: #ee7771;
+    display: inline;
   }
 
-  .example-md{
+  .example-md {
     margin: 0;
-    padding: 0 2%;
+    padding: 5% 2%;
     padding-bottom: 2%;
     height: 62vh;
     width: 100%;
-    float: left;
   }
 
-  .example-content{
-    height: 100%; 
-    width: 100%;
+  .example-md:after {
+    display: block;
+    content: "";
+    clear: both;
   }
 
-  .button-group{
+  .example-md .button-group {
     display: flex;
     justify-content: flex-end;
     flex-direction: column;
@@ -174,7 +195,7 @@ export default {
     user-select: none;
   }
 
-  .button-group .button{
+  .example-md .button-group .button {
     height: 70px;
     width: 95%;
     margin-bottom: 5%;
@@ -185,29 +206,36 @@ export default {
     color: #232a46; 
   }
 
-  .button:hover{
+  .example-md .button-group .button:hover {
     background-color: #d16a64;
   }
 
-  .example-content{
+  .example-md .example-content {
     float: left;
     width: 70%;
     height: 100%;
   }
 
-  .example-palette{
+  .example-palette {
     margin: 0;
+    padding: 2% 0;
     padding-left: 3%;
     user-select: none;
   }
 
-  .palette-content{
-    cursor:pointer;
+  .example-palette .palette-content {
+    cursor: pointer;
     width: 100%;
     height: 100%;
   }
 
-  .palette-content .color-info{
+  .example-palette .palette-content:after {
+    display: block;
+    content: "";
+    clear: both; 
+  }
+
+  .example-palette .palette-content .color-info {
     border: 4px solid #707070;
     float: left;
     height: 90px;
@@ -217,7 +245,7 @@ export default {
     margin-bottom: 10px;
   }
 
-  .palette-content .color-info .color{
+  .example-palette .palette-content .color-info .color {
     height: 50px;
     width: 50px;
     border-radius: 75px;
@@ -240,5 +268,160 @@ export default {
 
   .palette-content .color-info .desc{
     font-size: 1.3rem;
+  }
+
+  /*
+  =======================================================
+  스크롤 유도 화살표
+  =======================================================
+  */
+  .arrow {
+    opacity: 0;
+    position: absolute;
+    right: 5%;
+    top: 70%;
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+    -webkit-transform: translate3d(-50%, -50%, 0);
+            transform: translate3d(-50%, -50%, 0);
+  }
+
+  .arrow-first {
+    -webkit-animation: arrow-movement 2s ease-in-out infinite;
+            animation: arrow-movement 2s ease-in-out infinite;
+  }
+
+  .arrow-second {
+    -webkit-animation: arrow-movement 2s 1s ease-in-out infinite;
+            animation: arrow-movement 2s 1s ease-in-out infinite;
+  }
+
+  .arrow:before,
+  .arrow:after {
+    background: white;
+    content: '';
+    display: block;
+    height: 3px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+  }
+
+  .arrow:before {
+    -webkit-transform: rotate(45deg) translateX(-23%);
+            transform: rotate(45deg) translateX(-23%);
+    -webkit-transform-origin: top left;
+            transform-origin: top left;
+  }
+
+  .arrow:after {
+    -webkit-transform: rotate(-45deg) translateX(23%);
+            transform: rotate(-45deg) translateX(23%);
+    -webkit-transform-origin: top right;
+            transform-origin: top right;
+  }
+
+  @-webkit-keyframes arrow-movement {
+    0% {
+      opacity: 0;
+      top: 65%;
+    }
+    70% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes arrow-movement {
+    0% {
+      opacity: 0;
+      top: 65%;
+    }
+    70% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  /*
+  =======================================================
+  Getting Started 버튼
+  =======================================================
+  */
+
+  .indicator {
+    padding-top: 3%;
+    text-align: center;
+  }
+
+  .indicator button {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    vertical-align: middle;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-family: inherit;
+  }
+  .indicator button.getting-started {
+    font-weight: bolder;
+    color: #382b22;
+    text-transform: uppercase;
+    padding: 1.25em 2em;
+    /* background: #fff0f0; */
+    border: 2px solid #b18597;
+    border-radius: 0.75em;
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+    -webkit-transition: background 150ms cubic-bezier(0, 0, 0.58, 1), -webkit-transform 150ms cubic-bezier(0, 0, 0.58, 1);
+    transition: background 150ms cubic-bezier(0, 0, 0.58, 1), -webkit-transform 150ms cubic-bezier(0, 0, 0.58, 1);
+    transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), background 150ms cubic-bezier(0, 0, 0.58, 1);
+    transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), background 150ms cubic-bezier(0, 0, 0.58, 1), -webkit-transform 150ms cubic-bezier(0, 0, 0.58, 1);
+  }
+  .indicator button.getting-started::before {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 227, 226, .5);
+    border-radius: inherit;
+    box-shadow: 0 0 0 2px #b18597, 0 0.625em 0 0 rgba(255, 227, 226, .5);
+    -webkit-transform: translate3d(0, 0.75em, -1em);
+            transform: translate3d(0, 0.75em, -1em);
+    -webkit-transition: box-shadow 150ms cubic-bezier(0, 0, 0.58, 1), -webkit-transform 150ms cubic-bezier(0, 0, 0.58, 1);
+    transition: box-shadow 150ms cubic-bezier(0, 0, 0.58, 1), -webkit-transform 150ms cubic-bezier(0, 0, 0.58, 1);
+    transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), box-shadow 150ms cubic-bezier(0, 0, 0.58, 1);
+    transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), box-shadow 150ms cubic-bezier(0, 0, 0.58, 1), -webkit-transform 150ms cubic-bezier(0, 0, 0.58, 1);
+  }
+  .indicator button.getting-started:hover {
+    background: rgba(255, 227, 226, .5);
+    -webkit-transform: translate(0, 0.25em);
+            transform: translate(0, 0.25em);
+  }
+  .indicator button.getting-started:hover::before {
+    box-shadow: 0 0 0 2px #b18597, 0 0.5em 0 0 rgba(255, 227, 226, .5);
+    -webkit-transform: translate3d(0, 0.5em, -1em);
+            transform: translate3d(0, 0.5em, -1em);
+  }
+  .indicator button.getting-started:active {
+    background: rgba(255, 227, 226, .5);
+    -webkit-transform: translate(0em, 0.75em);
+            transform: translate(0em, 0.75em);
+  }
+  .indicator button.getting-started:active::before {
+    box-shadow: 0 0 0 2px #b18597, 0 0 rgba(255, 227, 226, .5);
+    -webkit-transform: translate3d(0, 0, -1em);
+            transform: translate3d(0, 0, -1em);
   }
 </style>

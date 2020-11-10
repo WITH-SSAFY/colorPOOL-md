@@ -82,10 +82,11 @@ export default {
 <style scoped>
 
 .theme-list-wrap{
-  width: 100%;
+  position: fixed;
+  width: 22.5%;
   height: 100vh;
   padding-top: 25px;
-  border-right: 3px solid #707070;
+  /* border-right: 3px solid #707070; */
   overflow: scroll;
 }
 
