@@ -91,6 +91,14 @@ export default {
         else this.selectedDemoColors[index] = '';
       })
       this.addOpacity(this.selectedDemoColors[4]);
+      console.log(this.selectedDemoColors[0])
+      if (this.selectedDemoColors[0] == '') {
+        document.querySelector('.indicator').style.backgroundColor = 'white'
+        document.querySelector('.example-md').style.backgroundColor = 'white'
+      } else {
+        document.querySelector('.indicator').style.backgroundColor = this.selectedDemoColors[0]
+        document.querySelector('.example-md').style.backgroundColor = this.selectedDemoColors[0]
+      }
       document.querySelectorAll('.background h1').forEach(node => node.style.color = this.selectedDemoColors[1])
       document.querySelectorAll('.background hr').forEach(node => node.style.borderColor = this.selectedDemoColors[1])
       document.querySelectorAll('.background blockquote').forEach(node => node.style.borderColor = this.selectedDemoColors[4])
