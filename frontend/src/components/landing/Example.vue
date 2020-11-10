@@ -31,23 +31,23 @@
       <div class="example-palette">
         <div class="palette-content">
           <h1>Palettes in Markdown</h1>
-          <div class="color-info d-flex align-center" @mouseover="overColor(0)" @mouseout="outColor(0)" @click="applyColor(0)">
+          <div class="color-info d-flex align-center" @mouseover="overColor(0)" @mouseout="outColor(0)" @click="[applyColor(0), activeColor(0)]">
             <div class="color" :style="{'background-color': color1 }"></div>
             <div class="desc">Background</div>
           </div>
-          <div class="color-info d-flex align-center" @mouseover="overColor(1)" @mouseout="outColor(1)" @click="applyColor(1)">
+          <div class="color-info d-flex align-center" @mouseover="overColor(1)" @mouseout="outColor(1)" @click="[applyColor(1), activeColor(1)]">
             <div class="color" :style="{'background-color': color2 }"></div>
             <div class="desc">Headline</div>
           </div>
-          <div class="color-info d-flex align-center" @mouseover="overColor(2)" @mouseout="outColor(2)" @click="applyColor(2)">
+          <div class="color-info d-flex align-center" @mouseover="overColor(2)" @mouseout="outColor(2)" @click="[applyColor(2), activeColor(2)]">
             <div class="color" :style="{'background-color': color3 }"></div>
             <div class="desc">Sub headline</div>
           </div>
-          <div class="color-info d-flex align-center" @mouseover="overColor(3)" @mouseout="outColor(3)" @click="applyColor(3)">
+          <div class="color-info d-flex align-center" @mouseover="overColor(3)" @mouseout="outColor(3)" @click="[applyColor(3), activeColor(3)]">
             <div class="color" :style="{'background-color': color4 }"></div>
             <div class="desc">Emphasis</div>
           </div>
-          <div class="color-info d-flex align-center" @mouseover="overColor(4)" @mouseout="outColor(4)" @click="applyColor(4)">
+          <div class="color-info d-flex align-center" @mouseover="overColor(4)" @mouseout="outColor(4)" @click="[applyColor(4), activeColor(4)]">
             <div class="color" :style="{'background-color': color5 }"></div>
             <div class="desc">Quote</div>
           </div>
@@ -92,6 +92,9 @@ export default {
     this.selectedDemoTheme = this.storeSelectedDemoTheme;
     this.flagDemoTheme = this.storeFlagDemoTheme;
     this.setColors(this.selectedDemoTheme);
+  },
+  mounted() {
+    [...Array(5).keys()].forEach(index => this.activeColor(index))
   },
   watch: {
     storeSelectedDemoTheme (val) {
@@ -140,9 +143,17 @@ export default {
     },
 
     //적용할 색상을 선택 -> demoFlag 값 변경
-    applyColor(index){
+    applyColor(index) {
       this.flagDemoTheme[index] = !this.flagDemoTheme[index];
       this.AC_FLAG_DEMO_THEME(this.flagDemoTheme);
+    },
+    activeColor(index) {
+      var targetColor = document.querySelectorAll('.color-info .color');
+      if (this.flagDemoTheme[index]) {
+        targetColor[index].classList.add("active-color");
+      } else {
+        targetColor[index].classList.remove("active-color");
+      }
     }
   }
 }
@@ -248,22 +259,36 @@ export default {
   .example-palette .palette-content .color-info .color {
     height: 50px;
     width: 50px;
-    border-radius: 75px;
-    border: 4px solid #707070;
+    border-radius: 50%;
+    border-bottom: 5px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.2);
+    /* border: 4px solid #707070; */
     margin-left: 8%; 
     margin-right: 3%;
   }
 
-  .animation-in{
-    /* -webkit-filter: blur(0); */
+  .example-palette .palette-content .color-info .color:hover {
+    -webkit-transform: scale(1.2);
     transform: scale(1.2);
-    transition-duration: 0.3s;
+    border-bottom: 10px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
   }
 
-  .animation-out{
-    /* -webkit-filter: blur(0); */
+  .animation-in {
+    transform: scale(1.2);
+    transition-duration: 0.15s;
+  }
+
+  .animation-out {
     transform: scale(1);
     transition-duration: 0.1s;
+  }
+
+  .active-color {
+    -webkit-transform: scale(1.2) translateY(-5px);
+    transform: scale(1.2) translateY(-5px);
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+    border-bottom: 30px solid rgba(0, 0, 0, 0.15);
   }
 
   .palette-content .color-info .desc{
@@ -424,4 +449,12 @@ export default {
     -webkit-transform: translate3d(0, 0, -1em);
             transform: translate3d(0, 0, -1em);
   }
+
+  /*
+  =======================================================
+  color selection 효과
+  =======================================================
+  */
+ 
+
 </style>
