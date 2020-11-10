@@ -16,9 +16,9 @@
     </v-btn>
     <v-navigation-drawer
       v-model="drawer"
-      absolute
+      fixed
       temporary
-      style="z-index: 99; width: 22.5%; background-color: #232a46;"
+      style="z-index: 99; width: 22.5%; height: 100%; background-color: #232a46;"
       dark
     >
       <v-list
