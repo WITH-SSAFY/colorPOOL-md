@@ -18,6 +18,8 @@ export default {
     SlideListSidebar,
     Editing,
   },
+  computed: {
+  },
 }
 </script>
 
