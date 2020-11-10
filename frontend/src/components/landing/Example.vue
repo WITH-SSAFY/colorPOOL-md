@@ -3,8 +3,8 @@
     <v-col class="example-area">
       <!-- 상단 toggle 버튼-->
       <div class="toggle-button-group">
-        <button>toggle themes</button>
-        <button>toggle palette</button>
+        <button @click="goPickColor">Color with Team-Color</button>
+        <button @click="goGetColor">Color with Main-Keyword</button>
       </div>
 
       <!--컨셉 컨텐츠 -->
@@ -13,11 +13,9 @@
       <div class="indicator" :style="{'background-color': color1 }">
         <div class="arrow arrow-first"></div>
         <div class="arrow arrow-second"></div>
-        <!-- TODO : 의논하기 - 튜토리얼 버튼? 스타트 버튼? -->
-        <!-- TODO : 버튼에 scrollIntoView 걸기 -> 튜토리얼 화면으로 연결 -->
-        <button class="getting-started" :style="{'background-color': color3 }">Getting Started</button>
+        <button class="getting-started" :style="{'background-color': color3 }" @click="goTutorial">Getting Started</button>
       </div>
-      
+
       <!-- exapmle ui와 버튼 -->
       <div class="example-md" :style="{'background-color': color1 }">
         <div class="example-content"><example-content/></div>
@@ -116,17 +114,19 @@ export default {
       this.color5 = 'rgb(' + color.red5 + ', ' + color.green5 + ', ' + color.blue5 + ')';
     },
     //getColor와 PickColor 간의 이동을 위한 변수 변경
-    goGetColor(){
+    goGetColor () {
       this.AC_IS_PICK(false);
       this.AC_IS_GET(true);
       this.$router.push({name: 'Select'});
     },
-    goPickColor(){
+    goPickColor () {
       this.AC_IS_PICK(true);
       this.AC_IS_GET(false);
       this.$router.push({name: 'Select'});
     },
-    
+    goTutorial () {
+      document.querySelector('.example-md').scrollIntoView({behavior: "smooth"})
+    },
     //Color 위에 마우스 올렸을 때, 애니메이션을 위한 함수
     overColor(index){
       var targetColor = document.querySelectorAll('.color-info .color');
