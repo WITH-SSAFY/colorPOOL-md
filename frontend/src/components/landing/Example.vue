@@ -129,6 +129,7 @@ export default {
     },
     goTutorial () {
       document.querySelector('.example-md').scrollIntoView({behavior: "smooth"})
+      document.querySelector('.color-info').classList.add("bounce-start")
     },
     //Color 위에 마우스 올렸을 때, 애니메이션을 위한 함수
     overColor(index){
@@ -274,6 +275,11 @@ export default {
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
   }
 
+  .bounce-start {
+    -webkit-animation: bounce 2s 1s ease-in-out;
+        animation: bounce 2s 1s ease-in-out;
+  }
+
   .animation-in {
     transform: scale(1.2);
     transition-duration: 0.15s;
@@ -409,6 +415,8 @@ export default {
     transition: background 150ms cubic-bezier(0, 0, 0.58, 1), -webkit-transform 150ms cubic-bezier(0, 0, 0.58, 1);
     transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), background 150ms cubic-bezier(0, 0, 0.58, 1);
     transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), background 150ms cubic-bezier(0, 0, 0.58, 1), -webkit-transform 150ms cubic-bezier(0, 0, 0.58, 1);
+    -webkit-animation: rubberBand 2s 1s ease-in-out;
+        animation: rubberBand 2s 1s ease-in-out;
   }
   .indicator button.getting-started::before {
     position: absolute;
@@ -449,5 +457,72 @@ export default {
     -webkit-transform: translate3d(0, 0, -1em);
             transform: translate3d(0, 0, -1em);
   }
+
+  /*
+  =======================================================
+  Bounce 애니메이션
+  =======================================================
+  */
+
+  @keyframes bounce {
+    from,
+    20%,
+    53%,
+    to {
+      animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      transform: translate3d(0, 0, 0);
+    }
+
+    40%,
+    43% {
+      animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+      transform: translate3d(0, -30px, 0) scaleY(1.1);
+    }
+
+    70% {
+      animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+      transform: translate3d(0, -15px, 0) scaleY(1.05);
+    }
+
+    80% {
+      transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      transform: translate3d(0, 0, 0) scaleY(0.95);
+    }
+
+    90% {
+      transform: translate3d(0, -4px, 0) scaleY(1.02);
+    }
+  }
+
+  @keyframes rubberBand {
+    from {
+      transform: scale3d(1, 1, 1);
+    }
+
+    30% {
+      transform: scale3d(1.25, 0.75, 1);
+    }
+
+    40% {
+      transform: scale3d(0.75, 1.25, 1);
+    }
+
+    50% {
+      transform: scale3d(1.15, 0.85, 1);
+    }
+
+    65% {
+      transform: scale3d(0.95, 1.05, 1);
+    }
+
+    75% {
+      transform: scale3d(1.05, 0.95, 1);
+    }
+
+    to {
+      transform: scale3d(1, 1, 1);
+    }
+  }
+
 
 </style>
