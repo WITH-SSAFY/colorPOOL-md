@@ -100,11 +100,14 @@ export default {
         document.querySelector('.example-md').style.backgroundColor = this.selectedDemoColors[0]
       }
       document.querySelectorAll('.background h1').forEach(node => node.style.color = this.selectedDemoColors[1])
-      document.querySelectorAll('.background hr').forEach(node => node.style.borderColor = this.selectedDemoColors[1])
       document.querySelectorAll('.background blockquote').forEach(node => node.style.borderColor = this.selectedDemoColors[4])
       document.querySelectorAll('.background blockquote').forEach(node => node.style.backgroundColor = this.quoteBackColor)
       document.querySelectorAll('.background h2').forEach(node => node.style.color = this.selectedDemoColors[2])
       document.querySelectorAll('.background samp').forEach(node => node.style.backgroundColor = this.selectedDemoColors[3])
+      document.querySelectorAll('.page-content hr').forEach(node => node.style.borderColor = this.selectedDemoColors[1])
+      document.querySelectorAll('.page-content blockquote').forEach(node => node.style.borderColor = this.selectedDemoColors[4])
+      document.querySelectorAll('.page-content blockquote').forEach(node => node.style.backgroundColor = this.quoteBackColor)
+      document.querySelectorAll('.page-content samp').forEach(node => node.style.backgroundColor = this.selectedDemoColors[3])
 
       this.setBackgroundColor(this.selectedDemoColors);
       console.log('changeColors', this.selectedDemoColors);
