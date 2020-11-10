@@ -153,12 +153,12 @@ public class PdfService {
 
         //pdf init settings
         Rectangle pageSize = new RectangleReadOnly(795,445);
-        Document document = new Document(pageSize,0,0,0,0);
+        Document document = new Document(pageSize,80,80,40,40);
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(tempPdfPath));
         document.open();
 
         for(String pageContents : pageContentsList){
-            String realContents = "<html><body style='family: NanumGothic;'>" + pageContents + "</body></html>";
+            String realContents = "<html><body style='font-family: NanumGothic;'>" + pageContents + "</body></html>";
             XMLWorkerHelper helper = XMLWorkerHelper.getInstance();
 
             //css
