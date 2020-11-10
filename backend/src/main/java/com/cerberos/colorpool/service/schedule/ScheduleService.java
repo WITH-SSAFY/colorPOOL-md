@@ -17,7 +17,7 @@ public class ScheduleService {
     private final PdfJpaRepository pdfJpaRepository;
     private final S3api s3api;
 
-    @Scheduled(cron = "0 30 23 * * *")
+    @Scheduled(cron = "0 40 23 * * *")
     public void clearPdfBucket(){
         List<Pdf> allPdfList = pdfJpaRepository.findAll();
         String keyPrefix = "pdf/";
