@@ -16,9 +16,9 @@
     </v-btn>
     <v-navigation-drawer
       v-model="drawer"
-      absolute
+      fixed
       temporary
-      style="z-index: 99; width: 22.5%; background-color: #232a46;"
+      style="z-index: 99; width: 22.5%; height: 100%; background-color: #232a46;"
       dark
     >
       <v-list
@@ -70,6 +70,34 @@
 
     </v-navigation-drawer>
     <router-view/>
+
+    <!-- 화면 크기 제한 -->
+    <div class="resize">
+      <div class="ground">
+        <p>colorPOOL.md는 웹 환경에서 지원합니다</p>
+        <p>발표자료 제작을 위해 화면의 크기를 좀 더 키워주세요</p>
+      </div>
+      <div class="frame">
+        <div class="shadow-top"></div>
+        <div class="shadow-bottom"></div>
+        <div class="canvas">
+          <div class="workeasy">
+            Work
+            Easy
+          </div>
+          <div class="and">&</div>
+          <div class="benice">
+            Be nice
+            to People
+          </div>
+          <div class="line"></div>
+          <div class="sign">
+            colorPOOL.md
+          </div>
+        </div>
+      </div>
+    </div>
+
   </v-app>
 </template>
 
@@ -114,4 +142,130 @@ export default {
 </script>
 <style>
   *{ font-family: 'Proxima Nova Alt', 'Spoqa Han Sans'; }
+
+  /*
+  =======================================================
+  화면 크기 제한
+  =======================================================
+  */
+  .resize {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    padding: 0;
+    background: #eee;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  @media (max-width: 1199px) {
+    .resize {
+      display: block;
+    }
+  }
+
+  .frame {
+    position: relative;
+    width: 230px;
+    height: 380px;
+    padding: 6px;
+    background: #fff;
+    margin: 80px auto;
+  }
+  
+  .shadow-top {
+    position: absolute;
+    left: -50px;
+    width: 0;
+    height: 0;
+    border-bottom: 366px solid #bbb;
+    border-left: 50px solid transparent;
+  }
+
+  .shadow-bottom {
+    position: absolute;
+    left: -50px;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-top: 20px solid #aaa;
+    border-left: 50px solid transparent;
+  }
+
+  .canvas {
+    padding: 30px;
+    width: 100%;
+    height: 100%;
+    /* width: 170px;
+    height: 320px; */
+    background: #ee7771;
+    box-shadow: inset -2px 2px 0 #777;
+  }
+
+  .ground {
+    position: absolute;
+    top: 450px;
+    width: 100%;
+    min-width: 250px;
+    height: 800px;
+    padding: 200px 0;
+    background: #ddd;
+    overflow: hidden;
+  }
+
+  .ground p {
+    font-size: 1.5rem;
+    padding: 1rem;
+  }
+
+  .workeasy, .and, .benice {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 55px;
+    line-height: 70px;
+  }
+
+  .and {
+    font-size: 40px;
+  }
+
+  .benice {
+    margin: 0 auto;
+    width: 150px;
+    font-size: 36px;
+    line-height: 40px;
+  }
+
+  .line {
+    width: 90px;
+    height: 1px;
+    background: #111;
+    margin: 30px auto 0;
+  }
+
+  .sign {
+    font-size: 10px;
+    margin-top: 5px;
+  }
+
+  a, .ground p {
+    color: #222;
+    line-height: 0;
+  }
+
+  .mysite {
+    font-size: 18px;
+    text-decoration:  none;
+    color: rgba(0,0,0,0.5);
+    border-bottom: solid 1px rgba(0,0,0,0.5);
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    line-height: 20px;
+  }
+
 </style>

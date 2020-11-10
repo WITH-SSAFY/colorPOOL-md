@@ -215,7 +215,10 @@ export default {
     background-color: #ee7771;
     font-size: 1.5rem;
     font-weight: bolder;
-    color: #232a46; 
+    color: #232a46;
+    box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+    7px 7px 20px 0px rgba(0,0,0,.1),
+    4px 4px 5px 0px rgba(0,0,0,.1);
   }
 
   .example-md .button-group .button:hover {
@@ -401,6 +404,7 @@ export default {
     font-size: 1.5rem;
     font-family: inherit;
   }
+
   .indicator button.getting-started {
     font-weight: bolder;
     color: #382b22;
@@ -418,6 +422,7 @@ export default {
     -webkit-animation: rubberBand 2s 1s ease-in-out;
         animation: rubberBand 2s 1s ease-in-out;
   }
+
   .indicator button.getting-started::before {
     position: absolute;
     content: '';
@@ -437,21 +442,25 @@ export default {
     transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), box-shadow 150ms cubic-bezier(0, 0, 0.58, 1);
     transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), box-shadow 150ms cubic-bezier(0, 0, 0.58, 1), -webkit-transform 150ms cubic-bezier(0, 0, 0.58, 1);
   }
+
   .indicator button.getting-started:hover {
     background: rgba(255, 227, 226, .5);
     -webkit-transform: translate(0, 0.25em);
             transform: translate(0, 0.25em);
   }
+
   .indicator button.getting-started:hover::before {
     box-shadow: 0 0 0 2px #b18597, 0 0.5em 0 0 rgba(255, 227, 226, .5);
     -webkit-transform: translate3d(0, 0.5em, -1em);
             transform: translate3d(0, 0.5em, -1em);
   }
+
   .indicator button.getting-started:active {
     background: rgba(255, 227, 226, .5);
     -webkit-transform: translate(0em, 0.75em);
             transform: translate(0em, 0.75em);
   }
+
   .indicator button.getting-started:active::before {
     box-shadow: 0 0 0 2px #b18597, 0 0 rgba(255, 227, 226, .5);
     -webkit-transform: translate3d(0, 0, -1em);
