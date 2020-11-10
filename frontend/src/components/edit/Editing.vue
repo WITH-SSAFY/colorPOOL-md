@@ -16,12 +16,13 @@
   // import axios from '../../api/axiosCommon'
   require('../../assets/LiveEditStyle.css')
   
-  import { mapGetters } from 'vuex'
+  import { mapActions, mapGetters } from 'vuex'
 
   const contentStore = 'contentStore'
   const customStore = 'customStore'
   const boxStore = 'boxStore'
   const editStore = 'editStore'
+  const pdfStore = 'pdfStore'
 
   export default {
     name: 'Editing',
@@ -34,6 +35,7 @@
         isToolBoxShow: false,
         colors: [],
         parent: 0,
+        handler: null,
       }
     },
     computed : {
@@ -52,8 +54,15 @@
     mounted() {
       document.addEventListener('click', this.handleDrag);
       console.log(this.templates);
+      this.handler = setInterval(() => {
+        this.setFinalContents();
+      }, 3000);
+    },
+    beforeDestroy() {
+      clearInterval(this.handler)
     },
     methods: {
+      ...mapActions(pdfStore,['AC_CONTENTS']),
       createPage() {
         this.templates.push(EditPage)
       },
@@ -85,6 +94,27 @@
         })
         console.log(str);
         // axios.post('/pdf', {'contents': str}).then((res) => console.log(res)).catch((err) => console.log(err));
+      },
+      setFinalContents() {
+        let str = ""
+        this.templates.forEach(template => {
+          template = template.replaceAll('"', "'");
+          template = template.replaceAll('<br>', '<br/>');
+          let i = 0;
+          // console.log(template.indexOf('<img', 42))
+          while(template.indexOf('<img', i) != -1) {
+            i = template.indexOf('<img', i);
+            for(var j = i; j < template.length; j++) {
+              if(template[j] == '>') {
+                template = template.substring(0, j) + '/' + template.substring(j)
+                i = j;
+                break;
+              }
+            }
+          }
+          str += template;
+        })
+        this.AC_CONTENTS(str);
       }
     },
     watch: {
@@ -92,7 +122,7 @@
         this.isToolBoxShow = val;
       },
       storePage () {
-
+        
       },
     }
   }

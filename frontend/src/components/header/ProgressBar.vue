@@ -17,7 +17,11 @@
         <span class="title" style="margin-left: -15px;">Coloring</span>
       </div>
       <span class="bar"></span>
-      <div class="circle" :class="[page == 4 ? 'active' : '', page > 4 ? 'done': '']" @click="goFinal">
+      <div class="circle" :class="[page == 4 ? 'active' : '', page > 4 ? 'done': '']" style="background-color: black;" v-if="!finalPage" @click="goFinalNo">
+        <span class="label">4</span><br>
+        <span class="title" style="margin-left: -50px;">Final Disabled</span>
+      </div>
+      <div class="circle" :class="[page == 4 ? 'active' : '', page > 4 ? 'done': '']" v-if="finalPage" @click="goFinal">
         <span class="label">4</span><br>
         <span class="title" style="margin-left: -5px;">Final</span>
       </div>
@@ -41,6 +45,8 @@ import { mapGetters, mapActions } from 'vuex'
 const landingStore = 'landingStore'
 const customStore = 'customStore'
 const editStore = 'editStore'
+const pdfStore = 'pdfStore'
+
 export default {
   props: {
     page: {
@@ -49,12 +55,14 @@ export default {
   },
   computed: {
     ...mapGetters(landingStore, {storeIsPick: 'GE_IS_PICK', storeIsGet: 'GE_IS_GET'}),
-    ...mapGetters(customStore, {storeFinalTheme: 'GE_FINAL_THEME'})
+    ...mapGetters(customStore, {storeFinalTheme: 'GE_FINAL_THEME'}),
+    ...mapGetters(pdfStore, {storeContents: 'GE_CONTENTS'})
   },
   data() {
     return {
       // page: 0,
       landText : '',
+      finalPage: false,
     }
   },
   created() {
@@ -69,6 +77,7 @@ export default {
     } else {
       this.landText = 'Select Your Color'
     }
+    if(this.storeContents != '') this.finalPage = true;
   },
   methods: {
     ...mapActions(landingStore, ['AC_IS_PICK', 'AC_IS_GET']),
@@ -91,6 +100,9 @@ export default {
     goFinal () {
       this.$router.push({name: 'Result'});
     },
+    goFinalNo() {
+      alert("마크다운을 작성해주세여")
+    }
   },
   watch : {
     storeIsPick(val) {
@@ -98,6 +110,13 @@ export default {
     },
     storeIsGet(val) {
       if(val) this.landText = 'Get Your Color'
+    },
+    storeContents(val) {
+      if(val != '') {
+        this.finalPage = true;
+      } else {
+        this.finalPage = false;
+      }
     }
   }
 }

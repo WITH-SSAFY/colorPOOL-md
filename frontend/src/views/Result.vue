@@ -2,7 +2,7 @@
   <div>
     <v-row class="edit wrap">
       <div class="slide-sidebar wrap"><slide-list-sidebar/></div>
-      <div class="editing-area wrap"><editing/></div>
+      <div class="demo-result-area wrap"><DemoResult/></div> 
       <div class="button-group">
         <div type="button" class="button">Export to pdf</div>
         <div type="button" class="button">Share with SNS</div>
@@ -12,14 +12,13 @@
 </template>
 
 <script>
-import SlideListSidebar from '../components/sidebar/SlideListSidebar'
-import Editing from '../components/edit/Editing'
+import SlideListSidebar from '../components/sidebar/FinalSlideListSidebar'
+import DemoResult from '../components/result/DemoResult'
 
 export default {
   name: 'Result',
   components: {
-    SlideListSidebar,
-    Editing,
+    SlideListSidebar, DemoResult
   },
 }
 </script>
@@ -37,7 +36,8 @@ export default {
     width: 22.5%;
   }
 
-  .edit.wrap .editing-area.wrap {
+
+  .demo-result-area.wrap {
     background-color: rgba(238, 238, 238, 0.7);
     width: 50%;
   }
@@ -50,6 +50,7 @@ export default {
     width: 27.5%;
     height: 100%;
     user-select: none;
+    background-color: rgba(238, 238, 238, 0.7);
   }
 
   .edit.wrap .button-group .button{
