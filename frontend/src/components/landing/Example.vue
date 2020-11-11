@@ -30,7 +30,7 @@
       <!-- 선택한 theme 팔레트에 표시-->
       <div class="example-palette">
         <div class="palette-content">
-          <h1>Palettes in Markdown</h1>
+          <h1 style="margin: 0;">Palettes in Markdown</h1>
           <div class="color-info d-flex align-center" @mouseover="overColor(0)" @mouseout="outColor(0)" @click="[applyColor(0), activeColor(0)]">
             <div class="color" :style="{'background-color': color1 }"></div>
             <div class="desc">Background</div>
@@ -185,9 +185,9 @@ export default {
 
   .example-md {
     margin: 0;
-    padding: 5% 2%;
+    padding: 0 2%;
     padding-bottom: 2%;
-    height: 62vh;
+    height: 67vh;
     width: 100%;
   }
 
@@ -240,8 +240,8 @@ export default {
 
   .example-palette .palette-content {
     cursor: pointer;
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 90%;
   }
 
   .example-palette .palette-content:after {

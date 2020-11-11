@@ -136,7 +136,9 @@ export default {
     height: 0;
     margin-top: 0;
     margin-bottom: .67em;
-    overflow: visible
+    overflow: visible;
+    color: transparent;
+    border-color: transparent;
   }
 
   pre {
