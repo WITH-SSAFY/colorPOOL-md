@@ -1,5 +1,6 @@
 package com.cerberos.colorpool.service.pdf;
 
+import com.cerberos.colorpool.advice.exception.CContentsNotFoundException;
 import com.cerberos.colorpool.advice.exception.CPdfNotCreateException;
 import com.cerberos.colorpool.entity.pdf.Pdf;
 import com.cerberos.colorpool.model.pdf.PdfModel;
@@ -49,12 +50,9 @@ public class PdfService {
     private final String pdfFolder = "http://k3a501.p.ssafy.io/resource/pdf/";
 
     public String getOneContents(int id){
-        Optional<Pdf> pdf = pdfJpaRepository.findById(id);
-        if(!pdf.isPresent()){
-            //예외 처리
-            throw new IllegalArgumentException();
-        }
-        String contents = pdf.get().getContents();
+        Pdf pdf = pdfJpaRepository.findById(id).orElseThrow(CContentsNotFoundException::new);
+
+        String contents = pdf.getContents();
         return contents;
     }
 
