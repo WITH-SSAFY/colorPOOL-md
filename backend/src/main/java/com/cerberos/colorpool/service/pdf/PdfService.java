@@ -168,7 +168,9 @@ public class PdfService {
 
         //pdf init settings
         Rectangle pageSize = new RectangleReadOnly(795,445);
-        Document document = new Document(pageSize,80,80,40,40);
+        //Document document = new Document(pageSize,80,80,40,40);
+        Document document = new Document(pageSize,0,0,0,0);
+
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(tempPdfPath));
         document.open();
 
