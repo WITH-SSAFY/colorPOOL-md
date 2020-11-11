@@ -54,11 +54,23 @@ public class PdfService {
     private final String pdfFolder = "http://k3a501.p.ssafy.io/api-pdf/";
     private final String imageFolder = "http://k3a501.p.ssafy.io/api-image/";
 
+    public String getOneContents(int id){
+        Optional<Pdf> pdf = pdfJpaRepository.findById(id);
+        if(!pdf.isPresent()){
+            //예외 처리
+            throw new IllegalArgumentException();
+        }
+        String contents = pdf.get().getContents();
+        return contents;
+    }
+
     public PdfModel.Res uploadPdfAndMarkdown(PdfModel.Req pdfReq){
-        String newPdfName = getNewPdfName();
+        int newPdfId = getNewPdfId();
+        String newPdfName = getNewPdfName(newPdfId);
         String newPdfPath = pdfFolder+newPdfName;
         String contents = pdfReq.getContents();
         PdfModel.Res pdfRes = PdfModel.Res.builder()
+                                .id(newPdfId)
                                 .contents(contents)
                                 .path(newPdfPath)
                                 .build();
@@ -102,13 +114,16 @@ public class PdfService {
 //        }
 //        return newImagePath;
 //    }
-
-    public String getNewPdfName() {
+    public int getNewPdfId(){
         Optional<Pdf> lastPdf = pdfJpaRepository.findFirstByOrderByIdDesc();
         long newPdfId = 1;
         if(lastPdf.isPresent()){
             newPdfId = lastPdf.get().getId()+1;
         }
+        return (int) newPdfId;
+    }
+
+    public String getNewPdfName(int newPdfId) {
         String newPdfName = newPdfId+".pdf";
         newPdfName = getHash(newPdfName)+".pdf";
         return newPdfName;

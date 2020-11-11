@@ -23,4 +23,9 @@ public class PdfController {
     public SingleResult<PdfModel.Res> uploadPdf(@RequestBody PdfModel.Req pdfModel){
         return responseService.getSingleResult(pdfService.uploadPdfAndMarkdown(pdfModel));
     }
+    @Operation(summary = "pdf html내용 단건 조회", description = "pdf의 id로 pdf html내용을 단건 조회합니다.")
+    @GetMapping("/contents/{id}")
+    public SingleResult<String> getOneContents(@PathVariable int id){
+        return responseService.getSingleResult(pdfService.getOneContents(id));
+    }
 }

@@ -13,17 +13,21 @@ public class PdfModel {
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Res{
+        private Integer id;
         private String contents;
         private String path;
 
+
         @Builder
-        public Res(String contents, String path){
+        public Res(int id, String contents, String path){
+            this.id = id;
             this.contents = contents;
             this.path = path;
         }
 
         public Pdf toEntity(){
             Pdf pdf = Pdf.builder()
+                    .id(this.id)
                     .contents(this.contents)
                     .path(this.path)
                     .build();
