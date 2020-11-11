@@ -182,7 +182,7 @@ blockquote {
   border-left: 6px solid;
   border-color: rgb(156, 156, 156);
   background-color: rgba(156, 156, 156, 0.1);
-  color: #888;
+  color: rgba(0, 0, 0, 0.7);;
 }
 
 code {

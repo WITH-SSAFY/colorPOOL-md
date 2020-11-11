@@ -233,7 +233,7 @@ export default {
 
   .example-palette {
     margin: 0;
-    padding: 2% 0;
+    padding-top: 2%;
     padding-left: 3%;
     user-select: none;
   }
