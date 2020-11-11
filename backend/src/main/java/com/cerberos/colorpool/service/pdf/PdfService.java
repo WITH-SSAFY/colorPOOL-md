@@ -1,8 +1,6 @@
 package com.cerberos.colorpool.service.pdf;
 
-import com.cerberos.colorpool.advice.exception.CImageNotUploadException;
 import com.cerberos.colorpool.advice.exception.CPdfNotCreateException;
-import com.cerberos.colorpool.advice.exception.CThemeNotFoundException;
 import com.cerberos.colorpool.entity.pdf.Pdf;
 import com.cerberos.colorpool.model.pdf.PdfModel;
 import com.cerberos.colorpool.repository.pdf.PdfJpaRepository;
@@ -25,15 +23,13 @@ import com.itextpdf.tool.xml.pipeline.css.CssResolverPipeline;
 import com.itextpdf.tool.xml.pipeline.end.PdfWriterPipeline;
 import com.itextpdf.tool.xml.pipeline.html.HtmlPipeline;
 import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
-import javassist.tools.reflect.CannotInvokeException;
 import lombok.RequiredArgsConstructor;
+
 
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.swing.plaf.synth.SynthTextAreaUI;
-import javax.transaction.Transactional;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
