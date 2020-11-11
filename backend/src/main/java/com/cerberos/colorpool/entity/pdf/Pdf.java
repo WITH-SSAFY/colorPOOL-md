@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Table(name="PDF")
 public class Pdf {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PDF_ID", nullable = false)
     private Integer id;
 
@@ -23,7 +23,8 @@ public class Pdf {
     private String path;
 
     @Builder
-    public Pdf(String contents, String path){
+    public Pdf(int id ,String contents, String path){
+        this.id = id;
         this.contents = contents;
         this.path = path;
     }
