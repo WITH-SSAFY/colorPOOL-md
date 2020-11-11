@@ -49,10 +49,9 @@ public class PdfService {
     private final S3api s3api;
 
     private final String tempPdfFolder = "../../colorpoolmd/pdf/";
-    private final String imageFolderPath = "../../colorpoolmd/image/";
     private final String staticFolder = "./src/main/resources/static/";
-    private final String pdfFolder = "http://k3a501.p.ssafy.io/api-pdf/";
-    private final String imageFolder = "http://k3a501.p.ssafy.io/api-image/";
+    //private final String pdfFolder = "http://k3a501.p.ssafy.io/api-pdf/";
+    private final String pdfFolder = "https://colorpool-md.s3.ap-northeast-2.amazonaws.com/pdf/";
 
     public String getOneContents(int id){
         Optional<Pdf> pdf = pdfJpaRepository.findById(id);
