@@ -107,6 +107,7 @@
         this.templates.forEach(template => {
           template = template.replaceAll('"', "'");
           template = template.replaceAll('<br>', '<br/>');
+          template = template.replaceAll('<hr>', '<hr/>');
           let i = 0;
           // console.log(template.indexOf('<img', 42))
           while(template.indexOf('<img', i) != -1) {
