@@ -20,18 +20,19 @@ public class ScheduleService {
     @Scheduled(cron = "0 0 18 * * *")
     public void clearPdfBucket(){
         List<Pdf> allPdfList = pdfJpaRepository.findAll();
+
+        if(allPdfList.isEmpty()) return;
+
         String keyPrefix = "pdf/";
         String subPath = "/pdf";
 
         List<String> allPdfNameList = new ArrayList<>();
-        if(!allPdfList.isEmpty()){
-            for(Pdf pdf : allPdfList){
-                String[] splitedPath = pdf.getPath().split("[/]");
-                String pdfName = splitedPath[splitedPath.length-1];
-                allPdfNameList.add(keyPrefix+pdfName);
-            }
-            s3api.delete(allPdfNameList,subPath);
-            pdfJpaRepository.deleteAll();
+        for(Pdf pdf : allPdfList){
+            String[] splitedPath = pdf.getPath().split("[/]");
+            String pdfName = splitedPath[splitedPath.length-1];
+            allPdfNameList.add(keyPrefix+pdfName);
         }
+        s3api.delete(allPdfNameList,subPath);
+        pdfJpaRepository.deleteAll();
     }
 }
