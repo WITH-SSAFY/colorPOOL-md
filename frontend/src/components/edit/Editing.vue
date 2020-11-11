@@ -36,6 +36,7 @@
         colors: [],
         parent: 0,
         handler: null,
+        handler2: null,
       }
     },
     computed : {
@@ -57,9 +58,15 @@
       this.handler = setInterval(() => {
         this.setFinalContents();
       }, 3000);
+
+      this.handler2 = document.addEventListener('keydown', (e) => {
+        if(e.altKey && e.keyCode == 13) this.createPage();
+        if(e.altKey && e.key == 'Backspace') this.deletePage();
+      })
     },
     beforeDestroy() {
       clearInterval(this.handler)
+      clearInterval(this.handler2)
     },
     methods: {
       ...mapActions(pdfStore,['AC_CONTENTS']),

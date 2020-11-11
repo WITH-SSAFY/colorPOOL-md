@@ -48,6 +48,7 @@ const landingStore = 'landingStore'
 const customStore = 'customStore'
 const contentStore = 'contentStore'
 const editStore = 'editStore'
+const pdfStore = 'pdfStore'
 
 export default {
   name: 'PaletteCustom',
@@ -117,6 +118,7 @@ export default {
     ...mapActions(customStore, ['AC_FINAL_THEME']),
     ...mapActions(contentStore, ['AC_CONTENTS_NULL']),
     ...mapActions(editStore, ['AC_PAGE']),
+    ...mapActions(pdfStore, ['AC_CONTENTS']),
     close(){
       this.AC_DIALOG(false);
       this.initIsActive();
@@ -131,6 +133,7 @@ export default {
       this.AC_CONTENTS_NULL();
       setTimeout(() => {
         this.AC_PAGE(0);
+        this.AC_CONTENTS(null);
         this.$router.push({name: 'Edit'})
       }, 1500);
     },

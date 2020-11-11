@@ -392,7 +392,6 @@
         this.handleContent();
       }, 5000);
 
-
       this.loadUntilSlideIsFull();
       
       document.addEventListener('click', (e) => {

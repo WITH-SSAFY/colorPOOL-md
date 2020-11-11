@@ -5,6 +5,7 @@ import Landing from '../views/Landing.vue'
 import Edit from '../views/Edit.vue'
 import Result from '../views/Result.vue'
 import SelectPalettes from '../views/SelectPalettes'
+import Viewer from '../views/Viewer'
 
 import EditKang from '../views/EditKang.vue'
 // import Editing from '../components/edit/Editing'
@@ -68,6 +69,12 @@ const routes = [
     name: 'Result',
     component: Result
   },
+  {
+    path: '/viewer/:id',
+    name: 'Viewer',
+    component: Viewer,
+    props: true
+  }
 ]
 
 const router = new VueRouter({

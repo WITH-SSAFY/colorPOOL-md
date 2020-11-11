@@ -19,6 +19,8 @@ import ProgressBar from '../header/ProgressBar'
 // import axios from '../../api/axiosCommon'
 const pdfStore = 'pdfStore'
 
+require('../../assets/DemoEditStyle.css')
+
 export default {
   name: 'DemoResult',
   components: {

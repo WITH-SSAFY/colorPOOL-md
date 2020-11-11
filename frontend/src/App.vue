@@ -8,10 +8,10 @@
     >
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
     </v-app-bar> -->
-    <v-btn v-if="!drawer" icon text fixed style="margin: 10px 10px auto; z-index: 99;" @click="drawer = true">
+    <v-btn v-if="!isViewer && !drawer" icon text fixed style="margin: 10px 10px auto; z-index: 99;" @click="drawer = true">
       <v-icon size="45" color="#232a46">mdi-menu</v-icon>
     </v-btn>
-    <v-btn v-if="drawer" icon text fixed style="margin: 10px 10px auto; z-index: 101;" @click="drawer = false">
+    <v-btn v-if="!isViewer && drawer" icon text fixed style="margin: 10px 10px auto; z-index: 101;" @click="drawer = false">
       <v-icon size="45" color="#ffffff">mdi-menu</v-icon>
     </v-btn>
     <v-navigation-drawer
@@ -96,9 +96,14 @@ export default {
     drawer: false,
     group: null,
     finalPage: false,
+    isViewer: false,
   }),
   computed: {
     ...mapGetters(pdfStore, {storeContents: 'GE_CONTENTS'}),
+  },
+  beforeMount(){
+    if(document.location.pathname.search('viewer') != -1) this.isViewer = true;
+    else this.isViewer = false;
   },
   created() {
     if(this.storeContents != '') this.finalPage = true;
