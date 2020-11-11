@@ -2,18 +2,12 @@ package com.cerberos.colorpool.service.image;
 
 import com.cerberos.colorpool.advice.exception.CImageNotUploadException;
 import com.cerberos.colorpool.entity.image.Image;
-import com.cerberos.colorpool.entity.pdf.Pdf;
 import com.cerberos.colorpool.repository.image.ImageJpaRepository;
 import com.cerberos.colorpool.s3.S3api;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
 
 @Service
