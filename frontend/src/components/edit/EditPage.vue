@@ -128,7 +128,6 @@
             </span>
 
             <span v-if="storePage == 1">
-              <br>
               <button
                 class="toolbox-btn" :style="{'background-color': 'black'}"
                 :class="{ 'is-active': isActive.customstyle({ level: 'black' }) }"
@@ -256,12 +255,6 @@
       </div>
 
     </div>
-    <!-- 컬러 툴박스 (임시) -->
-    <!-- <div class="toolbox" :class="[isToolBoxShow? 'show': '']">
-      <button style="background-color : red" @click="red">red</button>
-      <button style="background-color : blue" @click="blue">blue</button>
-      <button style="background-color : green" @click="green">green</button>
-    </div> -->
   </div>
 </template>
 
@@ -367,10 +360,6 @@
         }),
         height: null,
         isNewPage: false,
-        // isToolBoxShow: false,
-        // isBlock: false,
-        // target: null,
-        // targetStr: '',
         isImage: false,
         imageSize: 0,
         img: null,
@@ -381,28 +370,18 @@
         isToolBoxShow: false,
         target: null,
         command: null,
-        // targetStr: '',
-        // isTotal: false,
-        // targetParent: null,
-
-
-        // target: null,
-        // targetStr: '',
-        // isTotal: false,
-        // targetParent: null,
       }
     },
     computed: {
       ...mapGetters(customStore, {storeFinalTheme: 'GE_FINAL_THEME'}),
-      ...mapGetters(editStore, {storePage: 'GE_PAGE'})
+      ...mapGetters(editStore, {storePage: 'GE_PAGE'}),
+      ...mapGetters(contentStore, {storeContents: 'GE_CONTENTS', storeChangeAll: 'GE_CHANGE_ALL'}),
     },
     created() {
       this.colors = this.storeFinalTheme;
       hljs.initHighlightingOnLoad()
     },
     mounted() {
-      // console.log(document.querySelector('.toolbox.item' + this.page));
-      // this.editor.setContent(this.content_parent)
       document.querySelector('.photo_upload.item' + this.page).addEventListener('change', (e) => {
         console.log(e);
         this.readUploadImage(e);
@@ -411,66 +390,12 @@
       window.addEventListener('resize', this.handleResize)
       this.handler = setInterval(() => {
         this.handleContent();
-      }, 3000);
-
+      }, 5000);
 
       this.loadUntilSlideIsFull();
-
-      // 컬러 이벤트 리스너
-      // document.addEventListener('click', this.handleColor);
-
-      // 이미지 이벤트 리스너
       
       document.addEventListener('click', (e) => {
-        /*
-        if(window.getSelection().toString().length == 0) {
-          // this.isToolBoxShow = false;
-          // document.querySelector('.toolbox.item' + this.page).classList.remove('show')
-          this.target = null;
-        }
-        else {
-
-          // let toolbox = document.querySelector('.toolbox');
-          // toolbox.style.left = (e.pageX - 100) + 'px';
-          // toolbox.style.top = (e.pageY - 60) + 'px';
-
-
-          // this.isToolBoxShow = true;
-          // document.querySelector('.toolbox.item' + this.page).classList.add('show')
-          if(e.target.localName != 'button') {
-            this.target = e;
-          } else {
-            // this.isToolBoxShow = false;
-            // document.querySelector('.toolbox.item' + this.page).classList.remove('show')
-            console.log(this.target);
-            if(this.target.target.className == 'span') {
-              let name = this.target.target.className;
-              if(name == 'color1') this.target.target.style.color = this.colors[0];
-              else if(name == 'color2') this.target.target.style.color = this.colors[1];
-              else if(name == 'color3') this.target.target.style.color = this.colors[2];
-              else if(name == 'color4') this.target.target.style.color = this.colors[3];
-              else if(name == 'color5') this.target.target.style.color = this.colors[4];
-              this.target.target.className = '';
-            } else {
-              this.target.target.children.forEach((child) => {
-              if(child.className != '') {
-                if(child.className == 'color1') child.style.color = this.colors[0];
-                else if(child.className == 'color2') child.style.color = this.colors[1];
-                else if(child.className == 'color3') child.style.color = this.colors[2];
-                else if(child.className == 'color4') child.style.color = this.colors[3];
-                else if(child.className == 'color5') child.style.color = this.colors[4];
-                child.className = "";
-              }
-              
-            })
-            }
-            
-            
-            this.target = null;
-          }
-          
-        } 
-        */
+        
         if(e.target.className.includes('mdi-size-') && this.img != null) {
           // 이미지에 대한 크기 변경 0 -> 1 -> 2 -> 3 -> 4
           if(this.imageSize == 0) {
@@ -516,10 +441,6 @@
         this.height = document.querySelector("#container").clientHeight
       },
       handleContent () {
-        // if(this.isContentStored) return;
-        // this.isContentStored = true;
-        // console.log(document.querySelector('.editor__content.item' + this.page).innerHTML);
-        // console.log(document.querySelector('.editor__content.item' + this.page).style.backgroundColor);
         let background = document.querySelector('.editor__content.item' + this.page).style.backgroundColor;
         if(background == '') background = 'white'
         const payload = {
@@ -527,78 +448,7 @@
           content: "<div style='background-color : " + background + "'>" + document.querySelector('.editor__content.item' + this.page +' .ProseMirror').innerHTML + '</div>'
         }
         this.AC_CONTENTS(payload);
-        // setTimeout(() => {this.isContentStored = false}, 3000);
       },
-      // handleColor(e) {
-      //   if(!e.target.parentElement.className.includes('ProseMirror')) {
-      //     this.target = null;
-      //     this.targetStr = '';
-      //     this.AC_IS_BOX(false);
-      //     return;
-      //   }
-      //   // 두 가지 경우 ( 드래그해서 window.getSelection 하는 경우 )
-      //   // 나머지 경우 ( ToolBox에서 색을 선택한 경우 => Editing에서 색깔을 바꿔줌 -> storeColor를 가져옴 -> 색깔 지정)
-      //   // if(e.target.offsetParent == null || !e.target.offsetParent.className.includes('editor')) {
-      //   //   // 클릭한 곳이 부모가 없거나 || editor 내부가 아닌 곳을 선택한 경우?
-      //   //   this.target = null;
-      //   //   this.targetStr = '';
-      //   //   this.AC_IS_BOX(false);
-      //   //   return;
-      //   // }
-      //   // 드래그해서 블록 처리된 스트링
-      //   let str = window.getSelection().toString();
-      //   if(str.length == 0) {
-      //     this.target = null;
-      //     this.targetStr = '';
-      //     this.AC_IS_BOX(false);
-      //   } else {
-      //     e.target.focus();
-      //     if(e.target.innerHTML == str && e.target.parentElement.localName == 'blockquote') {
-      //       this.isTotal = true;
-      //       this.targetParent = e.target.parentElement;
-      //     }
-      //     let toolbox = document.querySelector('.toolbox');
-      //     toolbox.style.left = (e.pageX - 100) + 'px';
-      //     toolbox.style.top = (e.pageY - 60) + 'px';
-      //     this.target = e.target;
-      //     this.targetStr = str;
-      //     this.AC_IS_BOX(true);
-      //   }
-      // },
-      // handleColor(e) {
-      //    if(e.target.offsetParent == null) {
-      //     this.target = null;
-      //     this.targetStr = '';
-      //     this.isToolBoxShow = false;
-      //     return;
-      //   }
-      //   if(!e.target.offsetParent.className.includes('editor')) {
-      //     this.target = null;
-      //     this.targetStr = '';
-      //     this.isToolBoxShow = false;
-      //     return;
-      //   }
-        
-      //   let str = window.getSelection().toString();
-      //   if(str.length == 0) {
-      //     this.target = null;
-      //     this.targetStr = '';
-      //     this.isToolBoxShow = false;
-      //   } else {
-      //     e.target.focus();
-      //     if(e.target.innerHTML == str && e.target.parentElement.localName == 'blockquote') {
-      //       this.isTotal = true;
-      //       this.targetParent = e.target.parentElement;
-      //     }
-                  
-      //     let toolbox = document.querySelector('.toolbox');
-      //     toolbox.style.left = (e.pageX - 100) + 'px';
-      //     toolbox.style.top = (e.pageY - 60) + 'px';
-      //     this.target = e.target;
-      //     this.targetStr = str;
-      //     this.isToolBoxShow = true;
-      //   }
-      // },
       loadUntilSlideIsFull: function () {
         if(this.isNewPage) return;
         document.querySelector("#container").style.height = this.height;
@@ -611,14 +461,11 @@
 
         watcher.enterViewport(() => {
           console.log('____BOTTOMENTER____' + this.page)
-          // this.isNewPageCreated = true;
           if(!this.isNewPage) this.$emit('enterNewPage')
           this.isNewPage = true;
         })
         watcher.exitViewport(() => {
           console.log('____BOTTOMEXIT____' + this.page)
-          // if(this.isNewPageCreated) return;
-          // else this.isNewPageCreated = true;
           if(this.isNewPage) this.$emit('exitNewPage')
           this.isNewPage = false;
         })
@@ -659,7 +506,6 @@
         this.AC_PAGE(1);
       },
       clickPhotoUpload (command) {
-        // console.log(document.querySelector('.photo_upload.item' + this.page))
         document.querySelector('.photo_upload.item' + this.page).click();
         this.command = command;
       },
@@ -692,7 +538,7 @@
         setTimeout(() => {
           document.querySelector('.menubar').classList.remove('active')
         }, 250);
-      }
+      },
     }
   }
 </script>

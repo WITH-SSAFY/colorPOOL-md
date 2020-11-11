@@ -2,24 +2,76 @@
   <div>
     <v-row class="edit wrap">
       <div class="slide-sidebar wrap"><slide-list-sidebar/></div>
-      <div class="editing-area wrap"><editing/></div>
+      <div class="demo-result-area wrap"><DemoResult/></div> 
       <div class="button-group">
-        <div type="button" class="button">Export to pdf</div>
-        <div type="button" class="button">Share with SNS</div>
+        <div type="button" class="button" v-if="!storeIsSent" @click="sendServer">Save to Server</div>
+        <div type="button" class="button" v-if="storeIsSent" @click="showPDF">Export to pdf</div>
+        <div type="button" class="button" v-if="storeIsSent" @click="copyMD">Copy My Markdown</div>
+        <div type="button" class="button" v-if="storeIsSent" @click="copyLink">Copy My Link</div>
+        <div type="button" class="button" v-if="storeIsSent" @click="openViewer">Open in Viewer</div>
+      <input id="md_reader" style="user-select: none; opacity: 0;" v-model="storeContents" type="text"/>
+      <input id="link_reader" style="user-select: none; opacity: 0;" v-model="url" type="text"/>
       </div>
     </v-row>
   </div>
 </template>
 
 <script>
-import SlideListSidebar from '../components/sidebar/SlideListSidebar'
-import Editing from '../components/edit/Editing'
+import SlideListSidebar from '../components/sidebar/FinalSlideListSidebar'
+import DemoResult from '../components/result/DemoResult'
+import { mapActions, mapGetters } from 'vuex'
+
+const pdfStore = 'pdfStore'
 
 export default {
   name: 'Result',
   components: {
-    SlideListSidebar,
-    Editing,
+    SlideListSidebar, DemoResult
+  },
+  computed: {
+    ...mapGetters(pdfStore, {storeIsSent : 'GE_IS_SENT', storeContents: 'GE_CONTENTS', storePdfUrl : 'GE_PDF_URL', storeLink : 'GE_LINK_URL'})
+  },
+  data() {
+    return {
+      url: '',
+    }
+  },
+  created() {
+
+  },
+  mounted() {
+    this.url = 'http://k3a501.p.ssafy.io/viewer/' + this.storeLink;
+  },
+  watch: {
+    storeIsSent(){},
+    storeContents(){},
+    storePdfUrl(val){console.log(val)},
+  },
+  methods: {
+    ...mapActions(pdfStore, ['AC_PDF_URL']),
+    sendServer  () {
+      const payload = {
+        'contents': this.storeContents
+      }
+      this.AC_PDF_URL(payload)
+    },
+    showPDF () {
+      window.open(this.storePdfUrl)
+    },
+    copyMD () {
+      console.log(document.getElementById('md_reader').value)
+      document.getElementById('md_reader').select();
+      document.execCommand('copy')
+      alert('클립보드에 복사되었습니다')
+    },
+    copyLink() {
+      document.getElementById('link_reader').select();
+      document.execCommand('copy')
+      alert('클립보드에 복사되었습니다')
+    },
+    openViewer() {
+      window.open('/viewer/' + this.storeLink, 'window','location=no, directories=no,resizable=no,status=no,toolbar=no,menubar=no, width=1920,height=1080,left=0, top=0, scrollbars=yes');
+    }
   },
 }
 </script>
@@ -37,7 +89,8 @@ export default {
     width: 22.5%;
   }
 
-  .edit.wrap .editing-area.wrap {
+
+  .demo-result-area.wrap {
     background-color: rgba(238, 238, 238, 0.7);
     width: 50%;
   }
@@ -50,6 +103,7 @@ export default {
     width: 27.5%;
     height: 100%;
     user-select: none;
+    background-color: rgba(238, 238, 238, 0.7);
   }
 
   .edit.wrap .button-group .button{

@@ -13,16 +13,16 @@
 <script>
   import EditPage from './EditPage'
   import ProgressBar from '../../components/header/ProgressBar'
-  import axios from '../../api/axiosCommon'
-  // import CustomStyle from "../../assets/CustomStyle";
+  // import axios from '../../api/axiosCommon'
   require('../../assets/LiveEditStyle.css')
   
-  import { mapGetters } from 'vuex'
+  import { mapActions, mapGetters } from 'vuex'
 
   const contentStore = 'contentStore'
   const customStore = 'customStore'
   const boxStore = 'boxStore'
   const editStore = 'editStore'
+  const pdfStore = 'pdfStore'
 
   export default {
     name: 'Editing',
@@ -35,10 +35,12 @@
         isToolBoxShow: false,
         colors: [],
         parent: 0,
+        handler: null,
+        handler2: null,
       }
     },
     computed : {
-      ...mapGetters(contentStore, {storeContents: 'GE_CONTENTS'}),
+      ...mapGetters(contentStore, {storeContents: 'GE_CONTENTS', storeChange: 'GE_CHANGE', storeChangeAll: 'GE_CHANGE_ALL'}),
       ...mapGetters(boxStore, {storeIsBox: 'GE_IS_BOX'}),
       ...mapGetters(customStore, {storeFinalTheme: 'GE_FINAL_THEME'}),
       ...mapGetters(editStore, {storePage: 'GE_PAGE'}),
@@ -52,22 +54,22 @@
     },
     mounted() {
       document.addEventListener('click', this.handleDrag);
-      
-      // setInterval(() => {
-      //   document.querySelectorAll('.editor__content span').forEach(node => {
-      //     if(node.classList.length != 0) {
-      //       console.log(node);
-      //       if(node.className == 'color1') node.style.color = this.colors[0];
-      //       else if(node.className == 'color2') node.style.color = this.colors[1];
-      //       else if(node.className == 'color3') node.style.color = this.colors[2];
-      //       else if(node.className == 'color4') node.style.color = this.colors[3];
-      //       else if(node.className == 'color5') node.style.color = this.colors[4];
-      //     }
-      //     node.classList = [];
-      //   })
-      // }, 3000);
+      console.log(this.templates);
+      this.handler = setInterval(() => {
+        this.setFinalContents();
+      }, 3000);
+
+      this.handler2 = document.addEventListener('keydown', (e) => {
+        if(e.altKey && e.keyCode == 13) this.createPage();
+        if(e.altKey && e.key == 'Backspace') this.deletePage();
+      })
+    },
+    beforeDestroy() {
+      clearInterval(this.handler)
+      clearInterval(this.handler2)
     },
     methods: {
+      ...mapActions(pdfStore,['AC_CONTENTS']),
       createPage() {
         this.templates.push(EditPage)
       },
@@ -75,10 +77,6 @@
         this.templates.pop(EditPage)
       },
       handleDrag() {
-        // if(!e.target.parentElement.className.includes('ProseMirror')) return;
-        // console.log(e);
-        // this.isToolBoxShow = true;
-        // e.target.style.color="red"
       },
       /* TEST PDF */
       sendPDF() {
@@ -87,14 +85,43 @@
         this.templates.forEach(template => {
           template = template.replaceAll('"', "'");
           template = template.replaceAll('<br>', '<br/>');
+          let i = 0;
+          // console.log(template.indexOf('<img', 42))
+          while(template.indexOf('<img', i) != -1) {
+            i = template.indexOf('<img', i);
+            for(var j = i; j < template.length; j++) {
+              if(template[j] == '>') {
+                template = template.substring(0, j) + '/' + template.substring(j)
+                i = j;
+                break;
+              }
+            }
+          }
           str += template;
         })
         console.log(str);
-        // const payload = {
-        //   path : '',
-        //   contents: str
-        // }
-        axios.post('/pdf', {'contents': str}).then((res) => console.log(res)).catch((err) => console.log(err));
+        // axios.post('/pdf', {'contents': str}).then((res) => console.log(res)).catch((err) => console.log(err));
+      },
+      setFinalContents() {
+        let str = ""
+        this.templates.forEach(template => {
+          template = template.replaceAll('"', "'");
+          template = template.replaceAll('<br>', '<br/>');
+          let i = 0;
+          // console.log(template.indexOf('<img', 42))
+          while(template.indexOf('<img', i) != -1) {
+            i = template.indexOf('<img', i);
+            for(var j = i; j < template.length; j++) {
+              if(template[j] == '>') {
+                template = template.substring(0, j) + '/' + template.substring(j)
+                i = j;
+                break;
+              }
+            }
+          }
+          str += template;
+        })
+        this.AC_CONTENTS(str);
       }
     },
     watch: {
@@ -102,8 +129,8 @@
         this.isToolBoxShow = val;
       },
       storePage () {
-
-      }
+        
+      },
     }
   }
 </script>

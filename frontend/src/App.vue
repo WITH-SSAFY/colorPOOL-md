@@ -8,10 +8,10 @@
     >
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
     </v-app-bar> -->
-    <v-btn v-if="!drawer" icon text fixed style="margin: 10px 10px auto; z-index: 99;" @click="drawer = true">
+    <v-btn v-if="!isViewer && !drawer" icon text fixed style="margin: 10px 10px auto; z-index: 99;" @click="drawer = true">
       <v-icon size="45" color="#232a46">mdi-menu</v-icon>
     </v-btn>
-    <v-btn v-if="drawer" icon text fixed style="margin: 10px 10px auto; z-index: 101;" @click="drawer = false">
+    <v-btn v-if="!isViewer && drawer" icon text fixed style="margin: 10px 10px auto; z-index: 101;" @click="drawer = false">
       <v-icon size="45" color="#ffffff">mdi-menu</v-icon>
     </v-btn>
     <v-navigation-drawer
@@ -58,11 +58,18 @@
             <v-list-item-title style="font-weight: bolder; font-size: 2rem; line-height: 2rem;">Coloring</v-list-item-title>
           </v-list-item>
 
-          <v-list-item style="padding: 2.5%;" @click="goFinal">
+          <v-list-item style="padding: 2.5%;" v-if="finalPage" @click="goFinal">
             <v-list-item-icon>
               <p style="font-weight: bolder; font-size: 2rem; line-height: 2rem;">4</p>
             </v-list-item-icon>
             <v-list-item-title style="font-weight: bolder; font-size: 2rem; line-height: 2rem;">Final</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item style="padding: 2.5%;" v-if="!finalPage" disabled>
+            <v-list-item-icon>
+              <p style=" font-weight: bolder; font-size: 2rem; line-height: 2rem;">4</p>
+            </v-list-item-icon>
+            <v-list-item-title style="font-weight: bolder; font-size: 2rem; line-height: 2rem;">Final Disabled</v-list-item-title>
           </v-list-item>
 
         </v-list-item-group>
@@ -103,8 +110,9 @@
 
 <script>
 // import HelloWorld from './components/HelloWorld';
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 const landingStore = 'landingStore'
+const pdfStore = 'pdfStore'
 
 export default {
   name: 'App',
@@ -115,7 +123,19 @@ export default {
     //
     drawer: false,
     group: null,
+    finalPage: false,
+    isViewer: false,
   }),
+  computed: {
+    ...mapGetters(pdfStore, {storeContents: 'GE_CONTENTS'}),
+  },
+  beforeMount(){
+    if(document.location.pathname.search('viewer') != -1) this.isViewer = true;
+    else this.isViewer = false;
+  },
+  created() {
+    if(this.storeContents != '') this.finalPage = true;
+  },
   methods: {
     ...mapActions(landingStore, ['AC_IS_PICK', 'AC_IS_GET']),
     goHome () {
@@ -137,6 +157,12 @@ export default {
     goFinal () {
       this.$router.push({name: 'Result'});
     },
+  },
+  watch: {
+    storeContents (val) {
+      if(val == '') this.finalPage = false;
+      else this.finalPage = true;
+    }
   }
 };
 </script>
