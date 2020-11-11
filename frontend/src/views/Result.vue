@@ -46,6 +46,7 @@ export default {
     storeIsSent(){},
     storeContents(){},
     storePdfUrl(val){console.log(val)},
+    storeLink(){}
   },
   methods: {
     ...mapActions(pdfStore, ['AC_PDF_URL']),
