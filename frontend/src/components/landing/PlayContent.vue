@@ -136,7 +136,9 @@ export default {
     height: 0;
     margin-top: 0;
     margin-bottom: .67em;
-    overflow: visible
+    overflow: visible;
+    color: transparent;
+    border-color: transparent;
   }
 
   pre {
@@ -167,6 +169,7 @@ export default {
   samp {
     font-family: monospace,monospace;
     font-size: 1em;
+    padding: 0 .5em;
     border: 0.5px solid rgba(156, 156, 156, .1);
     border-radius: calc(1.0rem + .5vw);
   }
@@ -316,6 +319,7 @@ export default {
   .page-content {
     height: 100%;
     padding: 2rem;
+    padding-top: 0;
     user-select: none;
     display: -webkit-box;
     display: -ms-flexbox;

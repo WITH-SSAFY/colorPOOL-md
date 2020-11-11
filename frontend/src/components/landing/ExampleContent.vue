@@ -1,43 +1,40 @@
 <template>
-  <div class="background" :style="{'background-color': this.selectedDemoColors[0]}" style="user-select: none; overflow: scroll;" >
-    <h1 :style="{'color': this.selectedDemoColors[1]}">colorPOOL</h1>
-    <blockquote>colorPOOL에서 나만의 배색을 찾고, 세련된 발표 자료를 간단하게 만들어보세요.</blockquote>
-    <h2>1. <samp>colorPOOL</samp>은 마크다운 기반으로 compact한 발표 자료를 만드는 서비스를 제공합니다.</h2>
-    <h3>2. <samp>colorPOOL</samp>은 배색을 추천하여, 발표 자료를 세련되게 꾸미는 기능을 제공합니다.</h3>
-    <h3>3. <samp>colorPOOL</samp>은 SNS를 통해 다양한 사람들과 공유하는 환경을 제공합니다.</h3>
-    <br>
-    <h2>colorPOOL 100% 활용하기</h2>
-    <h3>배색 선택하기</h3>
+  <div class="background" :style="{'background-color': this.selectedDemoColors[0]}">
+    <h1 :style="{'color': this.selectedDemoColors[1]}">colorPOOL.md</h1>
+    <!-- <hr> -->
+    <blockquote>
+      colorPOOL.md에서
+      <blockquote>원하는 색에 대한 <samp>배색</samp>을 찾고, <samp>마크다운</samp>에 <strong>컬러를 입히세요</strong></blockquote>
+    </blockquote>
+    <h2>1. 전문가가 선택한 배색 데이터를 추천합니다</h2>
+    <hr>
     <ul>
-      <li><samp>with Team Color</samp>로 총 200여 개의 대표 컬러 중에 사용자가 직접 컬러를 선택할 수 있습니다. </li>
-      <li><samp>with Main Keyword</samp>를 통해 키워드 검색으로 컬러를 추천 받을 수 있습니다.</li>
-      <li>선택한 배색에 대해 사용자는 RGB 값, 순서, 비율을 커스텀하여, 나만의 배색을 구성할 수 있습니다.</li>
+      <li><em>팀 컬러</em> 에 대한 배색 정보를 찾아보세요</li>
+      <li>발표의 <em>키워드</em> 에 대한 배색 정보를 찾아보세요</li>
     </ul>
-    <h3>발표 자료 만들기</h3>
+    <h2>2. 마크다운 라이브 에디팅이 가능합니다</h2>
+    <hr>
     <ul>
-      <li>마크다운을 통해 발표 자료의 내용을 작성합니다. 또는 이전에 작성한 내용을 import합니다.</li>
-      <li>내용을 작성하면서 페이지를 구분하고, 선택한 배색을 바탕으로 강조를 하고 싶은 지점에 컬러를 부여합니다.</li>
-      <li>글꼴은 세리프/산세리프 두 가지를 제공합니다.</li>
+      <li>프리뷰 없이, 마크다운 문법을 <strong>실시간으로 렌더</strong>하세요</li>
+      <li><del>이미지 첨부는 물론,</del> 크기를 조절하여 시각적 효과를 극대화하세요</li>
+      <li>외부 마크다운 파일을 <strong>불러오기</strong> 하여 컬러를 입히세요</li>
+      <li>코드를 자료에 첨부하고 싶다면?</li>
+      <ul>
+        <li class="light"><code> //  Atom 테마의 하이라이팅이 적용된 코드 블록을 활용해보세요</code></li>
+      </ul>
+      <li>마크다운 문법이 익숙하지 않다면?</li>
+      <ul>
+        <li class="light">마크다운 기능을 그대로 담은 <samp>툴 박스</samp>를 이용해 쉽게 사용해보세요</li>
+      </ul>
     </ul>
-    <h3>발표 자료 공유 및 추출하기</h3>
+    <h2>3. 슬라이드 단위로 자료의 영역을 나눕니다</h2>
+    <hr>
     <ul>
-      <li>작성 완료한 발표 자료를 SNS를 통해 공유할 수 있습니다.</li>
-      <li>작성 완료한 발표 자료를 md파일과 pdf파일 형태로 추출할 수 있습니다.</li>
+      <li>발표 자료를 아래의 방법으로 추출하세요</li>
+      <ol><strong>1. pdf</strong> :  문서 형식을 <samp>그대로 보존</samp>하세요</ol>
+      <ol><strong>2. viewer</strong> :  <samp>gif의 동작</samp>까지 보여주세요</ol>
+      <ol><strong>3. text copy</strong> :  외부 에디터에서도 <samp>호환되는 컨텐츠</samp>를 확인하세요</ol>
     </ul>
-    <br>
-
-    <blockquote>마크다운이 무엇인가요?</blockquote>
-    <pre>  마크다운은 텍스트 기반의 마크업 언어 입니다.
-    특수기호와 문자를 이용한 매우 간단한 구조의 문법을 사용하여 빠르게 컨텐츠를 작성할 수 있습니다.
-    colorPOOL에서는 마크다운에 익숙하지 않은 사용자를 위해 toolbox를 제공하고 있습니다.
-    </pre>
-    
-
-    <blockquote>배색 추천은 어떻게 진행되는 건가요?</blockquote>
-    <pre>  배색 추천은 Abode Color CC의 배색 데이터를 기반으로 이뤄집니다.
-    대표 컬러 200개에 대해 디자이너 평가 점수가 높은 상위 10개의 배색을 추천합니다.
-    colorPOOL에서는 미세조정을 통해 선택한 배색의 컬러를 커스텀할 수 있습니다.
-    </pre>
   </div>
 </template>
 
@@ -91,7 +88,7 @@ export default {
         else this.selectedDemoColors[index] = '';
       })
       this.addOpacity(this.selectedDemoColors[4]);
-      console.log(this.selectedDemoColors[0])
+      /* 배경색 처리 */
       if (this.selectedDemoColors[0] == '') {
         document.querySelector('.indicator').style.backgroundColor = 'white'
         document.querySelector('.example-md').style.backgroundColor = 'white'
@@ -99,18 +96,27 @@ export default {
         document.querySelector('.indicator').style.backgroundColor = this.selectedDemoColors[0]
         document.querySelector('.example-md').style.backgroundColor = this.selectedDemoColors[0]
       }
+      /* background */
       document.querySelectorAll('.background h1').forEach(node => node.style.color = this.selectedDemoColors[1])
+      
+      document.querySelectorAll('.background strong').forEach(node => node.style.color = this.selectedDemoColors[1])
+      document.querySelectorAll('.background hr').forEach(node => node.style.borderBottomColor = this.selectedDemoColors[2])
+      document.querySelectorAll('.background h2').forEach(node => node.style.color = this.selectedDemoColors[2])
+      document.querySelectorAll('.background em').forEach(node => node.style.color = this.selectedDemoColors[2])
+      document.querySelectorAll('.background code').forEach(node => node.style.color = this.selectedDemoColors[2])
+      document.querySelectorAll('.background del').forEach(node => node.style.color = this.selectedDemoColors[2])
+      document.querySelectorAll('.background samp').forEach(node => node.style.backgroundColor = this.selectedDemoColors[3])
       document.querySelectorAll('.background blockquote').forEach(node => node.style.borderColor = this.selectedDemoColors[4])
       document.querySelectorAll('.background blockquote').forEach(node => node.style.backgroundColor = this.quoteBackColor)
-      document.querySelectorAll('.background h2').forEach(node => node.style.color = this.selectedDemoColors[2])
-      document.querySelectorAll('.background samp').forEach(node => node.style.backgroundColor = this.selectedDemoColors[3])
-      document.querySelectorAll('.page-content hr').forEach(node => node.style.borderColor = this.selectedDemoColors[1])
+      document.querySelectorAll('.background code').forEach(node => node.style.backgroundColor = this.selectedDemoColors[4])
+      /* page-content */
+      document.querySelectorAll('.page-content hr').forEach(node => node.style.borderBottomColor = this.selectedDemoColors[1])
       document.querySelectorAll('.page-content blockquote').forEach(node => node.style.borderColor = this.selectedDemoColors[4])
       document.querySelectorAll('.page-content blockquote').forEach(node => node.style.backgroundColor = this.quoteBackColor)
       document.querySelectorAll('.page-content samp').forEach(node => node.style.backgroundColor = this.selectedDemoColors[3])
 
       this.setBackgroundColor(this.selectedDemoColors);
-      console.log('changeColors', this.selectedDemoColors);
+      // console.log('changeColors', this.selectedDemoColors);
     },
     addOpacity(color){
       if(color !== ''){
@@ -146,42 +152,63 @@ export default {
   transition-property: background-color;
 }
 
-h1, h2, h3{
-  margin-bottom: 10px;
+h1, h2, h3 {
+  margin: 0;
+  margin-top: 20px;
 }
 
-.background{
+hr {
+  margin: 0;
+  margin-top: 2px;
+  margin-bottom: 5px;
+  height: 0px;
+  color: transparent;
+  border-color: transparent;
+}
+
+.background {
   padding: 0 5%;
   padding-bottom: 5%;
   height: 100%;
   width: 100%;
+  user-select: none;
 }
 
-blockquote{
-  border-radius: 2px;
-  padding-left: 8px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  margin: 10px 1px;
-  border-left: 3px solid;
+blockquote {
+  border-radius: 1px;
+  padding: 0;
+  padding-left: 10px;
+  margin: 5px 0;
+  border-left: 6px solid;
   border-color: rgb(156, 156, 156);
   background-color: rgba(156, 156, 156, 0.1);
+  color: rgba(0, 0, 0, 0.7);;
 }
 
 code {
-  padding: 6px 4px;
+  padding: 6px 6px;
   border-radius: 3px;
-  background-color: rgb(156, 156, 156, 0.5);
+  background-color: rgb(156, 156, 156, 0.1);
 }
 
 samp {
-  background-color: rgba(255, 255, 254, 0.5);
+  padding: 0 5px;
+  background-color: rgba(156, 156, 156, 0.5);
   border: 0.5px solid rgba(156, 156, 156, 0.1);
   border-radius: 4px;
 }
 
 ul {
-  list-style-type : disc;
+  list-style-type: disc;
+  margin: 0;
 }
 
+li.light {
+  list-style-type: circle;
+}
+
+ol {
+  margin: 0;
+  padding: 0;
+}
 </style>
