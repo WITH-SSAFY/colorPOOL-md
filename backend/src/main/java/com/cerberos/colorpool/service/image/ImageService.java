@@ -23,7 +23,8 @@ public class ImageService {
     private final S3api s3api;
 
     private final String imageFolderPath = "../../colorpoolmd/image/";
-    private final String imageFolder = "http://k3a501.p.ssafy.io/api-image/";
+    //private final String imageFolder = "http://k3a501.p.ssafy.io/api-image/";
+    private final String imageFolder = "https://colorpool-md.s3.ap-northeast-2.amazonaws.com/image/";
 
     public String uploadImage(MultipartFile imageMultipartFile){
         String extension = getExtension(imageMultipartFile.getContentType());
