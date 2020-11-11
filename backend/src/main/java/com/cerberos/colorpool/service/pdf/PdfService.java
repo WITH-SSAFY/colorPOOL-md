@@ -50,8 +50,7 @@ public class PdfService {
 
     private final String tempPdfFolder = "../../colorpoolmd/pdf/";
     private final String staticFolder = "./src/main/resources/static/";
-    //private final String pdfFolder = "http://k3a501.p.ssafy.io/api-pdf/";
-    private final String pdfFolder = "https://colorpool-md.s3.ap-northeast-2.amazonaws.com/pdf/";
+    private final String pdfFolder = "http://k3a501.p.ssafy.io/resource/pdf/";
 
     public String getOneContents(int id){
         Optional<Pdf> pdf = pdfJpaRepository.findById(id);
@@ -86,33 +85,6 @@ public class PdfService {
         return pdfRes;
     }
 
-//    public String uploadImage(){
-//        String newImageName = "batt.jpg";
-//        String newImagePath = imageFolder+newImageName;
-//        String type = newImageName.split("[.]")[1];
-//
-//        //////// this codes will be removed, just for test //////
-//        Path path = Paths.get(imageFolderPath+newImageName);
-//        String contentType = getContentType(type);
-//        byte[] content = null;
-//        try {
-//            content = Files.readAllBytes(path);
-//        } catch (IOException e) {
-//        }
-//        /////////////////////////////////////////////////////////
-//
-//
-//
-//        MultipartFile imageMultipartFile = new MockMultipartFile(newImageName,
-//                newImageName, contentType, content);
-//        System.out.println("image Content- Type : "+imageMultipartFile.getContentType());
-//        try{
-//            s3api.upload(imageMultipartFile,"/image");
-//        }catch (Exception e){
-//            throw new CImageNotUploadException();
-//        }
-//        return newImagePath;
-//    }
     public int getNewPdfId(){
         Optional<Pdf> lastPdf = pdfJpaRepository.findFirstByOrderByIdDesc();
         long newPdfId = 1;
@@ -128,13 +100,6 @@ public class PdfService {
         return newPdfName;
     }
 
-    private String getContentType(String type) {
-        if(type.equals("jpg")){
-            type = "jpeg";
-        }
-        return "application/"+type;
-    }
-
     public String getHash(String newPdfFileName){
         long hash = 17;
         hash = 31 * hash + newPdfFileName.hashCode();
@@ -144,8 +109,6 @@ public class PdfService {
     //html to pdf using itext
     public MultipartFile createPdf(String contents, String newPdfName) throws DocumentException, IOException, CPdfNotCreateException {
         String tempPdfPath = tempPdfFolder+newPdfName;
-        //pdfModel.setPath(pdfFolder+newPdfName);
-        //String contents = pdfModel.getContents();
 
         String pageCloseTag = "</div>";
         String[] pageContentsArr = contents.split(pageCloseTag);
@@ -167,7 +130,6 @@ public class PdfService {
 
         //pdf init settings
         Rectangle pageSize = new RectangleReadOnly(795,445);
-        //Document document = new Document(pageSize,80,80,40,40);
         Document document = new Document(pageSize,0,0,0,0);
 
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(tempPdfPath));
@@ -227,99 +189,5 @@ public class PdfService {
                 fileName, contentType, content);
         return multipartFile;
     }
-    //    image to pdf
-//    public void createPDF(PdfModel pdfModel) throws DocumentException, IOException{
-//        String pdfFilePath = pdfModel.getPath();
-//        pdfFilePath += ".pdf";
-//        File saveFolder = new File(pdfFolderPath);
-//        if(!saveFolder.exists() || saveFolder.isFile()){
-//            saveFolder.mkdirs();
-//        }
-//        Rectangle pageSize = new RectangleReadOnly(960,540);//ppt real size
-//        Document document = new Document(pageSize, 20, 20, 20, 20);
-//        PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
-//        document.open();
-//        Image image1 = Image.getInstance("C:/Users/multicampus/jaeul/colorpoolmd/pdf/image/1.jpg");
-//        Image image2 = Image.getInstance("C:/Users/multicampus/jaeul/colorpoolmd/pdf/image/2.jpg");
-//        Image image3 = Image.getInstance("C:/Users/multicampus/jaeul/colorpoolmd/pdf/image/3.png");
-//        document.add(image1);
-//        document.add(image2);
-//        document.add(image3);
-//
-//        document.close();
-//
-//        // Closing the document
-//        document.close();
-//
-//        System.out.println("Image added");
-//
-//    }
-
-//    public String createPdfByWk(){
-//        //com.github.jhonnymertz.wkhtmltopdf.wrapper.Pdf pdfWrapper =  new com.github.jhonnymertz.wkhtmltopdf.wrapper.Pdf();
-//        XvfbConfig xc = new XvfbConfig();
-//        xc.addParams(new Param("--auto-servernum"), new Param("--server-num=1"));
-//        WrapperConfig wc = new WrapperConfig("wkhtmltopdf");
-//        com.github.jhonnymertz.wkhtmltopdf.wrapper.Pdf pdfWrapper = new com.github.jhonnymertz.wkhtmltopdf.wrapper.Pdf(wc);
-//
-//        pdfWrapper.addPageFromUrl("https://www.naver.com/");
-//        String path = "../../colorpoolmd/pdf/output.pdf";
-//
-//        try {
-//            pdfWrapper.saveAs("../../colorpoolmd/pdf/output.pdf");
-//        }
-//        catch (IOException e) {
-//            //throw  new Xhtml2PdfChangeException(this, "Change fail xhtml to pdf. IOException message = " + e.getMessage());
-//            e.printStackTrace();
-//        }
-//        catch (InterruptedException e) {
-//            //throw  new Xhtml2PdfChangeException(this, "Change fail xhtml to pdf. InterruptedException message = " + e.getMessage());
-//            e.printStackTrace();
-//        }
-//        return path;
-//    }
-//    public String createPdfhtmltopdf(String contents){
-//        String path = "../../colorpoolmd/pdf/"+getNewPdfFileName()+".pdf";
-////        boolean success = HtmlToPdf.create()
-////                .object(HtmlToPdfObject.forUrl("https://www.naver.com/"))
-////                .convert(path);
-//        boolean success = HtmlToPdf.create()
-//                .object(HtmlToPdfObject.forHtml(contents))
-//                .
-//                .convert(path);
-//        return path;
-//    }
-//
-//    public String createPdfByopenhtml(String contents){
-//        String path = "../../colorpoolmd/pdf/"+getNewPdfFileName()+".pdf";
-//        System.out.println("Starting");
-//
-//        try{
-//            PdfRendererBuilder pdfBuilder = new PdfRendererBuilder();
-//            float width = 280.5f;
-//            float height = 157.0f;
-//            pdfBuilder.useDefaultPageSize(width,height, BaseRendererBuilder.PageSizeUnits.MM);
-//            String html = "<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"./src/main/resources/static/pdf.css\"/></head><body>";
-//            html += contents;
-//            html += "</body></html>";
-//
-//            File file = new File(path);
-//            FileOutputStream fop = new FileOutputStream(file);
-//
-//            W3CDom w3cDom = new W3CDom();
-//            org.w3c.dom.Document w3cDoc = w3cDom.fromJsoup(Jsoup.parse(html));
-//
-//            pdfBuilder.withW3cDocument(w3cDoc, "/");
-//            pdfBuilder.toStream(fop);
-//            pdfBuilder.run();
-//            fop.close();
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//
-//
-//        return path;
-//    }
-
 
 }
