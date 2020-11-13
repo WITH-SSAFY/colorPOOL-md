@@ -111,6 +111,7 @@ public class PdfService {
             pageContents += pageCloseTag;
             pageContentsList.add(pageContents);
         }
+        System.out.println(pageContentsList);
 
         File tempSaveFolder = new File(tempPdfFolder);
         if(!tempSaveFolder.exists() || tempSaveFolder.isFile()){
