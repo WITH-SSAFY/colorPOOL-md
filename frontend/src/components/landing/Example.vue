@@ -189,6 +189,7 @@ export default {
     padding-bottom: 2%;
     height: 67vh;
     width: 100%;
+    overflow: scroll;
   }
 
   .example-md:after {

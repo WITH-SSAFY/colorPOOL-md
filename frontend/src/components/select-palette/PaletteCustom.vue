@@ -10,7 +10,7 @@
       </div> -->
       <v-card :style="{'background-color' : customTheme.background, 'color' : invertedTextColor}">
         <v-card-title>
-          THEMEMEMEMEME
+          THEME
         </v-card-title>
         <div class="custom-theme-wrap d-flex align-center justify-center" :style="{'background-color' : 'rgb(255, 255, 255)'}">
           <div class="theme color1" :class="[isActive0? 'active': '']" @click="clickTheme1" :style="{'background-color' : colors[0]}"></div>

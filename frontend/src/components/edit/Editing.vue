@@ -6,7 +6,7 @@
       </div>
       <EditPage v-for="(template, index) in templates" v-bind:page="index" @enterNewPage="createPage()" @exitNewPage="deletePage()" :key="index" v-bind:content_parent="template"></EditPage>
     </v-col>
-    <button @click="sendPDF">보내기</button>
+    <!-- <button @click="sendPDF">보내기</button> -->
   </div>
 </template>
 
