@@ -1,9 +1,12 @@
 <template>
   <div>
     <div class="slide-section">
+      
       <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
+        
         <div class="menu-box">
           <div class="menubar">
+            <span v-if="storePage == 0">
             <button
               class="menubar__button"
               :class="{ 'is-active': isActive.bold() }"
@@ -111,16 +114,60 @@
               <v-icon>mdi-image-outline</v-icon>
             </button>
 
+            <button class="menubar__button" @click="clickPhotoUpload(commands.image)">
+              <v-icon>mdi-image</v-icon>
+            </button>
+
             <button
               class="menubar__button"
               @click="commands.createTable({rowsCount: 3, colsCount: 3, withHeaderRow: false })">
               <v-icon>mdi-table-large</v-icon>
             </button>
 
-            <br>
+            <input type="file" accept="image/gif, image/jpeg, image/png" class="photo_upload" :class="'item' + page" style="visibility: hidden;">
+            </span>
 
-            <span v-if="isActive.table()">
+            <span v-if="storePage == 1">
+              <button
+                class="toolbox-btn" :style="{'background-color': 'black'}"
+                :class="{ 'is-active': isActive.customstyle({ level: 'black' }) }"
+                @click="commands.customstyle({ level: 'black' })"
+              ></button>
+              <button
+                class="toolbox-btn" :style="{'background-color': 'white'}"
+                :class="{ 'is-active': isActive.customstyle({ level: 'white' }) }"
+                @click="commands.customstyle({ level: 'white' })"
+              ></button>
+              <button
+                class="toolbox-btn" :style="{'background-color': storeFinalTheme[0]}"
+                :class="{ 'is-active': isActive.customstyle({ level: 'color1' }) }"
+                @click="commands.customstyle({ level: colors[0] })"
+              ></button>
+              <button
+                class="toolbox-btn" :style="{'background-color': storeFinalTheme[1]}"
+                :class="{ 'is-active': isActive.customstyle({ level: 'color2' }) }"
+                @click="commands.customstyle({ level: colors[1] })"
+              ></button>
+              <button
+                class="toolbox-btn" :style="{'background-color': storeFinalTheme[2]}"
+                :class="{ 'is-active': isActive.customstyle({ level: 'color3' }) }"
+                @click="commands.customstyle({ level: colors[2] })"
+              ></button>
+              <button
+                class="toolbox-btn" :style="{'background-color': storeFinalTheme[3]}"
+                :class="{ 'is-active': isActive.customstyle({ level: 'color4' }) }"
+                @click="commands.customstyle({ level: colors[3] })"
+              ></button>
+              <button
+                class="toolbox-btn" :style="{'background-color': storeFinalTheme[4]}"
+                :class="{ 'is-active': isActive.customstyle({ level: 'color5' }) }"
+                @click="commands.customstyle({ level: colors[4] })"
+              ></button>        
+            </span>
+            
 
+            <span v-if="storePage == 0 && isActive.table()">
+              <br>
               <button class="menubar__button" @click="commands.deleteTable">
                 <v-icon>mdi-table-large-remove</v-icon>
               </button>
@@ -154,7 +201,8 @@
               </button>
             </span>
 
-            <span v-if="isImage">
+            <span v-if="storePage == 0 && isImage">
+              <br>
               <button class="menubar__button" @click="imageSize = 0">
                 <v-icon>mdi-size-xs</v-icon>
               </button>
@@ -190,24 +238,23 @@
 
         </div>
       </editor-menu-bar>
-
-      <section id="container" class="editor" :class="'item' + page" :style="{'height': this.height}" style="overflow: hidden;">
-        <editor-content v-focus class="editor__content" :class="'item' + page" :editor="editor"/>
-        <div class="bottomSensor" :class="'item' + page"></div>
-      </section>
-
-      <div class="arrow">
-        <div class="pre-arrow"></div>
-        <div class="next-arrow"></div>
+      <div style="width: 100%; display: flex;">
+        <section id="container" class="editor" :class="'item' + page" :style="{'height': this.height}">
+          <editor-content v-focus class="editor__content" :class="'item' + page" :editor="editor"/>
+          <div class="bottomSensor" :class="'item' + page"></div>
+        </section>
+        <div class="background-box" v-if="storePage == 1">
+          <button style="background-color: black;" @click="changeBackground('black')"></button>
+          <button style="background-color: white;" @click="changeBackground('white')"></button>
+          <button v-for="(color, index) in colors" :key="index" :style="{'background-color' : color}" @click="changeBackground(color)"></button>
+        </div>
+      </div>
+      <div class="arrow" v-if="page == 0">
+        <div class="pre-arrow" v-if="storePage == 1" @click="goEdit" ></div>
+        <div class="next-arrow" v-if="storePage == 0" @click="goColor"></div>
       </div>
 
     </div>
-    <!-- 컬러 툴박스 (임시) -->
-    <!-- <div class="toolbox" :class="[isToolBoxShow? 'show': '']">
-      <button style="background-color : red" @click="red">red</button>
-      <button style="background-color : blue" @click="blue">blue</button>
-      <button style="background-color : green" @click="green">green</button>
-    </div> -->
   </div>
 </template>
 
@@ -216,9 +263,12 @@
   import markdownIt from 'markdown-it'
   import hljs from 'highlight.js/lib/core'
   import 'highlight.js/styles/github.css'
-  import {mapActions} from 'vuex'
+  import {mapActions, mapGetters} from 'vuex'
   require('../../assets/LiveEditStyle.css')
   import {Editor, EditorContent, EditorMenuBar} from 'tiptap'
+  import CustomStyle from "../../assets/CustomStyle";
+  import axios from '../../api/axiosCommon'
+
   import {
     Blockquote,
     CodeBlock,
@@ -251,6 +301,9 @@
 
   const md = new markdownIt();
   const contentStore = 'contentStore';
+  const customStore = 'customStore'
+  const boxStore = 'boxStore';
+  const editStore = 'editStore';
 
   export default {
     name: 'EditPage',
@@ -270,6 +323,7 @@
       return {
         editor: new Editor({
           extensions: [
+            new CustomStyle(),
             new Blockquote(),
             new BulletList(),
             new CodeBlock(),
@@ -306,96 +360,70 @@
         }),
         height: null,
         isNewPage: false,
-        // isToolBoxShow: false,
-        // isBlock: false,
-        // target: null,
-        // targetStr: '',
         isImage: false,
         imageSize: 0,
         img: null,
         isContentStored: false,
         handler: null,
-        // isNewPageCreated: true,
+        /* 색깔 지정 변수들 */
+        colors: [],
+        isToolBoxShow: false,
+        target: null,
+        command: null,
       }
     },
+    computed: {
+      ...mapGetters(customStore, {storeFinalTheme: 'GE_FINAL_THEME'}),
+      ...mapGetters(editStore, {storePage: 'GE_PAGE'}),
+      ...mapGetters(contentStore, {storeContents: 'GE_CONTENTS', storeChangeAll: 'GE_CHANGE_ALL'}),
+    },
     created() {
+      this.colors = this.storeFinalTheme;
       hljs.initHighlightingOnLoad()
     },
     mounted() {
-      // this.editor.content = this.content_parent;
+      document.querySelector('.photo_upload.item' + this.page).addEventListener('change', (e) => {
+        console.log(e);
+        this.readUploadImage(e);
+      })
+
       window.addEventListener('resize', this.handleResize)
-      // window.addEventListener('keydown', this.handleContent);
       this.handler = setInterval(() => {
         this.handleContent();
-      }, 3000);
+      }, 5000);
 
       this.loadUntilSlideIsFull();
-
-      // 툴박스 mouseup 이벤트 리스너
-      // document.addEventListener('mouseup', (e) => {
-      //   let str = window.getSelection().toString();
-      //   if(e.target.localName == 'button') {
-      //     this.isToolBoxShow = false;
-      //     return;
-      //   }
-      //   if(str.length == 0) {
-      //     this.target = null;
-      //     this.targetStr = '';
-      //     this.isToolBoxShow = false;
-      //   } else {
-      //     this.target = e.target;
-      //     this.targetStr = str;
-      //     this.isBlock = true;
-      //     let toolbox = document.querySelector('.toolbox');
-      //     toolbox.style.left = (e.screenX) + 'px';
-      //     toolbox.style.top = (e.screenY - 50) + 'px';
-      //     this.isToolBoxShow = true;
-      //   }
-      // })
-
-      // 이미지 이벤트 리스너
+      
       document.addEventListener('click', (e) => {
+        
         if(e.target.className.includes('mdi-size-') && this.img != null) {
           // 이미지에 대한 크기 변경 0 -> 1 -> 2 -> 3 -> 4
-          console.log(this.imageSize, this.img);
-          // let width = this.img.target.clientWidth;
-          // let height = this.img.target.clientHeight;
           if(this.imageSize == 0) {
             this.img.target.style.width = '20%'
             this.img.target.style.height = '20%'
-            // this.img.target.style.width = parseInt(width / 2);
-            // this.img.target.style.height = parseInt(height / 2);
           } else if(this.imageSize == 1) {
             this.img.target.style.width = '40%'
             this.img.target.style.height = '40%'
-            // this.img.target.style.width = parseInt(width / 1.5);
-            // this.img.target.style.height = parseInt(height / 1.5);
           } else if(this.imageSize == 2) {
             this.img.target.style.width = '50%'
             this.img.target.style.height = '50%'
-            // this.img.target.style.width = parseInt(width / 1.2);
-            // this.img.target.style.height = parseInt(height / 1.2);
           } else if(this.imageSize == 3) {
             this.img.target.style.width = '80%'
             this.img.target.style.height = '80%'
-            // this.img.target.style.width = width;
-            // this.img.target.style.height = height;
           } else if(this.imageSize == 4) {
             this.img.target.style.width = '100%'
             this.img.target.style.height = '100%'
-            // this.img.target.style.width = parseInt(width / 0.9);
-            // this.img.target.style.height = parseInt(height / 0.9);
           }
           this.isImage = false;
           this.img = null;
           return;
         } 
-        if(e.target.localName != 'img') {
+        if(e.target.localName == 'img') {
+          this.isImage = true;
+          this.img = e;
+        } else {
           this.isImage = false;
-          return;
         }
-        this.isImage = true;
-        this.img = e;
       })
     },
     beforeDestroy() {
@@ -407,18 +435,19 @@
     },
     methods: {
       ...mapActions(contentStore, ['AC_CONTENTS']),
+      ...mapActions(boxStore, ['AC_IS_BOX', 'AC_TARGET']),
+      ...mapActions(editStore, ['AC_PAGE']),
       handleResize() {
         this.height = document.querySelector("#container").clientHeight
       },
       handleContent () {
-        // if(this.isContentStored) return;
-        // this.isContentStored = true;
+        let background = document.querySelector('.editor__content.item' + this.page).style.backgroundColor;
+        if(background == '') background = 'white'
         const payload = {
           page: this.page,
-          content: '<section>' + document.querySelector('.editor__content.item' + this.page +' .ProseMirror').innerHTML + '</section>'
+          content: "<div style='background-color : " + background + "'>" + document.querySelector('.editor__content.item' + this.page +' .ProseMirror').innerHTML + '</div>'
         }
         this.AC_CONTENTS(payload);
-        // setTimeout(() => {this.isContentStored = false}, 3000);
       },
       loadUntilSlideIsFull: function () {
         if(this.isNewPage) return;
@@ -432,46 +461,18 @@
 
         watcher.enterViewport(() => {
           console.log('____BOTTOMENTER____' + this.page)
-          // this.isNewPageCreated = true;
           if(!this.isNewPage) this.$emit('enterNewPage')
           this.isNewPage = true;
         })
         watcher.exitViewport(() => {
           console.log('____BOTTOMEXIT____' + this.page)
-          // if(this.isNewPageCreated) return;
-          // else this.isNewPageCreated = true;
           if(this.isNewPage) this.$emit('exitNewPage')
           this.isNewPage = false;
         })
       },
-      red() {
-        if(this.isBlock) {
-          console.log(this.target);
-          console.log(this.target.innerHTML);
-          console.log(this.targetStr)
-          this.target.innerHTML = this.target.innerHTML.replace(this.targetStr, '<a style="color: red">' + this.targetStr + '</a>')
-        }
-        this.isBlock = false;
-        this.isToolBoxShow = false;
-      },
-      blue() {
-        if(this.isBlock) {
-          this.target.innerHTML = this.target.innerHTML.replace(this.targetStr, '<a style="color: blue">' + this.targetStr + '</a>')
-        }
-        this.isBlock = false;
-        this.isToolBoxShow = false;
-      },
-      green() {
-        if(this.isBlock) {
-          this.target.innerHTML = this.target.innerHTML.replace(this.targetStr, '<a style="color: green">' + this.targetStr + '</a>')
-        }
-        this.isBlock = false;
-        this.isToolBoxShow = false;
-      },
       async changeVal(val) {
         let file = val.target.files[0]
         var reader = new FileReader();
-        
       
         reader.readAsText(file, /* optional */ "utf-8");
 
@@ -482,9 +483,8 @@
           }
         })
         this.editor.content = result;
-        // console.log(document.querySelector('.editor__content.item' + this.page + ' .ProseMirror').innerHTML)
+        
         document.querySelector('.editor__content.item' + this.page + ' .ProseMirror').innerHTML = result;
-        console.log(document.querySelector('.editor__content.item' + this.page + ' .ProseMirror').innerHTML)
       },
       clickBtn() {
         document.querySelector('.importMd.item' + this.page).click();
@@ -495,6 +495,31 @@
         if (src !== null) {
           command({ src })
         }
+      },
+      changeBackground(color) {
+        document.querySelector('.editor__content.item' + this.page).style.backgroundColor = color;
+      },
+      goEdit() {
+        this.AC_PAGE(0);
+      },
+      goColor() {
+        this.AC_PAGE(1);
+      },
+      clickPhotoUpload (command) {
+        document.querySelector('.photo_upload.item' + this.page).click();
+        this.command = command;
+      },
+      readUploadImage( inputObject ) {
+        console.log(inputObject)
+        var formData = new FormData();
+        formData.append('imageMultipartFile', inputObject.target.files[0])
+        axios.post('/image', formData, { headers: {accpet: 'application/json'}})
+        .then(res => {
+          console.log(res)
+          let src = res.data.data
+          this.command({ src })
+        })
+        .catch(err => console.log(err))
       }
     },
     directives: {
@@ -507,6 +532,14 @@
         }
       }
     },
+    watch: {
+      storePage() {
+        document.querySelector('.menubar').classList.add('active')
+        setTimeout(() => {
+          document.querySelector('.menubar').classList.remove('active')
+        }, 250);
+      },
+    }
   }
 </script>
 
@@ -554,6 +587,19 @@
     width: 100%;
   }
 
+  .menubar {
+    transition-duration: 250ms;
+    transform: translateX(0em);
+    opacity: 1;
+  }
+
+  .menubar.active {
+    transition-duration: 0s;
+    transform: translateX(5em);
+    opacity: 0;
+  }
+
+
   .slide-section .menu-box .menubar button {
     margin: 0 0.5%;
   }
@@ -567,6 +613,10 @@
     position: relative;
     margin-left: 7.5%;
     width: 85%;
+    /* 강세응이 추가함 */
+    float: left;
+    margin-right: 0;
+    /* 강세응이 추가함 */
     overflow-y: scroll;
   }
   
@@ -599,16 +649,25 @@
   .toolbox {
     position: absolute;
     width: 200px;
-    height: 50px;
-    /* visibility: hidden; */
+    height: 40px;
     opacity: 0;
+    visibility: hidden;
     transition-duration: 300ms;
   }
 
   .toolbox.show {
-    /* visibility: visible; */
     opacity: 1;
-    transition-duration: 300ms;
+    z-index: 95;
+    visibility: visible;
+  }
+
+  .toolbox-btn {
+    width: 30px;
+    height: 30px;
+    /* width: 20%; 
+    height: 100%;  */
+    border-radius: 70%;
+    border: 2px solid slategray;
   }
 
   * >>> blockquote {
@@ -617,9 +676,31 @@
     padding: 10px;
   }
 
-  .btnImport {
-    
+  
+  /* ====================================================== */
+
+  /* =================== BACKGROUND BOX =================== */
+
+  .background-box {
+    /* position: absolute; */
+    /* margin-top: 100px; */
+    float: right;
+    margin-left: -2px;
+    /* left: 85%; */
+    z-index: 95;
+    width: 80px;
+    height: 280px;
   }
+
+  .background-box button {
+    width: 100%;
+    height: 40px;
+    border: 3px solid slategray;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-left: none;
+  }
+
   /* ====================================================== */
 
 </style>

@@ -14,6 +14,12 @@ const customStore = {
     },
     MU_FINAL_THEME: (state, payload) => {
       state.finalTheme = payload;
+      console.log(payload);
+      localStorage.setItem('color1', payload[0]);
+      localStorage.setItem('color2', payload[1]);
+      localStorage.setItem('color3', payload[2]);
+      localStorage.setItem('color4', payload[3]);
+      localStorage.setItem('color5', payload[4]);
       console.log('MU_FINAL_THEME', state.finalTheme)
     },
   },

@@ -1,7 +1,7 @@
 package com.cerberos.colorpool.controller.theme;
 
 import com.cerberos.colorpool.entity.theme.Theme;
-import com.cerberos.colorpool.repository.response.ListResult;
+import com.cerberos.colorpool.model.response.ListResult;
 import com.cerberos.colorpool.service.ResponseService;
 import com.cerberos.colorpool.service.theme.ThemeService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,7 +24,8 @@ public class ThemeController {
     @Operation(summary = "배색 조합 추천 받기", description = "색 선택 후 10개의 배색조합을 추천받는다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "배색 조합 검색 성공", content = @Content),
-            @ApiResponse(responseCode = "500", description = "배색 조합 검색 실패", content = @Content)})
+            @ApiResponse(responseCode = "500", description = "배색 조합 검색 실패", content = @Content)
+    })
     @GetMapping(value = "/{colorId}")
     public ListResult<Theme> getThemes(@PathVariable Integer colorId) {
         return responseService.getListResult(themeService.getThemes(colorId));

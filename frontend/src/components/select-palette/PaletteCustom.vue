@@ -46,6 +46,9 @@ import { mapGetters, mapActions } from 'vuex'
 const landingStore = 'landingStore'
 // const colorStore = 'colorStore'
 const customStore = 'customStore'
+const contentStore = 'contentStore'
+const editStore = 'editStore'
+const pdfStore = 'pdfStore'
 
 export default {
   name: 'PaletteCustom',
@@ -113,6 +116,9 @@ export default {
   methods: {
     ...mapActions(landingStore, ['AC_DIALOG']),
     ...mapActions(customStore, ['AC_FINAL_THEME']),
+    ...mapActions(contentStore, ['AC_CONTENTS_NULL']),
+    ...mapActions(editStore, ['AC_PAGE']),
+    ...mapActions(pdfStore, ['AC_CONTENTS']),
     close(){
       this.AC_DIALOG(false);
       this.initIsActive();
@@ -124,8 +130,11 @@ export default {
       this.colorIndex = -1;
       this.AC_FINAL_THEME(this.colors);
       this.isLoading = true;
+      this.AC_CONTENTS_NULL();
       setTimeout(() => {
-        this.$router.push({name: 'Editing'})
+        this.AC_PAGE(0);
+        this.AC_CONTENTS(null);
+        this.$router.push({name: 'Edit'})
       }, 1500);
     },
     setBackgroundColor(color) {

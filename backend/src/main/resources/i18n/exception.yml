@@ -11,3 +11,6 @@ pdfNotCreateException:
 imageNotUploadException:
   code: "-3000"
   msg: "image 업로드 생성 중 오류가 발생하였습니다."
+contentsNotFoundException:
+  code: "-2001"
+  msg: "해당 contents가 존재하지 않습니다."

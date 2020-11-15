@@ -5,10 +5,11 @@ import Landing from '../views/Landing.vue'
 import Edit from '../views/Edit.vue'
 import Result from '../views/Result.vue'
 import SelectPalettes from '../views/SelectPalettes'
+import Viewer from '../views/Viewer'
 
 import EditKang from '../views/EditKang.vue'
-import Editing from '../components/edit/Editing'
-import Coloring from '../components/edit/Coloring'
+// import Editing from '../components/edit/Editing'
+// import Coloring from '../components/edit/Coloring'
 
 Vue.use(VueRouter)
 
@@ -27,18 +28,18 @@ const routes = [
     path: '/edit',
     name: 'Edit',
     component: Edit,
-    children: [
-      {
-        path: 'md',
-        name: 'Editing',
-        component: Editing
-      },
-      {
-        path: 'color',
-        name: 'Coloring',
-        component: Coloring
-      }
-    ]
+    // children: [
+    //   {
+    //     path: 'md',
+    //     name: 'Editing',
+    //     component: Editing
+    //   },
+    //   {
+    //     path: 'color',
+    //     name: 'Coloring',
+    //     component: Coloring
+    //   }
+    // ]
   },
   {
     path: '/edit_kang',
@@ -68,6 +69,12 @@ const routes = [
     name: 'Result',
     component: Result
   },
+  {
+    path: '/viewer/:id',
+    name: 'Viewer',
+    component: Viewer,
+    props: true
+  }
 ]
 
 const router = new VueRouter({

@@ -7,20 +7,25 @@ import javax.persistence.*;
 @Entity
 @Getter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="PDF")
 public class Pdf {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PDF_ID", nullable = false)
     private Integer id;
 
     @Lob
-    @Column(name="CONTENTS")
+    @Column(name="CONTENTS", nullable = false)
     private String contents;
 
-    @Column(name="PATH")
+    @Column(name="PATH",nullable = false, unique = true)
     private String path;
+
+    @Builder
+    public Pdf(int id ,String contents, String path){
+        this.id = id;
+        this.contents = contents;
+        this.path = path;
+    }
 }

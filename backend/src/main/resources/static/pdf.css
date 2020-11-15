@@ -151,6 +151,8 @@ ul ul {
 
 div {
   height: 100%;
+  padding: 40px 80px 40px 80px;
+  overflow: hidden;
 }
 
 body {

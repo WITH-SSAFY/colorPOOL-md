@@ -1,10 +1,10 @@
 package com.cerberos.colorpool.advice;
 
+import com.cerberos.colorpool.advice.exception.CContentsNotFoundException;
 import com.cerberos.colorpool.advice.exception.CImageNotUploadException;
 import com.cerberos.colorpool.advice.exception.CPdfNotCreateException;
 import com.cerberos.colorpool.advice.exception.CThemeNotFoundException;
-import com.cerberos.colorpool.repository.response.CommonResult;
-import com.cerberos.colorpool.repository.response.SingleResult;
+import com.cerberos.colorpool.model.response.CommonResult;
 import com.cerberos.colorpool.service.ResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
@@ -44,6 +44,12 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult imageNotUploadException(HttpServletRequest request, CImageNotUploadException e){
         return responseService.getFailResult(Integer.parseInt(getMessage("imageNotUploadException.code")),getMessage("imageNotUploadException.msg"));
+    }
+
+    @ExceptionHandler(CContentsNotFoundException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult contentsNotFoundException(HttpServletRequest request, CContentsNotFoundException e){
+        return responseService.getFailResult(Integer.parseInt(getMessage("contentsNotFoundException.code")),getMessage("contentsNotFoundException.msg"));
     }
 
 

@@ -42,7 +42,8 @@ dependencies {
     /* AWS S3 */
 
     /* mock */
-    compile 'org.springframework:spring-mock:2.0.8'
+    //compile 'org.springframework:spring-mock:2.0.8'
+    compile 'org.springframework:spring-test'
     /* mock */
 
     /* itext - pdf */
