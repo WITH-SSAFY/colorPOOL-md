@@ -9,6 +9,7 @@
 - team Color : 원하는 색상 선택
     - 색코르기
     <img src='./docs/image/teamColor1.gif'>
+
     - 배색 조합 고르기
     <img src='./docs/image/teamColor2.gif'>
     
