@@ -6,7 +6,6 @@
       </div>
       <EditPage v-for="(template, index) in templates" v-bind:page="index" @enterNewPage="createPage()" @exitNewPage="deletePage()" :key="index" v-bind:content_parent="template"></EditPage>
     </v-col>
-    <button @click="sendPDF">보내기</button>
   </div>
 </template>
 
@@ -77,30 +76,6 @@
         this.templates.pop(EditPage)
       },
       handleDrag() {
-      },
-      /* TEST PDF */
-      sendPDF() {
-        console.log(this.templates)
-        let str = ""
-        this.templates.forEach(template => {
-          template = template.replaceAll('"', "'");
-          template = template.replaceAll('<br>', '<br/>');
-          let i = 0;
-          // console.log(template.indexOf('<img', 42))
-          while(template.indexOf('<img', i) != -1) {
-            i = template.indexOf('<img', i);
-            for(var j = i; j < template.length; j++) {
-              if(template[j] == '>') {
-                template = template.substring(0, j) + '/' + template.substring(j)
-                i = j;
-                break;
-              }
-            }
-          }
-          str += template;
-        })
-        console.log(str);
-        // axios.post('/pdf', {'contents': str}).then((res) => console.log(res)).catch((err) => console.log(err));
       },
       setFinalContents() {
         let str = ""
