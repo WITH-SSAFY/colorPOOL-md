@@ -1,0 +1,16 @@
+# exception_ko.yml
+unKnown:
+  code: "-9999"
+  msg: "알수 없는 오류가 발생하였습니다."
+themeNotFoundException:
+  code: "-1000"
+  msg: "해당 컬러의 배색 조합을 추천할 수 없습니다."
+pdfNotCreateException:
+  code: "-2000"
+  msg: "pdf 생성 중 오류가 발생하였습니다."
+imageNotUploadException:
+  code: "-3000"
+  msg: "image 업로드 생성 중 오류가 발생하였습니다."
+contentsNotFoundException:
+  code: "-2001"
+  msg: "해당 contents가 존재하지 않습니다."

@@ -1,0 +1,76 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'java'
+}
+
+group = 'com.cerberos'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    /* jpa */
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+    /* lombok */
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    /* mysql */
+    runtimeOnly 'mysql:mysql-connector-java'
+
+    /* spring doc */
+    compile 'org.springdoc:springdoc-openapi-ui:1.4.3'
+
+    /* messageSource */
+    implementation 'net.rakugakibox.util:yaml-resource-bundle:1.1'
+    /* messageSource */
+
+    /* AWS S3 */
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-aws', version: '2.2.1.RELEASE', ext: 'pom'
+    implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.327')
+    implementation 'com.amazonaws:aws-java-sdk-s3'
+    /* AWS S3 */
+
+    /* mock */
+    //compile 'org.springframework:spring-mock:2.0.8'
+    compile 'org.springframework:spring-test'
+    /* mock */
+
+    /* itext - pdf */
+    compile 'com.itextpdf:itextpdf:5.5.13'
+    compile 'com.itextpdf:itext-pdfa:5.5.13'
+    compile 'com.itextpdf.tool:xmlworker:5.5.13'
+    /* itext - pdf */
+
+    /* wkhtmltopdf */
+    //compile 'com.github.jhonnymertz:java-wkhtmltopdf-wrapper:1.1.13-RELEASE'
+    /* wkhtmltopdf */
+
+    /* html to pdf */
+    //compile 'io.woo:htmltopdf:1.0.8'
+    /* html to pdf */
+
+    /* opengtmltopdf */
+    //compile 'com.openhtmltopdf:openhtmltopdf-pdfbox:1.0.4'
+    /* opengtmltopdf */
+
+    //compile 'com.itextpdf:itext-xtra:5.5.13'
+    /* jsoup */
+    //compile 'org.jsoup:jsoup:1.11.2'
+    /* jsoup */
+
+}
+
+test {
+    useJUnitPlatform()
+}
