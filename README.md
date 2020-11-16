@@ -39,7 +39,7 @@
 <img src='./docs/image/coloringBack.gif'>
 
 - Text
-<img src='./docs/image/coloringTextLocal.gif'>
+<img src='./docs/image/coloringText.gif'>
 
 #### Export
 <img src='./docs/image/Final.gif'>
