@@ -7,6 +7,7 @@
 
 #### 배색 조합 추천받기
 - team Color : 원하는 색상 선택
+<img src='./docs/image/teamColor1.gif'>
 
 - mainKeyword : 발표 키워드로 색상 검색
 
