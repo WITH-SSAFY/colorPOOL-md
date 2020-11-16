@@ -15,6 +15,7 @@
     - 배색 조합 고르기
     <img src='./docs/image/teamColor2.gif'>
 <br>
+
 - mainKeyword : 발표 키워드로 색상 검색
 <img src='./docs/image/mainKeyword.gif'>
 
