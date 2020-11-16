@@ -11,10 +11,10 @@
 - team Color : 원하는 색상 선택
     - 색코르기
     <img src='./docs/image/teamColor1.gif'>
-    <br>
+
     - 배색 조합 고르기
     <img src='./docs/image/teamColor2.gif'>
-<br><br>
+<br>
 - mainKeyword : 발표 키워드로 색상 검색
 <img src='./docs/image/mainKeyword.gif'>
 
@@ -22,19 +22,19 @@
 ### 발표 자료 작성
 - Manual : 마크다운 문법 직접 사용
 <img src='./docs/image/writeByManual.gif'>
-<br><br>
+<br>
 
 - ToolBox
 <img src='./docs/image/WriteByTool.gif'>
-<br><br>
+<br>
 
 - Import : 로컬 md파일 import
 <img src='./docs/image/import_md.gif'>
-<br><br>
+<br>
 
 - Codeblock : with Highlighting
 <img src='./docs/image/writeCodeBlock.gif'>
-<br><br>
+<br>
 
 - Image
     - URL
@@ -44,15 +44,15 @@
     <img src='./docs/image/writeImageByURL.gif'>
 <br><br>
 
-#### Coloring
+### Coloring
 - Background
 <img src='./docs/image/coloringBack.gif'>
-<br><br>
+<br>
 
 - Text
 <img src='./docs/image/coloringText.gif'>
 <br><br>
 
-#### Export
+### Export
 <img src='./docs/image/Final.gif'>
 
