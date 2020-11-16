@@ -9,7 +9,7 @@
 
 ### 배색 조합 추천받기
 - team Color : 원하는 색상 선택
-    - 색코르기
+    - 색고르기
     <img src='./docs/image/teamColor1.gif'>
 
     - 배색 조합 고르기
