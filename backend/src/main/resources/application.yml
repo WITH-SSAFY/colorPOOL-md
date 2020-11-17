@@ -4,6 +4,10 @@ spring:
   messages:
     basename: i18n/exception
     encoding: UTF-8
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 
 springdoc:
   version : 1.0.1
