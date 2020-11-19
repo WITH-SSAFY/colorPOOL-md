@@ -1,59 +1,242 @@
-# ColorPOOLmd
-- Compact
-- Practical
-- Formatted 한 Presentation
+<h1 align="center">colorPOOL.md</h1>
 
+<p align="center">Create your presentation with your palette using the knowledge of millions of designers</p>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/chat-on%20mattermost-yellowgreen" alt="chat on notion"/> 
+  <img src="https://img.shields.io/badge/chat-on%20notion-red" alt="chat on notion"/>
+</p>
 
-## 사용방법
-
-### 배색 조합 추천받기
-- team Color : 원하는 색상 선택
-    - 색고르기
-    <img src='./docs/image/teamColor1.gif'>
-
-    - 배색 조합 고르기
-    <img src='./docs/image/teamColor2.gif'>
 <br>
 
-- mainKeyword : 발표 키워드로 색상 검색
-<img src='./docs/image/mainKeyword.gif'>
-
-<br><br>
-### 발표 자료 작성
-- Manual : 마크다운 문법 직접 사용
-<img src='./docs/image/writeByManual.gif'>
 <br>
 
-- ToolBox
-<img src='./docs/image/WriteByTool.gif'>
+## Index
+
+### Introduction
+
+- [What is colorPOOL.md?](#what-is-colorPOOL.md?)
+- [Why colorPOOL.md?](#why-colorPOOL.md?)
+
+### Features
+
+- [Get recommendation](#get-recommendation)
+- [Create your presentation](#create-your-presentation)
+
+### Infra
+
+- [Web Infra Structure](#web-infra-structure)
+- [Big Data](#big-data)
+
+### Documents
+
 <br>
 
-- Import : 로컬 md파일 import
-<img src='./docs/image/import_md.gif'>
 <br>
 
-- Codeblock : with Highlighting
-<img src='./docs/image/writeCodeBlock.gif'>
+## What Is ColorPOOL.md?
+
+> colorPOOL.md에서 원하는 색에 대한 배색을 추천받고, 마크다운에 컬러를 입히세요
+
+- **colorPOOL.md**는 팀의 개성과 키워드의 컬러를 담은 배색을 추천합니다
+- **colorPOOL.md**는 추천한 배색을 이용하여 마크다운 기반의 발표 자료를 작성합니다
+
 <br>
 
-- Image
-    - URL
-    <img src='./docs/image/writeImageByLocal.gif'>
+<br>
 
-    - Local
-    <img src='./docs/image/writeImageByURL.gif'>
-<br><br>
+## Why ColorPOOL.md?
+
+- 발표자료 제작의 어려움은 다음에서 기인합니다
+  1. 발표 내용을 구조적으로 정리하기 쉽지 않다
+  2. 텍스트의 중요도를 나타내기 위한 디자인 적용이 쉽지 않다
+  3. 색상의 선택이 쉽지 않다
+- colorPOOL.md는 이렇게 해결합니다
+  1. 마크다운을 이용한 **구조적 내용 정리**
+  2. 마크다운을 이용한 텍스트 **흐름의 시각화**
+  3. 컬러를 활용한 발표자료 **아이덴티티** 확립
+
+<br>
+
+<br>
+
+## Get Recommendation
+
+>  컬러를 선택하고, 해당 컬러에 대한 배색을 추천받으세요
+>
+> **Team Color**와 **Main Keyword**, 두 가지 방법으로 컬러를 선택할 수 있습니다
+
+<br>
+
+<br>
+
+### Team Color
+
+> colorPOOL의 200가지 컬러를 직접 선택해보세요
+
+- 20개의 대표 컬러군 중 하나를 선택하면, 해당 컬러군에 속하는 10개 컬러를 밝기 별로 살펴볼 수 있습니다
+
+- 컬러 선택을 완료하여, 배색 10가지를 추천받으세요
+
+<br>
+
+<br>
+
+### Main Keyword
+
+> 키워드를 입력하여, 키워드를 대표하는 컬러를 선택해보세요
+
+- 구글 이미지 검색 결과에 대해 대표색을 보여주는 방식입니다
+- 검색의 결과는 colorPOOL의 대표 컬러와 가장 가까운 컬러로 보여집니다
+
+<br>
+
+<br>
+
+## Create Your Presentation
+
+> 마크다운 라이브 에디팅 기능을 이용하여, 슬라이드 단위로 발표자료를 작성하세요
+
+<br>
+
+<br>
+
+### Editing
+
+- 프리뷰 없이, 마크다운 문법을 **실시간으로 렌더**하세요
+
+- 마크다운 문법이 익숙하지 않은 사용자라면?
+  - 마크다운 기능을 그대로 담은 `툴 박스`를 이용해 쉽게 사용해보세요
+
+<br>
+
+<br>
+
+- **이미지 첨부**는 물론, 크기를 조절하여 시각적 효과를 극대화하세요
+- 외부 마크다운 파일을 **불러오기** 하여 컬러를 입히세요
+- 코드를 자료에 첨부하고 싶다면?
+  - Atom 테마의 하이라이팅이 적용된 코드 블록을 활용해보세요
+
+<br>
+
+<br>
+
+- **슬라이드 단위**로 발표 자료를 제작하는 익숙한 UX를 그대로 경험하세요
+  - 작성하던 슬라이드 범위를 초과하면, 새로운 슬라이드가 생성됩니다
+  - PPO의 단축키 그대로, 슬라이드 생성은 `Alt + Enter`, 삭제는 `Alt + Backspace`
+
+<br>
+
+<br>
 
 ### Coloring
-- Background
-<img src='./docs/image/coloringBack.gif'>
+
+> 컬러링을 원하는 영역을 드래그하고, 컬러 버튼을 클릭해 색을 입히세요
+
+- 선택한 배색 조합에 기본색인 Black & White를 포함한 컬러 선택지를 제공합니다
+- 텍스트 요소와 배경 영역에 컬러를 입혀보세요
+
 <br>
 
-- Text
-<img src='./docs/image/coloringText.gif'>
-<br><br>
+<br>
 
 ### Export
-<img src='./docs/image/Final.gif'>
+
+> 발표자료를 아래의 세 가지 방법으로 추출하세요
+
+- pdf - 문서 형식을 그대로 보존하여 추출할 수 있습니다
+- viewer - gif의 동작까지 보여줄 수 있습니다
+- text copy - 외부 에디터에서도 호환되는 컨텐츠를 확인할 수 있습니다
+
+<br>
+
+<br>
+
+## Web Infra Structure
+
+<br>
+
+<br>
+
+## Big Data
+
+### Collect Data
+
+- Adobe Color에서 제공하는 백 만 명의 디자이너가 평점을 매긴 배색 데이터를 수집했습니다
+- 45000개의 데이터 중 상위 3000개의 데이터를 추출하여 분석에 활용했습니다
+  - 추출한 3000개의 데이터는 평균 평점이 최고 5점 중 4.35, 표준편차가 0.26인 신뢰할 수 있는 데이터입니다
+
+### Set Reference Colors
+
+> **`표본 색채를 선정`**하기 위해 데이터를 **Quantization** 하고 **Clustering** 했습니다
+
+- 비슷한 색들을 근사하고, 인간이 인식하는 색차와 균등하게 보정하여 군집화했습니다
+- 결과로 표본 색채 200개를 선정했습니다
+- 화면에서는 200개의 컬러를 20개의 군으로 카테고리화 하여 `컬러 피커`의 형태로 보여줍니다
+
+### Recommend Palette
+
+- 배색을 이루는 5개의 컬러 중 표본 색채와의 색차 거리를 계산하여, 표본 색채를 기준으로 군집화했습니다
+- 이 중 평점이 상위 10위 안에 드는 배색 조합을 서비스에서 추천하고 있습니다
+
+<br>
+
+<br>
+
+## Documents
+
+- [git branch 전략]()
+- [git commit message convention]()
+- [coding convention]()
+- [기획]()
+- [와이어프레임]()
+
+<br>
+
+<br>
+
+## See Also
+
+### Contributor
+
+| 이름   | 역할               | 내용 |
+| ------ | ------------------ | ---- |
+| 강세응 | FE, BE, 영상       |      |
+| 김윤진 | FE, 데이터, 기획   |      |
+| 배현석 | BE, 데이터, 인프라 |      |
+
+<br>
+
+<br>
+
+## Awards
+
+- 🥈삼성청년SW아카데미 자율 프로젝트 2등상 수상
+
+<br>
+
+<br>
+
+### Technologies Used
+
+<p>
+<img height="50" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/java/java.png"/>
+<img height="50" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/python/python.png"/>
+<img height="50" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/html/html.png"/>
+<img height="50" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/css/css.png"/>
+<img height="50" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/javascript/javascript.png"/>
+</p>
+
+<p>
+<img height="60" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/vue/vue.png">
+<img height="60" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/spring-boot/spring-boot.png">
+<img height="60" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/mysql/mysql.png">
+</p>
+
+<p>
+<img height="40" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/docker/docker.png">
+<img height="40" src="./assets/ec2.png">
+<img height="40" src="./assets/jenkins.png">
+<img height="40" src="./assets/nginx.png">
+</p>
 
