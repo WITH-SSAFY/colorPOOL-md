@@ -27,6 +27,8 @@ import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
 import lombok.RequiredArgsConstructor;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,6 +50,7 @@ public class PdfService {
     private final String tempPdfFolder = "../../colorpoolmd/pdf/";
     private final String staticFolder = "./src/main/resources/static/";
     private final String pdfFolder = "http://k3a501.p.ssafy.io/resource/pdf/";
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public String getOneContents(int id){
         Pdf pdf = pdfJpaRepository.findById(id).orElseThrow(CContentsNotFoundException::new);
@@ -73,7 +76,9 @@ public class PdfService {
 
             Pdf new_pdf = pdfRes.toEntity();
             pdfJpaRepository.save(new_pdf);
+            logger.info("a new PDF(id : "+new_pdf.getId()+") is created successfully");
         }catch (Exception e){
+            logger.info("failed to create a new PDF");
             throw new CPdfNotCreateException();
         }
         return pdfRes;
@@ -111,7 +116,6 @@ public class PdfService {
             pageContents += pageCloseTag;
             pageContentsList.add(pageContents);
         }
-        System.out.println(pageContentsList);
 
         File tempSaveFolder = new File(tempPdfFolder);
         if(!tempSaveFolder.exists() || tempSaveFolder.isFile()){
