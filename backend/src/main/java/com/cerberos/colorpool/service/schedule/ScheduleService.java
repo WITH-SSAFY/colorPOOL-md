@@ -4,21 +4,19 @@ import com.cerberos.colorpool.entity.pdf.Pdf;
 import com.cerberos.colorpool.repository.pdf.PdfJpaRepository;
 import com.cerberos.colorpool.s3.S3api;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class ScheduleService {
     private final PdfJpaRepository pdfJpaRepository;
     private final S3api s3api;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Scheduled(cron = "0 0 18 * * *")
-    public void clearPdfBucket(){
+//    @Scheduled(cron = "0 0 18 * * *")
+//    public void clearPdfBucket(){
 //        List<Pdf> allPdfList = pdfJpaRepository.findAll();
 //
 //        if(allPdfList.isEmpty()) return;
@@ -34,5 +32,9 @@ public class ScheduleService {
 //        }
 //        s3api.delete(allPdfNameList,subPath);
 //        pdfJpaRepository.deleteAll();
-    }
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Date date = new Date();
+//        String time = simpleDateFormat.format(date);
+//        logger.info(time+" - all pdfFiles deleted");
+//    }
 }
