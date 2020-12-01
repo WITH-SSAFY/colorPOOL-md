@@ -154,7 +154,7 @@
 
 ## Web Infra Structure
 
-<img src="./assets/WebInfraStructure.png" width="100%"/>
+<img src="./assets/image/WebInfraStructure.png" width="100%"/>
 
 <br>
 
@@ -172,7 +172,7 @@
 
 > **`표본 색채를 선정`**하기 위해 데이터를 **Quantization** 하고 **Clustering** 했습니다
 
-<img src="./assets/SetReferenceColors.png" width="100%"/>
+<img src="./assets/image/SetReferenceColors.png" width="100%"/>
 
 - 비슷한 색들을 근사하고, 인간이 인식하는 색차와 균등하게 보정하여 군집화했습니다
 - 결과로 표본 색채 200개를 선정했습니다
@@ -182,7 +182,7 @@
 
 > **`배색을 추천`**하기 위해 데이터를 **Clustering** 했습니다
 
-<img src="./assets/RecommendPalette.png" width="100%"/>
+<img src="./assets/image/RecommendPalette.png" width="100%"/>
 
 - 배색을 이루는 5개의 컬러 중 표본 색채와의 색차 거리를 계산하여, 표본 색채를 기준으로 군집화했습니다
 - 이 중 평점이 상위 10위 안에 드는 배색 조합을 서비스에서 추천하고 있습니다
@@ -243,8 +243,8 @@
 
 <p>
 <img height="40" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/docker/docker.png">
-<img height="40" src="./assets/ec2.png">
-<img height="40" src="./assets/jenkins.png">
-<img height="40" src="./assets/nginx.png">
+<img height="40" src="./assets/image/ec2.png">
+<img height="40" src="./assets/image/jenkins.png">
+<img height="40" src="./assets/image/nginx.png">
 </p>
 
