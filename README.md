@@ -1,4 +1,6 @@
-<h1 align="center">colorPOOL.md</h1>
+<p align="center">
+  <div align="center"><img src="./assets/image/logo.png" width="25%"/></div>
+</p>
 
 <p align="center">Create your presentation with your palette using the knowledge of millions of designers</p>
 
@@ -21,7 +23,9 @@
 ### Features
 
 - [Get recommendation](#get-recommendation)
-- [Create your presentation](#create-your-presentation)
+- [Edit your presentation](#edit-your-presentation)
+- [Color your presentation](#color-your-presentation)
+- [Get your presentation](#get-your-presentation)
 
 ### Infra
 
@@ -29,6 +33,9 @@
 - [Big Data](#big-data)
 
 ### Documents
+
+- [Docs](#docs)
+- [Tasks](#tasks)
 
 <br>
 
@@ -40,6 +47,10 @@
 
 - **colorPOOL.md**는 팀의 개성과 키워드의 컬러를 담은 배색을 추천합니다
 - **colorPOOL.md**는 추천한 배색을 이용하여 마크다운 기반의 발표 자료를 작성합니다
+
+<br>
+
+<img src="./assets/image/workFlow.png" width="100%"/>
 
 <br>
 
@@ -194,7 +205,7 @@
 
 ### Set Reference Colors
 
-> **`표본 색채를 선정`**하기 위해 데이터를 **Quantization** 하고 **Clustering** 했습니다
+> `표본 색채를 선정`하기 위해 데이터를 **Quantization** 하고 **Clustering** 했습니다
 
 <img src="./assets/image/SetReferenceColors.png" width="100%"/>
 
@@ -204,7 +215,7 @@
 
 ### Recommend Palette
 
-> **`배색을 추천`**하기 위해 데이터를 **Clustering** 했습니다
+> `배색을 추천`하기 위해 데이터를 **Clustering** 했습니다
 
 <img src="./assets/image/RecommendPalette.png" width="100%"/>
 
@@ -231,11 +242,11 @@
 
 ### Contributor
 
-| 이름   | 역할               | 내용 |
-| ------ | ------------------ | ---- |
-| 강세응 | FE, BE, 영상       |      |
-| 김윤진 | FE, 데이터, 기획   |      |
-| 배현석 | BE, 데이터, 인프라 |      |
+| 이름   | 역할               | 내용                                       |
+| ------ | ------------------ | ------------------------------------------ |
+| 강세응 | FE, BE, 영상       | coloring과 result                          |
+| 김윤진 | FE, 데이터, 기획   | Landing과 Editing 단계의 화면 및 기능 구현 |
+| 배현석 | BE, 데이터, 인프라 | 인프라 및 백엔드 서버 구축                 |
 
 <br>
 
@@ -244,6 +255,7 @@
 ## Awards
 
 - 🥈삼성청년SW아카데미 자율 프로젝트 2등상 수상
+- 🎖삼성청년SW아카데미 자율 프로젝트 UCC 경진대회 입상
 
 <br>
 
