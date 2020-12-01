@@ -228,11 +228,21 @@
 
 ## Documents
 
-- [git branch 전략]()
-- [git commit message convention]()
-- [coding convention]()
+- [git branch 전략](./docs/convention/git%20branch%20전략.md)
+- [git commit message convention](./docs/convention/commit%20message%20convention.md)
+- [coding convention](./docs/convention/coding%20convention.md)
 - [기획](./docs/deliverables/최종산출물.docx)
 - [와이어프레임](https://scene.zeplin.io/project/5f8e304514b1a271a4c79437)
+
+<br>
+
+<br>
+
+## Tasks
+
+### Frontend
+
+### Backend
 
 <br>
 
@@ -242,11 +252,11 @@
 
 ### Contributor
 
-| 이름   | 역할               | 내용                                       |
-| ------ | ------------------ | ------------------------------------------ |
-| 강세응 | FE, BE, 영상       | coloring과 result                          |
-| 김윤진 | FE, 데이터, 기획   | Landing과 Editing 단계의 화면 및 기능 구현 |
-| 배현석 | BE, 데이터, 인프라 | 인프라 및 백엔드 서버 구축                 |
+| 이름   | 역할               | 내용                                          |
+| ------ | ------------------ | --------------------------------------------- |
+| 강세응 | FE, BE, 영상       | Coloring과 Exporting 단계의 화면 및 기능 구현 |
+| 김윤진 | FE, 데이터, 기획   | Landing과 Editing 단계의 화면 및 기능 구현    |
+| 배현석 | BE, 데이터, 인프라 | 인프라 및 백엔드 서버 구축                    |
 <br>
 
 <br>
