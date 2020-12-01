@@ -154,6 +154,8 @@
 
 ## Web Infra Structure
 
+<img src="./assets/WebInfraStructure.png" width="100%"/>
+
 <br>
 
 <br>
@@ -170,11 +172,17 @@
 
 > **`표본 색채를 선정`**하기 위해 데이터를 **Quantization** 하고 **Clustering** 했습니다
 
+<img src="./assets/SetReferenceColors.png" width="100%"/>
+
 - 비슷한 색들을 근사하고, 인간이 인식하는 색차와 균등하게 보정하여 군집화했습니다
 - 결과로 표본 색채 200개를 선정했습니다
 - 화면에서는 200개의 컬러를 20개의 군으로 카테고리화 하여 `컬러 피커`의 형태로 보여줍니다
 
 ### Recommend Palette
+
+> **`배색을 추천`**하기 위해 데이터를 **Clustering** 했습니다
+
+<img src="./assets/RecommendPalette.png" width="100%"/>
 
 - 배색을 이루는 5개의 컬러 중 표본 색채와의 색차 거리를 계산하여, 표본 색채를 기준으로 군집화했습니다
 - 이 중 평점이 상위 10위 안에 드는 배색 조합을 서비스에서 추천하고 있습니다
@@ -188,8 +196,8 @@
 - [git branch 전략]()
 - [git commit message convention]()
 - [coding convention]()
-- [기획]()
-- [와이어프레임]()
+- [기획](./docs/deliverables/최종산출물.docx)
+- [와이어프레임](https://scene.zeplin.io/project/5f8e304514b1a271a4c79437)
 
 <br>
 
