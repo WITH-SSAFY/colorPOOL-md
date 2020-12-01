@@ -66,8 +66,9 @@
 >
 >  **Team Color**와 **Main Keyword**, 두 가지 방법으로 컬러를 선택할 수 있습니다
 
-<br>
+<img src="./assets/gif/select_color.gif" width="60%"/>
 
+<br>
 
 ### Team Color
 
@@ -97,8 +98,9 @@
 >
 > ColorPOOl md가 지원하는 **마크다운 기능**들을 사용해보세요
 
-<br>
+<img src="./assets/gif/editing.gif" width="60%"/>
 
+<br>
 
 ### Slide UI/UX
 
@@ -131,6 +133,8 @@
 >
 > **텍스트** 뿐만 아니라 **배경**에도 색을 입힐 수 있습니다
 
+<img src="./assets/gif/coloring.gif" width="60%"/>
+
 <br>
 
 ### Color Text
@@ -157,6 +161,8 @@
 > 작성한 발표자료를 세 가지 방법으로 추출하세요
 >
 > **PDF**로 추출할 수 있고, **전용 뷰어**를 통해 확인이 가능하며, 발표 자료 자체를 **복사**할 수도 있습니다
+
+<img src="./assets/gif/export.gif" width="60%"/>
 
 <br>
 
