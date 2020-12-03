@@ -19,4 +19,4 @@
 ![image-20201203154240299](./assets/image/ReverseProxy.png)
 
 - 클라이언트 단에서 서버의 port번호를 입력하지 않고도 서버 접근 가능
-- image와 pdf가 저장된  AWS S3의 실제 URL이 아닌 location에 입력한 URL이 리턴된다.
+- 클라이언트 단에서 image와 pdf가 저장된  AWS S3의 실제 URL이 아닌 location에 입력한 URL이 리턴된다.
