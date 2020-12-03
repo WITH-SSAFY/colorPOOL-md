@@ -256,17 +256,17 @@
   - [슬라이드의 비율 고정](./docs/issues/슬라이드의%20비율%20고정.md)
   - [슬라이드의 범위 감지와 동적 생성](./docs/issues/슬라이드의%20범위%20감지와%20동적%20생성.md)
 - **Coloring**
-  - [TipTap-Extension과 확장성]()
-  - [Router-View와 TipTap의 엄격함]()
-- [SideBar]()
-- [ProgressBar]()
+  - [TipTap-Extension과 확장성](./docs/issues/TipTap-Extension과 그 확장성에 대하여.md)
+  - [Router-View와 TipTap의 엄격함](./docs/issues/Router-View와 TipTap의 엄격함에 대하여.md)
+- [SideBar](./docs/issues/사이드바의 다양함과 데이터 바인딩에 대하여.md)
+- [ProgressBar](./docs/issues/프로그레스바의 유용함에 대하여.md)
 
 #### UX Improvement
 
-- [컬러 커스텀과 자유도]()
+- [컬러 커스텀과 자유도](./docs/issues/커스텀 색깔과 그 자유도에 대하여.md)
 - [슬라이드 포커싱과 사용자 인지](./docs/issues/슬라이드%20포커싱과%20사용자%20인지.md)
 - [미리보기와 선택 방지](./docs/issues/미리보기와%20선택%20방지.md)
-- [V-Carousel과 발표자료 넘기기]()
+- [V-Carousel과 발표자료 넘기기](./docs/issues/V-Carousel과 발표 자료의 상관성에 대하여.md)
 - [최적 환경에 대한 안내](./docs/issues/최적%20환경에%20대한%20안내.md)
 
 <br>
