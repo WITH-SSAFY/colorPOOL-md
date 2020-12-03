@@ -270,7 +270,7 @@
 
 #### Environment
 
-- [민감 정보(DB 비밀번호, AWS 키) 처리](./docs/issues/민감 정보[DB 비밀번호, AWS 키]처리.md)
+- [민감 정보(DB 비밀번호, AWS 키) 처리](./docs/issues/민감 정보[DB 비밀번호, AWS 키] 처리.md)
 - [Response(사용자 정의) 및 예외처리](./docs/issues/Response[사용자 정의] 및 예외처리.md)
 - [LoggerFactory를 활용한 log설정](./docs/issues/LoggerFactory를 활용한 log설정.md)
 
