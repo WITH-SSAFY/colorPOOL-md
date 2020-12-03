@@ -248,11 +248,11 @@
 #### Issues for each screen
 
 - **Editing**
-  - [슬라이드의 비율 고정에 대하여](./docs/issues/슬라이드의%20비율%20고정에%20대하여.md)
-  - [슬라이드의 범위 감지와 동적 생성에 대하여](./docs/issues/슬라이드의%20범위%20감지와%20동적%20생성에%20대하여.md)
+  - [슬라이드의 비율 고정](./docs/issues/슬라이드의%20비율%20고정.md)
+  - [슬라이드의 범위 감지와 동적 생성](./docs/issues/슬라이드의%20범위%20감지와%20동적%20생성.md)
 - **Coloring**
-  - [TipTap-Extension과 확장성에 대하여]()
-  - [Router-View와 TipTap의 엄격함에 대하여]()
+  - [TipTap-Extension과 확장성]()
+  - [Router-View와 TipTap의 엄격함]()
 - [SideBar]()
 - [ProgressBar]()
 
