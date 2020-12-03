@@ -75,7 +75,7 @@ colorPOOL과 LOCKER에서 준호(a.k.a 룬로) 형이 이를 처리한 방식을
       driver-class-name: com.mysql.cj.jdbc.Driver
     jpa:
       hibernate:
-        ddl-auto: updat
+        ddl-auto: update
   ```
 
   
