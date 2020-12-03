@@ -5,17 +5,22 @@
 <p align="center">Create your presentation with your palette using the knowledge of millions of designers</p>
 
 <p align="center">
+  <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
+  <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   <img src="https://img.shields.io/badge/chat-on%20mattermost-yellowgreen" alt="chat on notion"/> 
   <img src="https://img.shields.io/badge/chat-on%20notion-red" alt="chat on notion"/>
 </p>
 
-<br>
 
 <br>
 
-## Index
+<br>
+
+## 🔖 Index
 
 ### Introduction
+
+- [Description](#description)
 
 - [What is colorPOOL.md?](#what-is-colorPOOL.md?)
 - [Why colorPOOL.md?](#why-colorPOOL.md?)
@@ -35,7 +40,7 @@
 ### Documents
 
 - [Docs](#docs)
-- [Tasks](#tasks)
+- [Issues](#issues)
 
 <br>
 
@@ -43,12 +48,10 @@
 
 ## What Is ColorPOOL.md?
 
-> colorPOOL.md에서 원하는 색에 대한 배색을 추천받고, 마크다운에 컬러를 입히세요
+> [colorPOOL.md](http://k3a501.p.ssafy.io/)에서 원하는 색에 대한 배색을 추천받고, 마크다운에 컬러를 입히세요
 
 - **colorPOOL.md**는 팀의 개성과 키워드의 컬러를 담은 배색을 추천합니다
 - **colorPOOL.md**는 추천한 배색을 이용하여 마크다운 기반의 발표 자료를 작성합니다
-
-<br>
 
 <img src="./assets/image/workFlow.png" width="100%"/>
 
@@ -71,13 +74,13 @@
 
 <br>
 
-## Get Recommendation
+## 🎨 Get Recommendation
 
 >  컬러를 선택하고, 해당 컬러에 대한 배색을 추천받으세요
 >
 >  **Team Color**와 **Main Keyword**, 두 가지 방법으로 컬러를 선택할 수 있습니다
 
-<img src="./assets/gif/select_color.gif" width="60%"/>
+<img align="center" src="./assets/gif/select_color.gif" width="70%"/>
 
 <br>
 
@@ -103,13 +106,13 @@
 
 <br>
 
-## Edit Your Presentation
+## 📝 Edit Your Presentation
 
 > 마크다운 라이브 에디팅 기능을 이용하여, **슬라이드 단위**로 발표자료를 작성하세요
 >
 > ColorPOOl md가 지원하는 **마크다운 기능**들을 사용해보세요
 
-<img src="./assets/gif/editing.gif" width="60%"/>
+<img align="center" src="./assets/gif/editing.gif" width="70%"/>
 
 <br>
 
@@ -138,13 +141,13 @@
 
 <br>
 
-## Color Your Presentation
+## 🖍 Color Your Presentation
 
 > 컬러링을 원하는 영역을 드래그하고, 컬러 버튼을 클릭해 색을 입히세요
 >
 > **텍스트** 뿐만 아니라 **배경**에도 색을 입힐 수 있습니다
 
-<img src="./assets/gif/coloring.gif" width="60%"/>
+<img align="center" src="./assets/gif/coloring.gif" width="70%"/>
 
 <br>
 
@@ -167,13 +170,13 @@
 
 <br>
 
-## Get Your Presentation
+## 📂 Get Your Presentation
 
 > 작성한 발표자료를 세 가지 방법으로 추출하세요
 >
 > **PDF**로 추출할 수 있고, **전용 뷰어**를 통해 확인이 가능하며, 발표 자료 자체를 **복사**할 수도 있습니다
 
-<img src="./assets/gif/export.gif" width="60%"/>
+<img align="center" src="./assets/gif/export.gif" width="70%"/>
 
 <br>
 
@@ -187,7 +190,7 @@
 
 <br>
 
-## Web Infra Structure
+## 🔭 Web Infra Structure
 
 <img src="./assets/image/WebInfraStructure.png" width="100%"/>
 
@@ -195,7 +198,7 @@
 
 <br>
 
-## Big Data
+## 📊 Big Data
 
 ### Collect Data
 
@@ -226,7 +229,7 @@
 
 <br>
 
-## Documents
+## 🗂 Documents
 
 - [git branch 전략](./docs/convention/git%20branch%20전략.md)
 - [git commit message convention](./docs/convention/commit%20message%20convention.md)
@@ -238,17 +241,44 @@
 
 <br>
 
-## Tasks
+## 💡 Issues
 
-### Frontend
+### FrontEnd
 
-### Backend
+#### Issues for each screen
+
+- **Editing**
+  - [슬라이드의 비율 고정에 대하여]()
+  - [슬라이드의 범위 감지와 동적 생성에 대하여]()
+- **Coloring**
+  - [TipTap-Extension과 확장성에 대하여]()
+  - [Router-View와 TipTap의 엄격함에 대하여]()
+- [SideBar]()
+- [ProgressBar]()
+
+#### UX Improvement
+
+- [컬러 커스텀과 자유도]()
+- [슬라이드 포커싱과 사용자 인지]()
+- [미리보기와 선택 방지]()
+- [V-Carousel과 발표자료 넘기기]()
+- [최적 환경에 대한 안내]()
+
+<br>
+
+### BackEnd
 
 <br>
 
 <br>
 
-## See Also
+## 🧚‍♀️ See Also
+
+### Timeline
+
+> 개발 기간: 10/19/2020 ~ 11/13/2020
+
+<br>
 
 ### Contributor
 
@@ -262,16 +292,22 @@
 
 <br>
 
-## Awards
+## 🏆 Awards
 
 - 🥈삼성청년SW아카데미 자율 프로젝트 2등상 수상
+
 - 🎖삼성청년SW아카데미 자율 프로젝트 UCC 경진대회 입상
 
-<br>
+  <div>
+    <a href="https://youtu.be/2tmA-B6YFkQ"><img src="./assets/image/landing.png" width="50%"/></a>
+    <p>위 이미지를 클릭하면 영상을 볼 수 있습니다</p>
+  </div>
 
 <br>
 
-### Technologies Used
+<br>
+
+### 🔧 Technologies Used
 
 <p>
 <img height="50" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/java/java.png"/>
