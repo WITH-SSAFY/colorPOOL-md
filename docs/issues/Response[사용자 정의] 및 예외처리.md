@@ -1,12 +1,25 @@
 # Response(사용자 정의) 및 예외처리
 
-
-
 ### Special thanks to 준호
 
+> 모든 경우에 대해 응답해주고 싶었다.....
+>
+> by **Beaver Bae** (1995~)
 
+<br>
 
-### Response(사용자 정의)
+### 도입 배경
+
+test용 API에서는 성공적인 결과만 리턴 되게 해놨었다. 하지만 실패 할 경우 클라이언트 단에서는 어떤 원인으로 실패하는 지를 모르고, 서버 단에서는 무진장 긴 에러 코드가 나왔다. <br>
+그래서 응답 코드에 따라 여러 응답 처리를 해줄 수 있는 ResponseEntity를 사용하려 했으나, 이전 플젝인 colorPOOL에서 준호형이 구현한 사용자 정의 Response가 좀 더 compact해서 clone 했다. <br>
+
+마찬가지로 예외 처리도 colorPOOL의 코드를 clone 하였다.
+
+<br>
+
+### 작업 내용
+
+#### Response(사용자 정의)
 
 - Response에 담는 내용
 
@@ -133,13 +146,13 @@
     }
     ```
 
+<br>
 
-
-### 예외처리
+#### 예외처리
 
 - ExceptionHandler, MessageSource 활용
 
-- exception.yml
+- exception.yml (가능한 예외에 대한 code와 message 내용)
 
   ```yaml
   unKnown:
@@ -159,7 +172,7 @@
     msg: "해당 contents가 존재하지 않습니다."
   ```
 
-- MessageConfiguration.java
+- MessageConfiguration.java (ExceptionHandler의 특정 exception에 맞는 exception.yml의 내용을 담아줌)
 
   ```java
   @Configuration
@@ -207,7 +220,7 @@
   }
   ```
 
-- ExceptionAdvice.java
+- ExceptionAdvice.java (각 예외에 대한 실질적인 처리 수행)
 
   ```java
   @RequiredArgsConstructor
@@ -273,8 +286,6 @@
 
     ```java
     public class CImageNotUploadException extends RuntimeException{
-        public CImageNotUploadException(String msg, Throwable t){super(msg,t);}
-        public CImageNotUploadException(String msg){ super(msg);}
         public CImageNotUploadException(){ super();}
     }
     ```
@@ -283,8 +294,6 @@
 
     ```java
     public class CPdfNotCreateException extends RuntimeException {
-        public CPdfNotCreateException(String msg, Throwable t){super(msg,t);}
-        public CPdfNotCreateException(String msg){super(msg);}
         public CPdfNotCreateException(){super();}
     }
     ```
@@ -293,12 +302,6 @@
 
     ```java
     public class CThemeNotFoundException extends RuntimeException{
-        public CThemeNotFoundException(String msg, Throwable t) {
-            super(msg, t);
-        }
-        public CThemeNotFoundException(String msg) {
-            super(msg);
-        }
         public CThemeNotFoundException() {
             super();
         }
