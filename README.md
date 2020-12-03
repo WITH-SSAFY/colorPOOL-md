@@ -20,8 +20,6 @@
 
 ### Introduction
 
-- [Description](#description)
-
 - [What is colorPOOL.md?](#what-is-colorPOOL.md?)
 - [Why colorPOOL.md?](#why-colorPOOL.md?)
 
@@ -62,12 +60,19 @@
 ## Why ColorPOOL.md?
 
 - 발표자료 제작의 어려움은 다음에서 기인합니다
+  
   1. 발표 내용을 구조적으로 정리하기 쉽지 않다
+  
   2. 텍스트의 중요도를 나타내기 위한 디자인 적용이 쉽지 않다
+  
   3. 색상의 선택이 쉽지 않다
+  
 - colorPOOL.md는 이렇게 해결합니다
+  
   1. 마크다운을 이용한 **구조적 내용 정리**
+  
   2. 마크다운을 이용한 텍스트 **흐름의 시각화**
+  
   3. 컬러를 활용한 발표자료 **아이덴티티** 확립
 
 <br>
@@ -80,7 +85,7 @@
 >
 >  **Team Color**와 **Main Keyword**, 두 가지 방법으로 컬러를 선택할 수 있습니다
 
-<img align="center" src="./assets/gif/select_color.gif" width="70%"/>
+<img align="center" src="./assets/gif/select_color.gif" width="100%"/>
 
 <br>
 
@@ -110,9 +115,9 @@
 
 > 마크다운 라이브 에디팅 기능을 이용하여, **슬라이드 단위**로 발표자료를 작성하세요
 >
-> ColorPOOl md가 지원하는 **마크다운 기능**들을 사용해보세요
+> ColorPOOL.md가 지원하는 **마크다운 기능**들을 사용해보세요
 
-<img align="center" src="./assets/gif/editing.gif" width="70%"/>
+<img align="center" src="./assets/gif/editing.gif" width="100%"/>
 
 <br>
 
@@ -121,7 +126,7 @@
 > **슬라이드 단위**로 발표 자료를 제작하는 익숙한 UX를 그대로 경험하세요
 
 - 작성하던 슬라이드 범위를 초과하면, 새로운 슬라이드가 생성됩니다
-- PPO의 단축키 그대로, 슬라이드 생성은 `Alt + Enter`, 삭제는 `Alt + Backspace`
+- PPT의 단축키 그대로, 슬라이드 생성은 `Alt + Enter`, 삭제는 `Alt + Backspace`
 
 <br>
 
@@ -147,7 +152,7 @@
 >
 > **텍스트** 뿐만 아니라 **배경**에도 색을 입힐 수 있습니다
 
-<img align="center" src="./assets/gif/coloring.gif" width="70%"/>
+<img align="center" src="./assets/gif/coloring.gif" width="100%"/>
 
 <br>
 
@@ -170,13 +175,13 @@
 
 <br>
 
-## 📂 Get Your Presentation
+## 📨 Get Your Presentation
 
 > 작성한 발표자료를 세 가지 방법으로 추출하세요
 >
 > **PDF**로 추출할 수 있고, **전용 뷰어**를 통해 확인이 가능하며, 발표 자료 자체를 **복사**할 수도 있습니다
 
-<img align="center" src="./assets/gif/export.gif" width="70%"/>
+<img align="center" src="./assets/gif/export.gif" width="100%"/>
 
 <br>
 
@@ -245,7 +250,7 @@
 
 ### FrontEnd
 
-#### Issues for each screen
+#### Features Implementation
 
 - **Editing**
   - [슬라이드의 비율 고정](./docs/issues/슬라이드의%20비율%20고정.md)
@@ -264,30 +269,22 @@
 - [V-Carousel과 발표자료 넘기기]()
 - [최적 환경에 대한 안내](./docs/issues/최적%20환경에%20대한%20안내.md)
 
-<br>
+### BackEnd 
 
-### Backend 
-
-#### Environment
+#### Environment Setup
 
 - [민감 정보(DB 비밀번호, AWS 키) 처리](./docs/issues/민감 정보[DB 비밀번호, AWS 키] 처리.md)
 - [Response(사용자 정의) 및 예외처리](./docs/issues/Response[사용자 정의] 및 예외처리.md)
 - [LoggerFactory를 활용한 log설정](./docs/issues/LoggerFactory를 활용한 log설정.md)
 
-#### Function
+#### Features Implementation
 
 - [itext라이브러리 css처리](./docs/issues/itext라이브러리 css처리.md)
 - [Scheduler를 활용한 Batch](./docs/issues/Scheduler를 활용한 Batch.md)
 
-<br>
-
 ### Infra
 
 - [Nginx reverse proxy](./docs/issues/Nginx reverse proxy.md)
-
-
-
-
 
 <br>
 
@@ -306,14 +303,14 @@
 | 이름   | 역할               | 내용                                               |
 | ------ | ------------------ | -------------------------------------------------- |
 | 강세응 | FE, BE, 영상       | Coloring 단계와 Exporting 단계의 화면 및 기능 구현 |
-| 김윤진 | FE, 데이터, 기획   | Landing 단계와 Editing 단계의 화면 및 기능 구현    |
+| 김윤진 | FE, 데이터, 기획   | Editing 단계와 Landing 단계의 화면 및 기능 구현    |
 | 배현석 | BE, 데이터, 인프라 | 인프라 및 백엔드 서버 구축                         |
 | 윤재원 | FE                 | SelectColor 단계의 화면 및 기능 구현               |
 <br>
 
 <br>
 
-## 🏆 Awards
+### Awards
 
 - 🥈삼성청년SW아카데미 자율 프로젝트 2등상 수상
 
@@ -328,7 +325,7 @@
 
 <br>
 
-### 🔧 Technologies Used
+### Technologies Used
 
 <p>
 <img height="50" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/java/java.png"/>
