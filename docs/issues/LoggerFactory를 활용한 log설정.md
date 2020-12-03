@@ -109,9 +109,9 @@
                       .build();
               imageJpaRepository.save(image);
               ///////    log    ////////
-  			logger.info("a new image(path : "+image.getPath()+") is added successfully");
-  		    //////////////////////////
-  		}catch (Exception e){
+  			  logger.info("a new image(path : "+image.getPath()+") is added successfully");
+  		      //////////////////////////
+  		  }catch (Exception e){
               logger.info("failed to add a new image");
               throw new CImageNotUploadException();
           }
@@ -140,17 +140,17 @@
           try{
               s3api.upload(imageMultipartFile,"/image",newImageName);
               Image image = Image.builder()
-                      .path(newImagePath)
-                      .build();
+                                .path(newImagePath)
+                                .build();
               imageJpaRepository.save(image);
               ///////    log    ////////
-  						logger.info("a new image(path : "+image.getPath()+") is added successfully");
-  		        //////////////////////////
-  				}catch (Exception e){
-              logger.info("failed to add a new image");
-              throw new CImageNotUploadException();
-          }
-          return newImagePath;
+  			    logger.info("a new image(path : "+image.getPath()+") is added successfully");
+  		      //////////////////////////
+  		    }catch (Exception e){
+               logger.info("failed to add a new image");
+               throw new CImageNotUploadException();
+            }
+            return newImagePath;
       }
   }
   ```
@@ -167,7 +167,7 @@
   
       @Scheduled(cron = "0 0 18 * * *")
       public void clearPdfBucket(){
-  				///// business logic /////       
+  		  ///// business logic /////       
   
           /////    log     /////
           SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
