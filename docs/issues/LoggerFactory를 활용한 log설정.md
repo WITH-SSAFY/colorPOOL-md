@@ -6,9 +6,17 @@
 
 
 
+<br>
+
+
+
 ### LoggerFactory를 활용한 log설정
 
 스케줄러를 구현했는데 컨트님께서 log가 없다는 것을 아쉬워 하셨다. 생각해 보니 맞는 말씀이었다. <br>주기적으로 어떤 작업이 실행 되었는지 확인하기 위해서는 log를 작성하는 것이 바람직하다. <br>구글 신의 도움을 받아 LoggerFactory를 통해 log를 간단하게 작성해 볼 수 있다는 것을 알게 되었다.
+
+
+
+<br>
 
 
 
@@ -17,11 +25,12 @@
 - [참고링크](https://goddaehee.tistory.com/206)
 
 - 좀 더 편리한 디버깅을 위해 log파일을 아래 처럼 3가지 파일로 나눴다.
+
   - colorPOOLmd_stdout_log 파일 : 서버를 언제 시작했는지
   - colorPOOLmd_pdf_log 파일 : pdf 생성 성공 또는 실패 시, Scheduler를 통해 pdf 삭제 시
   - colorPOOLmd_image_log 파일 : S3에 image파일 저장 성공 또는 실패 시 
 
-- logback-spring.xml → STDOUT_FILE(서버 실행), PDF_FILE(pdf), IMAGE_FILE(image) 로 나눠서 log 파일 저장
+- logback-spring.xml (LoggerFactory 환경 설정)
 
   ```xml
   <?xml version="1.0" encoding="UTF-8"?>
@@ -101,7 +110,7 @@
   </configuration>
   ```
 
-- PdfService.java
+- PdfService.java (log 적용)
 
   ```java
   @Service
@@ -136,7 +145,7 @@
 
   
 
-- ImageService.java
+- ImageService.java (log 적용)
 
   ```java
   @Service
@@ -169,7 +178,7 @@
   }
   ```
 
-- SchedulerService.java
+- SchedulerService.java (log 적용)
 
   ```java
   @Service
