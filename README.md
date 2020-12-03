@@ -269,22 +269,26 @@
 - [V-Carousel과 발표자료 넘기기]()
 - [최적 환경에 대한 안내](./docs/issues/최적%20환경에%20대한%20안내.md)
 
+<br>
+
 ### BackEnd 
 
 #### Environment Setup
 
-- [민감 정보(DB 비밀번호, AWS 키) 처리](./docs/issues/민감 정보[DB 비밀번호, AWS 키] 처리.md)
-- [Response(사용자 정의) 및 예외처리](./docs/issues/Response[사용자 정의] 및 예외처리.md)
-- [LoggerFactory를 활용한 log설정](./docs/issues/LoggerFactory를 활용한 log설정.md)
+- [민감 정보(DB 비밀번호, AWS 키) 처리](./docs/issues/민감%20정보[DB%20비밀번호,%20AWS%20키]%20처리.md)
+- [Response(사용자 정의) 및 예외처리](./docs/issues/Response[사용자%20정의]%20및%20예외처리.md)
+- [LoggerFactory를 활용한 log설정](./docs/issues/LoggerFactory를%20활용한%20log설정.md)
 
 #### Features Implementation
 
-- [itext라이브러리 css처리](./docs/issues/itext라이브러리 css처리.md)
-- [Scheduler를 활용한 Batch](./docs/issues/Scheduler를 활용한 Batch.md)
+- [itext라이브러리 css처리](./docs/issues/itext라이브러리%20css처리.md)
+- [Scheduler를 활용한 Batch](./docs/issues/Scheduler를%20활용한%20Batch.md)
+
+<br>
 
 ### Infra
 
-- [Nginx reverse proxy](./docs/issues/Nginx reverse proxy.md)
+- [Nginx reverse proxy](./docs/issues/Nginx%20reverse%20proxy.md)
 
 <br>
 
