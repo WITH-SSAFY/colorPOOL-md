@@ -283,7 +283,7 @@
 
 ### Infra
 
-- [Nginx reverse proxy](./docs/issues/Nginx%20reverse%20proxy.md)
+- [Nginx reverse proxy](./docs/issues/Nginx reverse proxy.md)
 
 
 
