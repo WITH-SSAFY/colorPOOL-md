@@ -1,4 +1,10 @@
-## 코딩 컨벤션
+## Coding Convention
+> 일관성 있는 코드 작성을 위해 다음의 규칙을 지키고 있습니다
+
+<br>
+
+<br>
+
 ## JAVA
 
 [Naver Hackday Java 코딩 컨벤션](https://naver.github.io/hackday-conventions-java/#space-around-comment)을 따른다.

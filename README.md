@@ -239,6 +239,7 @@
 - [git branch 전략](./docs/convention/git%20branch%20전략.md)
 - [git commit message convention](./docs/convention/commit%20message%20convention.md)
 - [coding convention](./docs/convention/coding%20convention.md)
+- [directory structure](./docs/convention/directory%20structure.md)
 - [기획](./docs/deliverables/최종산출물.docx)
 - [와이어프레임](https://scene.zeplin.io/project/5f8e304514b1a271a4c79437)
 
